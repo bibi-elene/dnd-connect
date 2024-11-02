@@ -50,7 +50,7 @@ const Login = () => {
           Login
         </button>
         <p className="mt-4 text-center">
-          Don't have an account? <Link href="/auth/register" className="text-blue-500">Register</Link>
+          Don`t have an account? <Link href="/auth/register" className="text-blue-500">Register</Link>
         </p>
       </form>
     </div>
