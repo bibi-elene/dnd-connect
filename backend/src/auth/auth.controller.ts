@@ -18,6 +18,8 @@ export class AuthController {
       console.log('Invalid credentials'); // TODO: create proper logger
       throw new UnauthorizedException('Invalid credentials');
     }
+    
+    return this.authService.login(user);
   }
 
   @Post('register')

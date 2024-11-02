@@ -1,21 +1,23 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 import { CharacterModule } from './character/character.module';
-import { UserService } from './user/user.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true, // Makes environment variables available globally
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'elenebb',
-      password: '',
-      database: 'dnd_connect',
+      url: process.env.POSTGRES_URL, // Use POSTGRES_URL from your .env file
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
+      synchronize: true, // Set to false in production
+      ssl: {
+        rejectUnauthorized: false, // Necessary for SSL connections on managed databases
+      },
     }),
     CharacterModule,
     UserModule,

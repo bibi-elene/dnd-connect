@@ -24,11 +24,19 @@ export class CharacterController {
   constructor(private readonly characterService: CharacterService) {}
 
   @Get()
-  @Roles(UserRole.ADMIN)
   @ApiOperation({ summary: 'Get all characters' })
   @ApiResponse({ status: 200, description: 'List of characters.' })
   findAll(): Promise<Character[]> {
     return this.characterService.findAll();
+  }
+
+  @Get('me')
+  @ApiOperation({ summary: 'Get all characters for the current user' })
+  @ApiResponse({ status: 200, description: 'List of characters for the current user.' })
+  async findCurrentUserCharacters(@Request() req): Promise<Character[]> {
+    // Retrieve userId from the request
+    const userId = req.user.id;
+    return this.characterService.findAllForUser(userId);
   }
 
   @Get(':id')
@@ -36,14 +44,17 @@ export class CharacterController {
   @ApiResponse({ status: 200, description: 'Character found.' })
   @ApiResponse({ status: 404, description: 'Character not found.' })
   async findOne(@Param('id') id: number, @Request() req): Promise<Character> {
-    return this.characterService.findOne(id, req.user.userId);
+    return this.characterService.findOne(id, req.user.id);
   }
 
   @Post()
   @ApiOperation({ summary: 'Create a new character' })
   @ApiResponse({ status: 201, description: 'Character created.' })
-  create(@Body() character: Character, @Request() req): Promise<Character> {
-    return this.characterService.create(character, req.user);
+  create(@Body() characterData: Character, @Request() req): Promise<Character> {
+    console.log('User:', req.user);
+    console.log('Character Data:', characterData);
+
+    return this.characterService.create(characterData, req.user);
   }
 
   @Put(':id')
@@ -54,13 +65,13 @@ export class CharacterController {
     @Body() character: Character,
     @Request() req,
   ): Promise<Character> {
-    return this.characterService.update(id, character, req.user.userId);
+    return this.characterService.update(id, character, req.user.id);
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a character' })
   @ApiResponse({ status: 204, description: 'Character deleted.' })
   remove(@Param('id') id: number, @Request() req): Promise<void> {
-    return this.characterService.remove(id, req.user.userId);
+    return this.characterService.remove(id, req.user.id);
   }
 }

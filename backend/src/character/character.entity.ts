@@ -28,6 +28,6 @@ export class Character {
   @ApiProperty({ description: 'The background of the character' })
   background: string;
 
-  @ManyToOne(() => User, (user) => user.characters)
+  @ManyToOne(() => User, user => user.characters, { onDelete: 'CASCADE' })
   user: User;
 }
