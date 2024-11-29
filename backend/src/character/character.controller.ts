@@ -14,8 +14,6 @@ import { Character } from './character.entity';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
-import { Roles } from 'src/auth/roles.decorator';
-import { UserRole } from 'src/user/user.entity';
 
 @ApiTags('characters')
 @Controller('characters')

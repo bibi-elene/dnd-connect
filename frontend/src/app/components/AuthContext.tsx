@@ -32,60 +32,55 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      axios
-        .get("/auth/me")
-        .then((response) => {
-          setUser(response.data);
-        })
-        .catch((error) => {
-          console.error("Invalid token", error);
-          localStorage.removeItem("token");
-          setUser(null);
-        })
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
-    }
+    axios
+      .get("/auth/me") // Ensure cookies are sent
+      .then((response) => {
+        setUser(response.data); // Backend should return user info in `/auth/me`
+      })
+      .catch((error) => {
+        console.error("Failed to fetch user info", error);
+        setUser(null);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const login = async (username: string, password: string) => {
     try {
-      const response = await axios.post("/auth/login", { username, password });
-      localStorage.setItem("token", response.data.access_token);
-      // Decode token to get user info
-      const payload = JSON.parse(
-        atob(response.data.access_token.split(".")[1])
-      );
-      setUser({
-        id: payload.sub,
-        username: payload.username,
-        role: payload.role,
-      });
+      await axios.post("/auth/login", { username, password }); // Login sets the cookie
+
+      // Fetch user info after login
+      const response = await axios.get("/auth/me", { withCredentials: true });
+      setUser(response.data);
+
       router.push("/dashboard");
     } catch (error) {
+      console.error("Login error", error);
       throw error;
     }
   };
 
   const register = async (username: string, password: string) => {
     try {
-      await axios.post("/auth/register", {
-        username,
-        password,
-        role: "user",
-      });
+      await axios.post("/auth/register", { username, password });
       router.push("/auth/login");
-    } catch (error) {
-      throw error;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.error(
+        "Registration error:",
+        error.response?.data || error.message
+      );
+      throw new Error(error.response?.data?.message || "Registration failed.");
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    setUser(null);
-    router.push("/");
+  const logout = async () => {
+    try {
+      await axios.post("/auth/logout", {}, { withCredentials: true });
+      setUser(null);
+      router.push("/");
+    } catch (error) {
+      console.error("Logout error", error);
+    }
   };
 
   return (

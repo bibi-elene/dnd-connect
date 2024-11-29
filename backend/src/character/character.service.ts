@@ -18,24 +18,23 @@ export class CharacterService {
   findOne(id: number, userId: number): Promise<Character> {
     return this.characterRepository.findOne({ where: { id, user: { id: userId } } });
   }
-  
+
   async create(characterData: Partial<Character>, user: User): Promise<Character> {
     console.log('User:', user);
     console.log('Character Data:', characterData);
-  
+
     // Ensure that 'id' is not present in the data to be saved
-    const { id, ...characterDetails } = characterData;
-  
+    const { ...characterDetails } = characterData;
+
     // Create a new character instance and associate it with the user
     const character = this.characterRepository.create({
       ...characterDetails, // Ensure that the 'id' is excluded
       user,
     });
-  
+
     // Save the new character entity to the database
     return await this.characterRepository.save(character);
   }
-  
 
   async findAllForUser(userId: number): Promise<Character[]> {
     return this.characterRepository.find({ where: { user: { id: userId } } });
