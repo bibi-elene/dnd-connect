@@ -14,7 +14,7 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.useStaticAssets(join(__dirname, '..', 'public'), {
-    prefix: '/',
+    prefix: '/docs/',
   });
 
   const config = new DocumentBuilder()
@@ -29,7 +29,12 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup('api-docs', app, document, {
+    customCssUrl: '/docs/swagger-ui.css',
+    customJs: '/docs/swagger-ui-bundle.js',
+    customfavIcon: '/docs/favicon-32x32.png',
+    customSiteTitle: 'API Docs',
+  });
 
   app.enableCors({
     origin:
