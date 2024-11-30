@@ -30,8 +30,10 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document, {
-    customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.css',
-    customJs: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.js',
+    customCssUrl: '/docs/swagger-ui.css',
+    customJs: '/docs/swagger-ui-bundle.js',
+    customfavIcon: '/docs/favicon-32x32.png', // Optional
+    customSiteTitle: 'API Docs', // Optional
   });
 
   app.enableCors({
