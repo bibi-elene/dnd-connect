@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post, Res, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { Response } from 'express'; // Import Express Response
 import { AuthService } from './auth.service';
-import { UserService } from 'src/user/user.service';
-import { UserRole } from 'src/user/user.entity';
+import { UserService } from '../user/user.service';
+import { UserRole } from '../user/user.entity';
 import { Request as ReqDecorator } from '@nestjs/common';
 import { JwtAuthGuard } from './jwt-auth.guard';
 

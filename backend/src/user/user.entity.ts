@@ -1,4 +1,4 @@
-import { Character } from 'src/character/character.entity';
+import { Character } from '../character/character.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum UserRole {
