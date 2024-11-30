@@ -14,7 +14,7 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.useStaticAssets(join(__dirname, '..', 'public'), {
-    prefix: '/docs/',
+    prefix: '/',
   });
 
   const config = new DocumentBuilder()
@@ -30,7 +30,8 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document, {
-    customCssUrl: 'swagger-ui.css',
+    customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.css',
+    customJs: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.js',
   });
 
   app.enableCors({
