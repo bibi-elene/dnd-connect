@@ -32,11 +32,13 @@ export class AuthController {
     console.log('Generated token:', token);
 
     // Set the cookie with the token
+    const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('access_token', token.access_token, {
-      httpOnly: false,
-      secure: false,
-      sameSite: 'lax',
+      httpOnly: isProduction, // More secure
+      secure: isProduction, // Ensure secure cookies on production
+      sameSite: isProduction ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000,
+      path: '/', // Make cookie accessible across the entire site
     });
 
     console.log('Cookie set, sending response.');

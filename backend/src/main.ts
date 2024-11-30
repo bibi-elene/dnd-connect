@@ -6,42 +6,54 @@ import cookieParser from 'cookie-parser';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
-async function bootstrap() {
-  dotenv.config();
+dotenv.config();
 
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+async function bootstrap() {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    bufferLogs: true,
+  });
 
   app.use(cookieParser());
+
+  // Middleware to handle CORS
+  app.use((req, res, next) => {
+    const allowedOrigin =
+      process.env.NODE_ENV === 'local' ? 'http://localhost:3000' : 'https://dnd-connect.vercel.app';
+
+    res.header('Access-Control-Allow-Origin', allowedOrigin);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+    );
+    res.header('Access-Control-Allow-Credentials', 'true');
+
+    if (req.method === 'OPTIONS') {
+      return res.status(204).end(); // Respond to preflight with no content
+    }
+
+    next();
+  });
+
+  app.useStaticAssets(join(__dirname, '..', 'public'), {
+    prefix: '/docs/',
+  });
 
   const config = new DocumentBuilder()
     .setTitle('D&D Connect API')
     .setDescription('API documentation for the D&D Connect application')
     .setVersion('1.0')
-    .addServer(
-      process.env.NODE_ENV === 'production'
-        ? 'https://dnd-connect-8375.vercel.app'
-        : 'http://localhost:3001',
-    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api-docs', app, document, {
-    customCssUrl: '/swagger-ui.css',
-    customJs: '/swagger-ui-bundle.js',
-    customfavIcon: '/favicon-32x32.png',
-    customSiteTitle: 'API Docs',
+  SwaggerModule.setup('docs', app, document, {
+    customCssUrl: 'swagger-ui.css',
   });
 
-  app.enableCors({
-    origin:
-      process.env.NODE_ENV === 'production'
-        ? 'https://dnd-connect.vercel.app'
-        : 'http://localhost:3000',
-    credentials: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+  const port = process.env.PORT || 3001;
+  await app.listen(port, () => {
+    console.log(`🚀 Server running on http://localhost:${port}`);
   });
-
-  await app.listen(process.env.PORT || 3001);
 }
+
 bootstrap();
