@@ -29,12 +29,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document, {
-    customCssUrl: '/docs/swagger-ui.css',
-    customJs: '/docs/swagger-ui-bundle.js',
-    customfavIcon: '/docs/favicon-32x32.png', // Optional
-    customSiteTitle: 'API Docs', // Optional
-  });
+  SwaggerModule.setup('docs', app, document);
 
   app.enableCors({
     origin:
