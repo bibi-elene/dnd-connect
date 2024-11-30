@@ -13,10 +13,6 @@ async function bootstrap() {
 
   app.use(cookieParser());
 
-  app.useStaticAssets(join(__dirname, '..', 'public'), {
-    prefix: '/docs/',
-  });
-
   const config = new DocumentBuilder()
     .setTitle('D&D Connect API')
     .setDescription('API documentation for the D&D Connect application')
@@ -30,9 +26,9 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, document, {
-    customCssUrl: '/docs/swagger-ui.css',
-    customJs: '/docs/swagger-ui-bundle.js',
-    customfavIcon: '/docs/favicon-32x32.png',
+    customCssUrl: '/swagger-ui.css',
+    customJs: '/swagger-ui-bundle.js',
+    customfavIcon: '/favicon-32x32.png',
     customSiteTitle: 'API Docs',
   });
 
@@ -42,6 +38,8 @@ async function bootstrap() {
         ? 'https://dnd-connect.vercel.app'
         : 'http://localhost:3000',
     credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
   });
 
   await app.listen(process.env.PORT || 3001);
