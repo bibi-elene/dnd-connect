@@ -36,12 +36,13 @@ export class AuthController {
     res.cookie('access_token', token.access_token, {
       httpOnly: isProduction, // More secure
       secure: isProduction, // Ensure secure cookies on production
-      sameSite: isProduction ? 'none' : 'lax',
+      sameSite: 'lax',
+      domain: '.vercel.app', // Shared across subdomains
       maxAge: 7 * 24 * 60 * 60 * 1000,
       path: '/', // Make cookie accessible across the entire site
     });
 
-    console.log('Cookie set, sending response.');
+    console.log('Cookie set, sending response. update1');
 
     // Return a success response
     return res.status(200).json({ message: 'Login successful', token });
