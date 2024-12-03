@@ -94,17 +94,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         throw new Error("Failed to register");
       }
 
-      router.push("/auth/login");
+      router.push("/dashboard");
     } catch (error) {
       console.error("Registration error:", error);
       throw error;
     }
   };
-
   const logout = async () => {
     try {
       const response = await fetch("/api/auth/logout", {
         method: "POST",
+        credentials: "include",
       });
 
       if (response.ok) {

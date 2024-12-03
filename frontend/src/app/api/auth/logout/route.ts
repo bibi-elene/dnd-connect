@@ -1,36 +1,49 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
 import API_BASE_URL from "@/config";
+import { parse } from "cookie";
 
 export async function POST(req: Request) {
   try {
     const cookieHeader = req.headers.get("cookie");
-
     if (!cookieHeader) {
       console.error("No cookies found in request");
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-    const formattedCookie = cookieHeader.split("=")[1];
 
-    // Forward logout request to the backend
+    const cookies = parse(cookieHeader);
+
+    const accessToken = cookies["access_token"];
+
+    if (!accessToken) {
+      console.error("Access token not found in cookies");
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    // Make logout request to the backend
     const response = await axios.post(
       `${API_BASE_URL}/auth/logout`,
       {},
       {
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${formattedCookie}`, // Use the Authorization header
+          Authorization: `Bearer ${accessToken}`,
         },
         withCredentials: true,
       }
     );
 
-    return NextResponse.json(response.data, { status: response.status });
+    const res = NextResponse.json(response.data, { status: response.status });
+    res.headers.set(
+      "Set-Cookie",
+      "access_token=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0"
+    );
+
+    return res;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    console.error("Error proxying /auth/logout:", error.message);
+    console.error("Error processing logout:", error.message);
     return NextResponse.json(
-      { message: error.response?.data || "Error forwarding logout request" },
+      { message: "Logout failed", error: error.response?.data },
       { status: error.response?.status || 500 }
     );
   }

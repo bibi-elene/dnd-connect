@@ -1,5 +1,6 @@
 import API_BASE_URL from "@/config";
 import axios from "axios";
+import { parse } from "cookie";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
@@ -9,11 +10,15 @@ export async function GET(req: Request) {
       console.error("No cookies found in request");
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-    const formattedCookie = cookieHeader.split("=")[1];
+
+    const cookies = parse(cookieHeader);
+
+    const accessToken = cookies["access_token"];
+
     const response = await axios.get(`${API_BASE_URL}/auth/me`, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${formattedCookie}`, // Forward cookies to the backend
+        Authorization: `Bearer ${accessToken}`, // Forward cookies to the backend
       },
       withCredentials: true,
     });

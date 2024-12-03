@@ -27,15 +27,28 @@ export class AuthController {
     // const isProduction = process.env.NODE_ENV === 'production';
     const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('access_token', token.access_token, {
-      httpOnly: isProduction,
+      httpOnly: true,
       secure: isProduction,
       sameSite: 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000,
       path: '/',
     });
 
-    // Return a success response
     return res.status(200).json({ message: 'Login successful', token });
+  }
+
+  @Post('logout')
+  async logout(@Res() res: Response) {
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    res.clearCookie('access_token', {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: 'lax',
+      path: '/',
+    });
+
+    return res.status(200).json({ message: 'Logout successful' });
   }
 
   @Post('register')

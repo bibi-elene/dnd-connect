@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import API_BASE_URL from "@/config";
 import axios from "axios";
+import { parse } from "cookie";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
@@ -10,12 +11,15 @@ export async function GET(req: Request) {
       console.error("No cookies found in request");
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-    const formattedCookie = cookieHeader.split("=")[1];
+
+    const cookies = parse(cookieHeader);
+
+    const accessToken = cookies["access_token"];
 
     const response = await axios.get(`${API_BASE_URL}/characters`, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${formattedCookie}`, // Forward cookies to the backend
+        Authorization: `Bearer ${accessToken}`,
       },
       withCredentials: true,
     });
@@ -44,7 +48,7 @@ export async function POST(req: Request) {
     const response = await axios.post(`${API_BASE_URL}/characters`, body, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${formattedCookie}`, // Forward cookies to the backend
+        Authorization: `Bearer ${formattedCookie}`,
       },
       withCredentials: true,
     });
