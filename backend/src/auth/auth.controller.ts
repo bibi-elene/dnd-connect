@@ -36,8 +36,8 @@ export class AuthController {
     res.cookie('access_token', token.access_token, {
       httpOnly: isProduction, // More secure
       secure: isProduction, // Ensure secure cookies on production
-      sameSite: 'lax',
-      domain: '.vercel.app', // Shared across subdomains
+      sameSite: 'none',
+      domain: 'dnd-connect.vercel.app', // Backend hostname
       maxAge: 7 * 24 * 60 * 60 * 1000,
       path: '/', // Make cookie accessible across the entire site
     });
