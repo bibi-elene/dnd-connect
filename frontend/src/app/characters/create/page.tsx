@@ -1,4 +1,3 @@
-// src/app/characters/create/page.tsx
 "use client";
 
 import { useForm } from "react-hook-form";
