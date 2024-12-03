@@ -28,7 +28,6 @@ const CreateCharacter = () => {
 
   const onSubmit = async (data: CharacterFormInputs) => {
     try {
-        console.log(data, 'my data')
       await axios.post("/characters", data);
       setSuccessMessage("Character created successfully!");
       router.push("/dashboard"); // Redirect to dashboard or character list

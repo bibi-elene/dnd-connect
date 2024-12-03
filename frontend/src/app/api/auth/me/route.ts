@@ -10,7 +10,6 @@ export async function GET(req: Request) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
     const formattedCookie = cookieHeader.split("=")[1];
-    // Make a request to the backend using the axios instance
     const response = await axios.get(`${API_BASE_URL}/auth/me`, {
       headers: {
         "Content-Type": "application/json",
@@ -18,8 +17,7 @@ export async function GET(req: Request) {
       },
       withCredentials: true,
     });
-    console.log(response, "my response");
-    // Return the backend response
+
     return NextResponse.json(response.data, { status: response.status });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {

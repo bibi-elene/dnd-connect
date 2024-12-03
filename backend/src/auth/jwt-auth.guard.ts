@@ -20,9 +20,6 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       token = request.cookies?.['access_token'];
     }
 
-    console.log('Extracted token:', token);
-    console.log(process.env.NODE_ENV, 'my environment')
-
     if (!token) {
       throw new UnauthorizedException('Token not found in cookies or Authorization header.');
     }

@@ -15,34 +15,24 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() body, @Res() res: Response) {
-    console.log('Login endpoint hit with body:', body);
-
     const { username, password } = body;
     const user = await this.authService.validateUser(username, password);
 
     if (!user) {
-      console.log('Invalid credentials');
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    console.log('User validated:', user);
+    const token = await this.authService.generateAccessToken(user);
 
-    // Generate the token
-    const token = await this.authService.login(user);
-    console.log('Generated token:', token);
-
-    // Set the cookie with the token
+    // const isProduction = process.env.NODE_ENV === 'production';
     const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('access_token', token.access_token, {
-      httpOnly: isProduction, // More secure
-      secure: isProduction, // Ensure secure cookies on production
-      sameSite: 'none',
-      domain: 'dnd-connect.vercel.app', // Backend hostname
+      httpOnly: isProduction,
+      secure: isProduction,
+      sameSite: 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      path: '/', // Make cookie accessible across the entire site
+      path: '/',
     });
-
-    console.log('Cookie set, sending response. update1');
 
     // Return a success response
     return res.status(200).json({ message: 'Login successful', token });
@@ -57,7 +47,6 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('me')
   getMe(@ReqDecorator() req) {
-    console.log('User from JWT:', req.user);
     if (!req.user) {
       throw new UnauthorizedException('User not found in request.');
     }
