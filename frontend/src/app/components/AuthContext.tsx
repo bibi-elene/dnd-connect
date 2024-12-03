@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useState, useEffect, ReactNode } from "react";
-import axios from "../utils/axios";
 import { useRouter } from "next/navigation";
 
 interface User {
@@ -32,54 +31,90 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
-    axios
-      .get("/auth/me") // Ensure cookies are sent
-      .then((response) => {
-        setUser(response.data); // Backend should return user info in `/auth/me`
-      })
-      .catch((error) => {
-        console.error("Failed to fetch user info", error);
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("/api/auth/me");
+
+        if (response.ok) {
+          const userData = await response.json();
+          setUser(userData);
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user info:", error);
         setUser(null);
-      })
-      .finally(() => setLoading(false));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
   }, []);
 
   const login = async (username: string, password: string) => {
     try {
-      await axios.post("/auth/login", { username, password }); // Login sets the cookie
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
 
-      // Fetch user info after login
-      const response = await axios.get("/auth/me", { withCredentials: true });
-      setUser(response.data);
+      if (!response.ok) {
+        throw new Error("Failed to log in");
+      }
 
-      router.push("/dashboard");
+      const userResponse = await fetch("/api/auth/me");
+
+      if (userResponse.ok) {
+        const userData = await userResponse.json();
+        setUser(userData);
+        router.push("/dashboard");
+      }
     } catch (error) {
-      console.error("Login error", error);
+      console.error("Login error:", error);
       throw error;
     }
   };
 
   const register = async (username: string, password: string) => {
     try {
-      await axios.post("/auth/register", { username, password });
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to register");
+      }
+
       router.push("/auth/login");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      console.error(
-        "Registration error:",
-        error.response?.data || error.message
-      );
-      throw new Error(error.response?.data?.message || "Registration failed.");
+    } catch (error) {
+      console.error("Registration error:", error);
+      throw error;
     }
   };
 
   const logout = async () => {
     try {
-      await axios.post("/auth/logout", {}, { withCredentials: true });
-      setUser(null);
-      router.push("/");
+      const response = await fetch("/api/auth/logout", {
+        method: "POST",
+      });
+
+      if (response.ok) {
+        setUser(null);
+        router.push("/");
+      } else {
+        throw new Error("Failed to logout");
+      }
     } catch (error) {
-      console.error("Logout error", error);
+      console.error("Logout error:", error);
     }
   };
 
