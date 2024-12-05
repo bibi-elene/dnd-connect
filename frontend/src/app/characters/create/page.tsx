@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../components/AuthContext";
-import axios from "../../utils/axios";
-import { useRouter } from "next/navigation";
-import ProtectedRoute from "../../components/ProtectedRoute";
+import { useForm } from 'react-hook-form';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../components/AuthContext';
+import axios from '../../utils/axios';
+import { useRouter } from 'next/navigation';
+import ProtectedRoute from '../../components/ProtectedRoute';
 
 interface CharacterFormInputs {
   name: string;
@@ -22,17 +22,17 @@ const CreateCharacter = () => {
     formState: { errors },
   } = useForm<CharacterFormInputs>();
   const { user } = useContext(AuthContext);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const router = useRouter();
 
   const onSubmit = async (data: CharacterFormInputs) => {
     try {
-      await axios.post("/characters", data);
-      setSuccessMessage("Character created successfully!");
-      router.push("/dashboard"); // Redirect to dashboard or character list
+      await axios.post('/characters', data);
+      setSuccessMessage('Character created successfully!');
+      router.push('/dashboard'); // Redirect to dashboard or character list
     } catch (error) {
-      setErrorMessage("Failed to create character.");
+      setErrorMessage('Failed to create character.');
       console.error(error);
     }
   };
@@ -60,9 +60,9 @@ const CreateCharacter = () => {
           <label className="block text-gray-700">Name</label>
           <input
             type="text"
-            {...register("name", { required: true })}
+            {...register('name', { required: true })}
             className={`w-full px-3 py-2 border ${
-              errors.name ? "border-red-500" : "border-gray-300"
+              errors.name ? 'border-red-500' : 'border-gray-300'
             } rounded`}
           />
           {errors.name && (
@@ -73,9 +73,9 @@ const CreateCharacter = () => {
           <label className="block text-gray-700">Class</label>
           <input
             type="text"
-            {...register("class", { required: true })}
+            {...register('class', { required: true })}
             className={`w-full px-3 py-2 border ${
-              errors.class ? "border-red-500" : "border-gray-300"
+              errors.class ? 'border-red-500' : 'border-gray-300'
             } rounded`}
           />
           {errors.class && (
@@ -86,9 +86,9 @@ const CreateCharacter = () => {
           <label className="block text-gray-700">Level</label>
           <input
             type="number"
-            {...register("level", { required: true, min: 1 })}
+            {...register('level', { required: true, min: 1 })}
             className={`w-full px-3 py-2 border ${
-              errors.level ? "border-red-500" : "border-gray-300"
+              errors.level ? 'border-red-500' : 'border-gray-300'
             } rounded`}
           />
           {errors.level && (
@@ -101,9 +101,9 @@ const CreateCharacter = () => {
           <label className="block text-gray-700">Race</label>
           <input
             type="text"
-            {...register("race", { required: true })}
+            {...register('race', { required: true })}
             className={`w-full px-3 py-2 border ${
-              errors.race ? "border-red-500" : "border-gray-300"
+              errors.race ? 'border-red-500' : 'border-gray-300'
             } rounded`}
           />
           {errors.race && (
@@ -114,9 +114,9 @@ const CreateCharacter = () => {
           <label className="block text-gray-700">Background</label>
           <input
             type="text"
-            {...register("background", { required: true })}
+            {...register('background', { required: true })}
             className={`w-full px-3 py-2 border ${
-              errors.background ? "border-red-500" : "border-gray-300"
+              errors.background ? 'border-red-500' : 'border-gray-300'
             } rounded`}
           />
           {errors.background && (

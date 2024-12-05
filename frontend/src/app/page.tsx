@@ -1,21 +1,26 @@
+import JoinUsButton from './components/widgets/JoinButton';
+
 export default function Home() {
   return (
     <div
-      className="relative flex items-center justify-center min-h-screen bg-gray-100"
+      className="relative flex items-center justify-center min-h-screen"
       style={{
-        backgroundImage: `url('/assets/tavern.jpg')`, // Correct path to your image
-        backgroundSize: "cover", // Ensures the image covers the whole screen
-        backgroundRepeat: "no-repeat", // Prevents the image from repeating
-        backgroundPosition: "center", // Centers the image on the screen
+        backgroundImage: `url('/assets/tavern.jpg')`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
       }}
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black opacity-50"></div>
+      {/* Overlay for Dark Background */}
+      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
       {/* Content */}
-      <h1 className="relative text-6xl font-bold text-white">
-        Welcome to D&D Connect!
-      </h1>
+      <div className="relative text-center">
+        <h1 className="text-6xl font-bold text-white">
+          Welcome to D&D Connect!
+        </h1>
+        <JoinUsButton />
+      </div>
     </div>
   );
 }

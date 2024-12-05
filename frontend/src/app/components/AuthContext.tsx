@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { createContext, useState, useEffect, ReactNode } from "react";
-import { useRouter } from "next/navigation";
+import { createContext, useState, useEffect, ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface User {
   id: number;
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch("/api/auth/me");
+        const response = await fetch('/api/auth/me');
 
         if (response.ok) {
           const userData = await response.json();
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setUser(null);
         }
       } catch (error) {
-        console.error("Failed to fetch user info:", error);
+        console.error('Failed to fetch user info:', error);
         setUser(null);
       } finally {
         setLoading(false);
@@ -54,67 +54,67 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (username: string, password: string) => {
     try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        credentials: "include",
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        credentials: 'include',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to log in");
+        throw new Error('Failed to log in');
       }
 
-      const userResponse = await fetch("/api/auth/me");
+      const userResponse = await fetch('/api/auth/me');
 
       if (userResponse.ok) {
         const userData = await userResponse.json();
         setUser(userData);
-        router.push("/dashboard");
+        router.push('/dashboard');
       }
     } catch (error) {
-      console.error("Login error:", error);
+      console.error('Login error:', error);
       throw error;
     }
   };
 
   const register = async (username: string, password: string) => {
     try {
-      const response = await fetch("/api/auth/register", {
-        method: "POST",
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to register");
+        throw new Error('Failed to register');
       }
 
-      router.push("/dashboard");
+      router.push('/dashboard');
     } catch (error) {
-      console.error("Registration error:", error);
+      console.error('Registration error:', error);
       throw error;
     }
   };
   const logout = async () => {
     try {
-      const response = await fetch("/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
       });
 
       if (response.ok) {
         setUser(null);
-        router.push("/");
+        router.push('/');
       } else {
-        throw new Error("Failed to logout");
+        throw new Error('Failed to logout');
       }
     } catch (error) {
-      console.error("Logout error:", error);
+      console.error('Logout error:', error);
     }
   };
 

@@ -1,10 +1,11 @@
-import "./globals.css";
-import { AuthProvider } from "./components/AuthContext";
-import type { Metadata } from "next";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './globals.css';
+import { AuthProvider } from './components/AuthContext';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "D&D Connect",
-  description: "Connect with D&D characters",
+  title: 'D&D Connect',
+  description: 'Connect with D&D characters',
 };
 
 export default function RootLayout({

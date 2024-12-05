@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
-import axios from "axios";
-import API_BASE_URL from "@/config";
+import { NextResponse } from 'next/server';
+import axios from 'axios';
+import API_BASE_URL from '@/config';
 
 export async function POST(req: Request) {
   try {
@@ -10,15 +10,15 @@ export async function POST(req: Request) {
     // Forward login request to the backend
     const response = await axios.post(`${API_BASE_URL}/auth/login`, body, {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
 
     // Forward backend cookies to the client
-    const backendCookies = response.headers["set-cookie"];
+    const backendCookies = response.headers['set-cookie'];
     if (backendCookies) {
       const headers = new Headers();
-      headers.append("Set-Cookie", backendCookies.join(","));
+      headers.append('Set-Cookie', backendCookies.join(','));
       return NextResponse.json(response.data, { headers });
     }
 
@@ -26,9 +26,9 @@ export async function POST(req: Request) {
     return NextResponse.json(response.data, { status: response.status });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    console.error("Error proxying /auth/login:", error.message);
+    console.error('Error proxying /auth/login:', error.message);
     return NextResponse.json(
-      { message: error.response?.data || "Error forwarding login request" },
+      { message: error.response?.data || 'Error forwarding login request' },
       { status: error.response?.status || 500 }
     );
   }

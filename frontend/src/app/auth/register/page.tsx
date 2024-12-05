@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../components/AuthContext";
-import Link from "next/link";
+import { useForm } from 'react-hook-form';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../components/AuthContext';
+import Link from 'next/link';
 
 interface RegisterFormInputs {
   username: string;
@@ -17,20 +17,20 @@ const Register = () => {
     formState: { errors },
   } = useForm<RegisterFormInputs>();
   const { register } = useContext(AuthContext);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const onSubmit = async (data: RegisterFormInputs) => {
     try {
       await register(data.username, data.password);
-      setSuccessMessage("Registration successful! You can now log in.");
-      setErrorMessage(""); // Clear previous errors
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setSuccessMessage('Registration successful! You can now log in.');
+      setErrorMessage(''); // Clear previous errors
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setErrorMessage(
-        error.message || "Registration failed. Username might be taken."
+        error.message || 'Registration failed. Username might be taken.'
       );
-      setSuccessMessage(""); // Clear success message
+      setSuccessMessage(''); // Clear success message
     }
   };
 
@@ -49,9 +49,9 @@ const Register = () => {
           <label className="block text-gray-700">Username</label>
           <input
             type="text"
-            {...registerUser("username", { required: true })}
+            {...registerUser('username', { required: true })}
             className={`w-full px-3 py-2 border ${
-              errors.username ? "border-red-500" : "border-gray-300"
+              errors.username ? 'border-red-500' : 'border-gray-300'
             } rounded`}
           />
           {errors.username && (
@@ -62,9 +62,9 @@ const Register = () => {
           <label className="block text-gray-700">Password</label>
           <input
             type="password"
-            {...registerUser("password", { required: true })}
+            {...registerUser('password', { required: true })}
             className={`w-full px-3 py-2 border ${
-              errors.password ? "border-red-500" : "border-gray-300"
+              errors.password ? 'border-red-500' : 'border-gray-300'
             } rounded`}
           />
           {errors.password && (
@@ -78,7 +78,7 @@ const Register = () => {
           Register
         </button>
         <p className="mt-4 text-center">
-          Already have an account?{" "}
+          Already have an account?{' '}
           <Link href="/auth/login" className="text-blue-500">
             Login
           </Link>

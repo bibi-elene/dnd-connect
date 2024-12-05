@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../components/AuthContext";
-import axios from "../utils/axios";
-import ProtectedRoute from "../components/ProtectedRoute";
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../components/AuthContext';
+import axios from '../utils/axios';
+import ProtectedRoute from '../components/ProtectedRoute';
 
 interface Character {
   id: number;
@@ -17,15 +17,15 @@ interface Character {
 const CharactersList = () => {
   const { user } = useContext(AuthContext);
   const [characters, setCharacters] = useState<Character[]>([]);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
-        const response = await axios.get("/characters");
+        const response = await axios.get('/characters');
         setCharacters(response.data);
       } catch (error) {
-        setErrorMessage("Failed to fetch characters.");
+        setErrorMessage('Failed to fetch characters.');
         console.error(error);
       }
     };
@@ -56,7 +56,7 @@ const CharactersList = () => {
           <ul className="text-black">
             {characters.map((character) => (
               <li key={character.id} className="border-b py-2">
-                <strong>{character.name}</strong> - {character.class} (Level:{" "}
+                <strong>{character.name}</strong> - {character.class} (Level:{' '}
                 {character.level})
               </li>
             ))}
