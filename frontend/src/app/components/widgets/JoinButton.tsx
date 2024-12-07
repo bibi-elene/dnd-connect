@@ -1,12 +1,20 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useContext } from 'react';
+import { AuthContext } from '../AuthContext';
 
 const JoinUsButton = () => {
   const router = useRouter();
+  const { user } = useContext(AuthContext);
+  console.log(user);
 
   const handleClick = () => {
-    router.push('/auth/login');
+    if (user) {
+      router.push('/dashboard');
+    } else {
+      router.push('/auth/register');
+    }
   };
 
   return (
@@ -21,7 +29,7 @@ const JoinUsButton = () => {
           border: 'none',
         }}
       >
-        🚀 Join Us Now
+        🚀 Start Exploring
       </button>
     </div>
   );

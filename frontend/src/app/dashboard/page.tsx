@@ -4,7 +4,8 @@ import ProtectedRoute from '../components/ProtectedRoute';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../components/AuthContext';
 import { useRouter } from 'next/navigation';
-import axios from '../utils/axios';
+import { ROLES } from '../utils/constants';
+import Loading from '../components/widgets/Loading';
 
 interface Character {
   id: number;
@@ -25,22 +26,33 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
-        if (user?.role === 'admin') {
-          const response = await axios.get('/characters');
-          setCharacters(response.data);
-        } else {
-          const response = await axios.get('/characters/me');
-          setCharacters(response.data);
+        const url =
+          user?.role === ROLES.ADMIN
+            ? '/api/characters?fetchAll=true'
+            : '/api/characters/me';
+
+        const response = await fetch(url, {
+          method: 'GET',
+          credentials: 'include',
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch characters');
         }
+
+        const data = await response.json();
+        setCharacters(data);
       } catch (err) {
         setError('Oops! Looks like you need to create a champion. You have 0');
-        console.error(err);
+        console.error('Error:', err);
       } finally {
         setLoadingCharacters(false);
       }
     };
 
-    fetchCharacters();
+    if (user) {
+      fetchCharacters();
+    }
   }, [user]);
 
   const handleViewAllCharacters = () => {
@@ -52,56 +64,53 @@ const Dashboard = () => {
   };
 
   return (
-    <div
-      className="relative min-h-screen bg-gray-100 p-4"
-      style={{
-        backgroundImage: `url('/assets/tavern.jpg')`, // Correct path to your image
-        backgroundSize: 'cover', // Ensures the image covers the whole screen
-        backgroundRepeat: 'no-repeat', // Prevents the image from repeating
-        backgroundPosition: 'center', // Centers the image on the screen
-      }}
-    >
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black opacity-50"></div>
-
-      {/* Content */}
-      <div className="relative">
-        <header className="flex justify-between items-center bg-white bg-opacity-90 p-4 rounded shadow-md mb-6">
-          <h1 className="text-2xl font-bold text-black">Dashboard</h1>
+    <div className="relative min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 p-6 flex items-center justify-center">
+      <div className="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg w-full max-w-4xl">
+        <header className="flex justify-between items-center border-b pb-4 mb-6">
+          <h1 className="text-3xl font-semibold text-gray-700">
+            {user?.role === ROLES.USER ? 'Dashboard' : 'Admin Panel'}
+          </h1>
           <div>
-            <span className="mr-4 text-black">Hello, {user?.username}</span>
+            <span className="mr-4 text-gray-700 font-medium">
+              Hello, {user?.username}
+            </span>
             <button
-              onClick={() => {
-                logout();
-              }}
-              className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+              onClick={logout}
+              className="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600 transition"
             >
-              Logout
+              Log out
             </button>
           </div>
         </header>
-        <main className="text-black bg-white bg-opacity-90 p-4 rounded">
+
+        <main>
           {user?.role === 'admin' ? (
             <div>
-              <h2 className="text-xl mb-4">Admin Panel</h2>
               <button
                 onClick={handleViewAllCharacters}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4"
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition mb-6"
               >
                 View All Characters
               </button>
               <div>
-                <h3 className="text-lg mb-2">All Characters:</h3>
+                <h3 className="text-lg font-medium text-gray-700 mb-3">
+                  All Characters:
+                </h3>
                 {loadingCharacters ? (
-                  <p>Loading characters...</p>
+                  <Loading message="Fetching characters..." size="sm" />
                 ) : error ? (
                   <p className="text-red-500">{error}</p>
                 ) : (
-                  <ul className="list-disc pl-5">
+                  <ul className="space-y-2">
                     {characters.map((character) => (
-                      <li key={character.id} className="mb-1">
-                        <strong>{character.name}</strong> - {character.class}{' '}
-                        (Level {character.level})
+                      <li
+                        key={character.id}
+                        className="bg-gray-100 p-3 rounded-lg shadow hover:bg-gray-200 transition"
+                      >
+                        <strong className="text-gray-700">
+                          {character.name}
+                        </strong>{' '}
+                        - {character.class} (Level {character.level})
                       </li>
                     ))}
                   </ul>
@@ -110,25 +119,34 @@ const Dashboard = () => {
             </div>
           ) : (
             <div>
-              <h2 className="text-xl mb-4">Your Characters</h2>
+              <h2 className="text-xl font-semibold mb-4 text-gray-700">
+                Your Characters
+              </h2>
               <button
                 onClick={handleCreateCharacter}
-                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mb-4"
+                className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition mb-6"
               >
                 Create New Character
               </button>
               <div>
-                <h3 className="text-lg mb-2">Your Characters:</h3>
+                <h3 className="text-lg font-medium text-gray-700 mb-3">
+                  Your Characters:
+                </h3>
                 {loadingCharacters ? (
                   <p>Loading characters...</p>
                 ) : error ? (
                   <p className="text-red-500">{error}</p>
                 ) : (
-                  <ul className="list-disc pl-5">
+                  <ul className="space-y-2">
                     {characters.map((character) => (
-                      <li key={character.id} className="mb-1">
-                        <strong>{character.name}</strong> - {character.class}{' '}
-                        (Level {character.level})
+                      <li
+                        key={character.id}
+                        className="bg-gray-100 p-3 rounded-lg shadow hover:bg-gray-200 transition"
+                      >
+                        <strong className="text-gray-700">
+                          {character.name}
+                        </strong>{' '}
+                        - {character.class} (Level {character.level})
                       </li>
                     ))}
                   </ul>

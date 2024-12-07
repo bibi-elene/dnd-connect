@@ -32,7 +32,6 @@ export class CharacterController {
   @ApiOperation({ summary: 'Get all characters for the current user' })
   @ApiResponse({ status: 200, description: 'List of characters for the current user.' })
   async findCurrentUserCharacters(@Request() req): Promise<Character[]> {
-    // Retrieve userId from the request
     const userId = req.user.id;
     return this.characterService.findAllForUser(userId);
   }

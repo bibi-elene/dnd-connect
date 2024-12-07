@@ -24,13 +24,13 @@ const Register = () => {
     try {
       await register(data.username, data.password);
       setSuccessMessage('Registration successful! You can now log in.');
-      setErrorMessage(''); // Clear previous errors
+      setErrorMessage('');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setErrorMessage(
         error.message || 'Registration failed. Username might be taken.'
       );
-      setSuccessMessage(''); // Clear success message
+      setSuccessMessage('');
     }
   };
 
@@ -40,7 +40,7 @@ const Register = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-6 rounded shadow-md w-full max-w-sm"
       >
-        <h2 className="text-2xl mb-4 text-center">Register</h2>
+        <h2 className="text-2xl text-black mb-4 text-center">Register</h2>
         {errorMessage && <p className="text-red-500 mb-2">{errorMessage}</p>}
         {successMessage && (
           <p className="text-green-500 mb-2">{successMessage}</p>
@@ -77,7 +77,7 @@ const Register = () => {
         >
           Register
         </button>
-        <p className="mt-4 text-center">
+        <p className="mt-4 text-center text-black">
           Already have an account?{' '}
           <Link href="/auth/login" className="text-blue-500">
             Login

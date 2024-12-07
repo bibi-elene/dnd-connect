@@ -15,7 +15,6 @@ async function bootstrap() {
 
   app.use(cookieParser());
 
-  // Middleware to handle CORS
   app.use((req, res, next) => {
     const allowedOrigin =
       process.env.NODE_ENV === 'local' ? 'http://localhost:3000' : 'https://dnd-connect.vercel.app';
@@ -29,7 +28,7 @@ async function bootstrap() {
     res.header('Access-Control-Allow-Credentials', 'true');
 
     if (req.method === 'OPTIONS') {
-      return res.status(204).end(); // Respond to preflight with no content
+      return res.status(204).end();
     }
 
     next();

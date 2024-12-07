@@ -4,6 +4,7 @@
 import { useContext, useEffect } from 'react';
 import { AuthContext } from './AuthContext';
 import { useRouter } from 'next/navigation';
+import Loading from './widgets/Loading';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -21,9 +22,9 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 
   if (loading || !user) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        Loading...
-      </div>
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <Loading message="Fetching data..." size="lg" />
+        </div>
     );
   }
 

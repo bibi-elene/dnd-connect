@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Res, UnauthorizedException, UseGuards } from '@nestjs/common';
-import { Response } from 'express'; // Import Express Response
+import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
 import { UserRole } from '../user/user.entity';
@@ -24,7 +24,6 @@ export class AuthController {
 
     const token = await this.authService.generateAccessToken(user);
 
-    // const isProduction = process.env.NODE_ENV === 'production';
     const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('access_token', token.access_token, {
       httpOnly: true,

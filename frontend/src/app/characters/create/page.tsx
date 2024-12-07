@@ -3,9 +3,9 @@
 import { useForm } from 'react-hook-form';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../components/AuthContext';
-import axios from '../../utils/axios';
 import { useRouter } from 'next/navigation';
 import ProtectedRoute from '../../components/ProtectedRoute';
+import Loading from '@/app/components/widgets/Loading';
 
 interface CharacterFormInputs {
   name: string;
@@ -28,19 +28,28 @@ const CreateCharacter = () => {
 
   const onSubmit = async (data: CharacterFormInputs) => {
     try {
-      await axios.post('/characters', data);
-      setSuccessMessage('Character created successfully!');
-      router.push('/dashboard'); // Redirect to dashboard or character list
+      // Use Next.js API route to fetch characters
+      const response = await fetch('/api/characters', {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify(data),
+      });
+      setSuccessMessage('Successfully created a new character');
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch characters');
+      }
+
+      router.push('/dashboard');
     } catch (error) {
       setErrorMessage('Failed to create character.');
       console.error(error);
     }
   };
-
   if (!user) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        Loading...
+        <Loading message="Fetching data..." size="lg" />
       </div>
     );
   }

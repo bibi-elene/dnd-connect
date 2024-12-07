@@ -6,7 +6,6 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    // Forward registration request to the backend
     const response = await axios.post(`${API_BASE_URL}/auth/register`, body, {
       headers: {
         'Content-Type': 'application/json',

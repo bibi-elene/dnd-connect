@@ -7,7 +7,6 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest<Request>();
 
-    // Extract token from Authorization header
     const authHeader = request.headers['authorization'];
     let token: string | undefined;
 
@@ -15,7 +14,6 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       token = authHeader.split(' ')[1];
     }
 
-    // Fallback: Extract token from cookies
     if (!token) {
       token = request.cookies?.['access_token'];
     }

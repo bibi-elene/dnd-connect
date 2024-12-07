@@ -2,8 +2,9 @@
 
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../components/AuthContext';
-import axios from '../utils/axios';
 import ProtectedRoute from '../components/ProtectedRoute';
+import { ROLES } from '../utils/constants';
+import Loading from '../components/widgets/Loading';
 
 interface Character {
   id: number;
@@ -17,16 +18,34 @@ interface Character {
 const CharactersList = () => {
   const { user } = useContext(AuthContext);
   const [characters, setCharacters] = useState<Character[]>([]);
+  const [loading, setLoading] = useState(true); 
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
-        const response = await axios.get('/characters');
-        setCharacters(response.data);
+        setLoading(true); 
+        const url =
+          user?.role === ROLES.ADMIN
+            ? '/api/characters?fetchAll=true'
+            : '/api/characters/me';
+
+        const response = await fetch(url, {
+          method: 'GET',
+          credentials: 'include',
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch characters');
+        }
+
+        const data = await response.json();
+        setCharacters(data);
       } catch (error) {
         setErrorMessage('Failed to fetch characters.');
-        console.error(error);
+        console.error('Error:', error);
+      } finally {
+        setLoading(false); 
       }
     };
 
@@ -35,10 +54,10 @@ const CharactersList = () => {
     }
   }, [user]);
 
-  if (!user) {
+  if (!user || loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        Loading...
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <Loading message="Loading your characters..." size="lg" />
       </div>
     );
   }

@@ -25,13 +25,11 @@ export class CharacterService {
 
     const { ...characterDetails } = characterData;
 
-    // Create a new character instance and associate it with the user
     const character = this.characterRepository.create({
       ...characterDetails,
       user,
     });
 
-    // Save the new character entity to the database
     return await this.characterRepository.save(character);
   }
 
