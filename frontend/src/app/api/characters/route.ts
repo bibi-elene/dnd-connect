@@ -37,20 +37,23 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const cookieHeader = req.headers.get('cookie');
-    const body = await req.json();
-
     if (!cookieHeader) {
-      console.error('No cookies found in request');
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
-    const formattedCookie = cookieHeader.split('=')[1];
 
-    const response = await axios.post(`${API_BASE_URL}/characters`, body, {
+    const cookies = parse(cookieHeader);
+    const accessToken = cookies['access_token'];
+
+    const formData = await req.formData();
+    const payload = new FormData();
+    formData.forEach((value, key) => {
+      payload.append(key, value);
+    });
+
+    const response = await axios.post(`${API_BASE_URL}/characters`, payload, {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${formattedCookie}`,
+        Authorization: `Bearer ${accessToken}`,
       },
-      withCredentials: true,
     });
 
     return NextResponse.json(response.data, { status: response.status });

@@ -78,7 +78,7 @@ const Register = () => {
           Register
         </button>
         <p className="mt-4 text-center text-black">
-          Already have an account?{' '}
+          Already have an account?
           <Link href="/auth/login" className="text-blue-500">
             Login
           </Link>

@@ -6,15 +6,7 @@ import { AuthContext } from '../components/AuthContext';
 import { useRouter } from 'next/navigation';
 import { ROLES } from '../utils/constants';
 import Loading from '../components/widgets/Loading';
-
-interface Character {
-  id: number;
-  name: string;
-  class: string;
-  level: number;
-  race: string;
-  background: string;
-}
+import { Character } from '../utils/types';
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
@@ -27,9 +19,7 @@ const Dashboard = () => {
     const fetchCharacters = async () => {
       try {
         const url =
-          user?.role === ROLES.ADMIN
-            ? '/api/characters?fetchAll=true'
-            : '/api/characters/me';
+          user?.role === ROLES.ADMIN ? '/api/characters' : '/api/characters/me';
 
         const response = await fetch(url, {
           method: 'GET',
@@ -71,7 +61,7 @@ const Dashboard = () => {
             {user?.role === ROLES.USER ? 'Dashboard' : 'Admin Panel'}
           </h1>
           <div>
-            <span className="mr-4 text-gray-700 font-medium">
+            <span className="mr-4 text-gray-700 font-medium text-xl">
               Hello, {user?.username}
             </span>
             <button
@@ -84,7 +74,7 @@ const Dashboard = () => {
         </header>
 
         <main>
-          {user?.role === 'admin' ? (
+          {user?.role === ROLES.ADMIN ? (
             <div>
               <button
                 onClick={handleViewAllCharacters}
@@ -109,7 +99,7 @@ const Dashboard = () => {
                       >
                         <strong className="text-gray-700">
                           {character.name}
-                        </strong>{' '}
+                        </strong>
                         - {character.class} (Level {character.level})
                       </li>
                     ))}
@@ -123,17 +113,20 @@ const Dashboard = () => {
                 Your Characters
               </h2>
               <button
+                onClick={handleViewAllCharacters}
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition mb-5"
+              >
+                View All Characters
+              </button>
+              <button
                 onClick={handleCreateCharacter}
-                className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition mb-6"
+                className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition mb-5 ml-3"
               >
                 Create New Character
               </button>
               <div>
-                <h3 className="text-lg font-medium text-gray-700 mb-3">
-                  Your Characters:
-                </h3>
                 {loadingCharacters ? (
-                  <p>Loading characters...</p>
+                  <Loading message="Loading characters..." size="sm" />
                 ) : error ? (
                   <p className="text-red-500">{error}</p>
                 ) : (
@@ -145,7 +138,7 @@ const Dashboard = () => {
                       >
                         <strong className="text-gray-700">
                           {character.name}
-                        </strong>{' '}
+                        </strong>
                         - {character.class} (Level {character.level})
                       </li>
                     ))}

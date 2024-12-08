@@ -28,6 +28,14 @@ export class Character {
   @ApiProperty({ description: 'The background of the character' })
   background: string;
 
+  @Column({ default: '' })
+  @ApiProperty({ description: 'The skills of the character' })
+  skills: string;
+
+  @Column({ type: 'bytea', nullable: true })
+  @ApiProperty({ description: 'The image of the character as a JPEG' })
+  image: Buffer | null;
+
   @ManyToOne(() => User, (user) => user.characters, { onDelete: 'CASCADE' })
   user: User;
 }

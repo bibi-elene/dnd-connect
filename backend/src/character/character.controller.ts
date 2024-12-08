@@ -8,12 +8,16 @@ import {
   Delete,
   UseGuards,
   Request,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { CharacterService } from './character.service';
 import { Character } from './character.entity';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiConsumes } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
+import { CreateCharacterDto } from './character.dto';
 
 @ApiTags('characters')
 @Controller('characters')
@@ -24,14 +28,17 @@ export class CharacterController {
   @Get()
   @ApiOperation({ summary: 'Get all characters' })
   @ApiResponse({ status: 200, description: 'List of characters.' })
-  findAll(): Promise<Character[]> {
+  findAll(): Promise<CreateCharacterDto[]> {
     return this.characterService.findAll();
   }
 
   @Get('me')
   @ApiOperation({ summary: 'Get all characters for the current user' })
-  @ApiResponse({ status: 200, description: 'List of characters for the current user.' })
-  async findCurrentUserCharacters(@Request() req): Promise<Character[]> {
+  @ApiResponse({
+    status: 200,
+    description: 'List of characters for the current user.',
+  })
+  async findCurrentUserCharacters(@Request() req): Promise<CreateCharacterDto[]> {
     const userId = req.user.id;
     return this.characterService.findAllForUser(userId);
   }
@@ -45,13 +52,16 @@ export class CharacterController {
   }
 
   @Post()
+  @UseInterceptors(FileInterceptor('image'))
+  @ApiConsumes('multipart/form-data')
   @ApiOperation({ summary: 'Create a new character' })
   @ApiResponse({ status: 201, description: 'Character created.' })
-  create(@Body() characterData: Character, @Request() req): Promise<Character> {
-    console.log('User:', req.user);
-    console.log('Character Data:', characterData);
-
-    return this.characterService.create(characterData, req.user);
+  create(
+    @Body() characterData: Character,
+    @UploadedFile() image: Express.Multer.File,
+    @Request() req,
+  ): Promise<Character> {
+    return this.characterService.create(characterData, req.user, image);
   }
 
   @Put(':id')

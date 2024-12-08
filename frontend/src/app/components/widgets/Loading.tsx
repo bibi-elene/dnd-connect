@@ -11,7 +11,7 @@ const Loading: React.FC<LoadingProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mt-5">
+    <div className="flex flex-col items-center justify-center">
       <div className="flex space-x-2">
         <div
           className={`bg-blue-500 ${sizeClasses[size]} rounded-full animate-bounce`}
@@ -26,7 +26,7 @@ const Loading: React.FC<LoadingProps> = ({
           style={{ animationDelay: '0.4s' }}
         ></div>
       </div>
-      {message && <p className="text-gray-600 mt-2 text-sm">{message}</p>}
+      {message && <h2 className="text-gray-600 mt-2 text-lg">{message}</h2>}
     </div>
   );
 };

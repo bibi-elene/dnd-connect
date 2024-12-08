@@ -5,30 +5,21 @@ import { AuthContext } from '../components/AuthContext';
 import ProtectedRoute from '../components/ProtectedRoute';
 import { ROLES } from '../utils/constants';
 import Loading from '../components/widgets/Loading';
-
-interface Character {
-  id: number;
-  name: string;
-  class: string;
-  level: number;
-  race: string;
-  background: string;
-}
+import { Character } from '../utils/types';
+import Image from 'next/image';
 
 const CharactersList = () => {
   const { user } = useContext(AuthContext);
   const [characters, setCharacters] = useState<Character[]>([]);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
-        setLoading(true); 
+        setLoading(true);
         const url =
-          user?.role === ROLES.ADMIN
-            ? '/api/characters?fetchAll=true'
-            : '/api/characters/me';
+          user?.role === ROLES.ADMIN ? '/api/characters' : '/api/characters/me';
 
         const response = await fetch(url, {
           method: 'GET',
@@ -45,7 +36,7 @@ const CharactersList = () => {
         setErrorMessage('Failed to fetch characters.');
         console.error('Error:', error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
@@ -72,11 +63,28 @@ const CharactersList = () => {
         {characters.length === 0 ? (
           <p className="text-black">No characters found.</p>
         ) : (
-          <ul className="text-black">
+          <ul className="text-black space-y-4">
             {characters.map((character) => (
-              <li key={character.id} className="border-b py-2">
-                <strong>{character.name}</strong> - {character.class} (Level:{' '}
-                {character.level})
+              <li
+                key={character.id}
+                className="flex items-center space-x-4 border-b pb-2"
+              >
+                {character.image && (
+                  <Image
+                    src={character.image}
+                    alt={character.name}
+                    width={100}
+                    height={100}
+                    className="w-16 h-16 rounded-full object-cover"
+                  />
+                )}
+                <div>
+                  <p className="text-lg font-semibold">{character.name}</p>
+                  <p>
+                    {character.class} (Level: {character.level})
+                  </p>
+                  <p>{character.race}</p>
+                </div>
               </li>
             ))}
           </ul>
