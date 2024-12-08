@@ -14,6 +14,10 @@ const CharactersList = () => {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 
+  // const handleEditCharacter = (id: number) => {
+  //   router.push(`/character/${id}`);
+  // };
+
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
@@ -54,7 +58,7 @@ const CharactersList = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="relative min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 p-6 flex items-center justify-center">
       <div className="w-full max-w-2xl bg-white p-6 rounded shadow-md">
         <h2 className="text-2xl mb-4 text-center text-black">
           Your Characters

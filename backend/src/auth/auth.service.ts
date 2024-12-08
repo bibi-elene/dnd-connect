@@ -18,7 +18,7 @@ export class AuthService {
       return result;
     }
 
-    console.log('Password did not match or user not found.');
+    console.error('Password did not match or user not found.');
     return null;
   }
 

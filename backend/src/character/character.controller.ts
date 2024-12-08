@@ -10,6 +10,7 @@ import {
   Request,
   UploadedFile,
   UseInterceptors,
+  Patch,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CharacterService } from './character.service';
@@ -47,7 +48,7 @@ export class CharacterController {
   @ApiOperation({ summary: 'Get a character by ID' })
   @ApiResponse({ status: 200, description: 'Character found.' })
   @ApiResponse({ status: 404, description: 'Character not found.' })
-  async findOne(@Param('id') id: number, @Request() req): Promise<Character> {
+  async findOne(@Param('id') id: number, @Request() req): Promise<CreateCharacterDto> {
     return this.characterService.findOne(id, req.user.id);
   }
 
@@ -73,6 +74,20 @@ export class CharacterController {
     @Request() req,
   ): Promise<Character> {
     return this.characterService.update(id, character, req.user.id);
+  }
+
+  @Patch(':id')
+  @UseInterceptors(FileInterceptor('image'))
+  @ApiConsumes('multipart/form-data')
+  @ApiOperation({ summary: 'Partially update an existing character' })
+  @ApiResponse({ status: 200, description: 'Character partially updated.' })
+  async partialUpdate(
+    @Param('id') id: number,
+    @Body() partialData: Partial<Character>,
+    @UploadedFile() image: Express.Multer.File,
+    @Request() req,
+  ): Promise<CreateCharacterDto> {
+    return this.characterService.partialUpdate(id, partialData, req.user.id, image);
   }
 
   @Delete(':id')

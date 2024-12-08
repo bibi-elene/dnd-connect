@@ -7,7 +7,6 @@ import { AuthContext } from '../AuthContext';
 const JoinUsButton = () => {
   const router = useRouter();
   const { user } = useContext(AuthContext);
-  console.log(user);
 
   const handleClick = () => {
     if (user) {

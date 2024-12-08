@@ -1,4 +1,3 @@
-// src/app/components/ProtectedRoute.tsx
 'use client';
 
 import { useContext, useEffect } from 'react';

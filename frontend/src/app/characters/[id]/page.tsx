@@ -1,38 +1,83 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { useContext, useState } from 'react';
-import { AuthContext } from '../../components/AuthContext';
-import { useRouter } from 'next/navigation';
-import ProtectedRoute from '../../components/ProtectedRoute';
+import { useRouter, useParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import Loading from '@/app/components/widgets/Loading';
-import Image from 'next/image';
 import { CharacterFormInputs } from '@/app/utils/types';
-import { characterImages, classOptions, raceOptions, backgroundOptions, skillsOptions } from '@/app/utils/constants';
+import Image from 'next/image';
+import {
+  backgroundOptions,
+  classOptions,
+  raceOptions,
+  skillsOptions,
+} from '@/app/utils/constants';
 
-const CreateCharacter = () => {
+const EditCharacter = () => {
+  const { id } = useParams();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-    watch,
   } = useForm<CharacterFormInputs>();
-  const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
 
-  const router = useRouter();
+  useEffect(() => {
+    const fetchCharacter = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(`/api/characters/${id}`, {
+          method: 'GET',
+          credentials: 'include',
+        });
 
-  const selectedClass = watch('class');
-  const selectedRace = watch('race');
+        if (!response.ok) {
+          throw new Error('Failed to fetch character details');
+        }
 
-  const defaultImagePath =
-    characterImages[selectedClass]?.[selectedRace] ||
-    '/assets/default_character.jpeg';
+        const data = await response.json();
+        Object.entries(data).forEach(([key, value]) => {
+          if (key === 'image' && value) {
+            // Remove Base64 prefix
+            const base64String = (value as string).split(',')[1];
+
+            // Decode Base64 string to create a Blob or File
+            const byteCharacters = atob(base64String);
+            const byteNumbers = Array.from(byteCharacters).map((char) =>
+              char.charCodeAt(0)
+            );
+            const byteArray = new Uint8Array(byteNumbers);
+            const blob = new Blob([byteArray], { type: 'image/jpeg' });
+
+            const file = new File([blob], 'character-image.jpg', {
+              type: 'image/jpeg',
+            });
+            // if img is not updated, existing image will be used
+            setUploadedImage(file);
+            // set the preview image as a URL for rendering
+            const imageUrl = URL.createObjectURL(blob);
+            setPreviewImage(imageUrl);
+          } else {
+            setValue(key as keyof CharacterFormInputs, value as string);
+          }
+        });
+      } catch (error) {
+        setErrorMessage('Failed to load character details.');
+        console.error('Error:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCharacter();
+  }, [id, setValue]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
@@ -40,7 +85,6 @@ const CreateCharacter = () => {
 
     const maxFileSize = 2 * 1024 * 1024; // 2MB
     setUploadedImage(file);
-
     if (file && file.size > maxFileSize) {
       setFileError('File size should not exceed 2MB.');
       return;
@@ -52,65 +96,54 @@ const CreateCharacter = () => {
         setPreviewImage(reader.result as string);
       };
       reader.readAsDataURL(file);
-    } else {
-      setPreviewImage(null);
     }
   };
 
   const onSubmit = async (data: CharacterFormInputs) => {
-    setLoading(true);
+    const formData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (key !== 'id') formData.append(key, value);
+    });
+
+    if (uploadedImage) {
+      formData.append('image', uploadedImage);
+    }
+
     try {
-      const formData = new FormData();
-
-      Object.entries(data).forEach(([key, value]) => {
-        formData.append(key, value);
-      });
-
-      if (uploadedImage) {
-        formData.append('image', uploadedImage);
-      } else {
-        const imageResponse = await fetch(defaultImagePath);
-        const imageBlob = await imageResponse.blob();
-        formData.append('image', imageBlob, 'default_character_image.jpeg');
-      }
-
-      const response = await fetch('/api/characters', {
-        method: 'POST',
+      const response = await fetch(`/api/characters/${id}`, {
+        method: 'PATCH',
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create character');
+        throw new Error('Failed to update character');
       }
 
-      setSuccessMessage('Successfully created a new character');
-      router.push('/dashboard');
+      setSuccessMessage('Character updated successfully!');
+      setTimeout(() => router.push('/characters'), 2000);
     } catch (error) {
-      setErrorMessage('Failed to create character.');
-      console.error(error);
-    } finally {
-      setLoading(false);
+      setErrorMessage('Failed to update character.');
+      console.error('Error:', error);
     }
   };
 
-  if (!user) {
+  if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loading message="Fetching data..." size="lg" />
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <Loading message="Loading character details..." size="lg" />
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 p-6 flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form
         onSubmit={handleSubmit(onSubmit)}
         encType="multipart/form-data"
         className="bg-white p-6 rounded shadow-md w-full max-w-md"
       >
-        <h2 className="text-2xl text-black mb-4 text-center">
-          Create New Character
-        </h2>
+        <h2 className="text-2xl mb-4 text-center">Edit Character</h2>
         {errorMessage && <p className="text-red-500 mb-2">{errorMessage}</p>}
         {successMessage && (
           <p className="text-green-500 mb-2">{successMessage}</p>
@@ -204,7 +237,6 @@ const CreateCharacter = () => {
             <p className="text-red-500 text-sm">Skills are required</p>
           )}
         </div>
-
         <div className="mb-4">
           <label className="block text-gray-700">Level</label>
           <input
@@ -235,40 +267,30 @@ const CreateCharacter = () => {
         </div>
         <button
           type="submit"
-          disabled={!!fileError || loading}
+          disabled={!!fileError}
           className={`w-full py-2 rounded text-white ${
-            !!fileError || loading
+            fileError
               ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-green-500 hover:bg-green-600'
+              : 'bg-blue-500 hover:bg-blue-600'
           }`}
         >
-          Create Character
+          Save Changes
         </button>
       </form>
-
-      <div className="bg-gradient-to-br text-black from-green-100 to-green-300 p-6 rounded shadow-md ml-6 w-1/2 max-w-sm flex flex-col items-center">
-        <h3 className="text-xl mb-4 text-center">Character Preview</h3>
-        <Image
-          src={previewImage || defaultImagePath}
-          width={320}
-          height={480}
-          style={{ maxHeight: '550px' }}
-          alt="Character Preview"
-        />
-      </div>
-      {loading && (
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
-          <Loading message="" size="lg" />
+      {previewImage && (
+        <div className="bg-gradient-to-br text-black from-green-100 to-green-300 p-6 rounded shadow-md ml-6 w-1/2 max-w-sm flex flex-col items-center">
+          <h3 className="text-xl mb-4 text-center">Character Preview</h3>
+          <Image
+            src={previewImage || ''}
+            width={320}
+            height={480}
+            style={{ maxHeight: '550px' }}
+            alt="Character Preview"
+          />
         </div>
       )}
     </div>
   );
 };
 
-export default function CreateCharacterPage() {
-  return (
-    <ProtectedRoute>
-      <CreateCharacter />
-    </ProtectedRoute>
-  );
-}
+export default EditCharacter;

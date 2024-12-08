@@ -34,7 +34,7 @@ export class Character {
 
   @Column({ type: 'bytea', nullable: true })
   @ApiProperty({ description: 'The image of the character as a JPEG' })
-  image: Buffer | null;
+  image: Buffer | string | null;
 
   @ManyToOne(() => User, (user) => user.characters, { onDelete: 'CASCADE' })
   user: User;

@@ -31,7 +31,7 @@ const Dashboard = () => {
         }
 
         const data = await response.json();
-        setCharacters(data);
+        setCharacters(data.slice(-3));
       } catch (err) {
         setError('Oops! Looks like you need to create a champion. You have 0');
         console.error('Error:', err);
@@ -51,6 +51,10 @@ const Dashboard = () => {
 
   const handleCreateCharacter = () => {
     router.push('/characters/create');
+  };
+
+  const handleEditCharacter = (id: number) => {
+    router.push(`/characters/${id}`);
   };
 
   return (
@@ -95,12 +99,20 @@ const Dashboard = () => {
                     {characters.map((character) => (
                       <li
                         key={character.id}
-                        className="bg-gray-100 p-3 rounded-lg shadow hover:bg-gray-200 transition"
+                        className="bg-gray-100 p-3 rounded-lg shadow hover:bg-gray-200 transition flex items-center justify-between"
                       >
-                        <strong className="text-gray-700">
-                          {character.name}
-                        </strong>
-                        - {character.class} (Level {character.level})
+                        <div>
+                          <strong className="text-gray-700">
+                            {character.name}
+                          </strong>
+                          - {character.class} (Level {character.level})
+                        </div>
+                        <button
+                          onClick={() => handleEditCharacter(character.id)}
+                          className="bg-blue-500 text-white px-3 py-1 rounded shadow hover:bg-blue-600 transition"
+                        >
+                          Edit
+                        </button>
                       </li>
                     ))}
                   </ul>
@@ -134,12 +146,20 @@ const Dashboard = () => {
                     {characters.map((character) => (
                       <li
                         key={character.id}
-                        className="bg-gray-100 p-3 rounded-lg shadow hover:bg-gray-200 transition"
+                        className="bg-gray-100 p-3 text-gray-600 rounded-lg shadow hover:bg-gray-200 transition flex items-center justify-between"
                       >
-                        <strong className="text-gray-700">
-                          {character.name}
-                        </strong>
-                        - {character.class} (Level {character.level})
+                        <div>
+                          <strong className="text-gray-700">
+                            {character.name}
+                          </strong>
+                          - {character.class} (Level {character.level})
+                        </div>
+                        <button
+                          onClick={() => handleEditCharacter(character.id)}
+                          className="bg-blue-500 text-white px-3 py-1 rounded shadow hover:bg-blue-600 transition"
+                        >
+                          Edit
+                        </button>
                       </li>
                     ))}
                   </ul>

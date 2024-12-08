@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Character } from './character.entity';
 import { User } from '../user/user.entity';
-import { CreateCharacterDto } from './character.dto';
+import { CharacterResponseDto, CreateCharacterDto } from './character.dto';
 @Injectable()
 export class CharacterService {
   constructor(
@@ -29,8 +29,28 @@ export class CharacterService {
     }));
   }
 
-  findOne(id: number, userId: number): Promise<Character> {
-    return this.characterRepository.findOne({ where: { id, user: { id: userId } } });
+  async findOne(id: number, userId: number): Promise<CreateCharacterDto> {
+    const character = await this.characterRepository.findOne({
+      where: { id, user: { id: userId } },
+    });
+
+    if (!character) {
+      throw new Error('Character not found or not owned by user');
+    }
+
+    return {
+      id: character.id,
+      name: character.name,
+      class: character.class,
+      level: character.level,
+      race: character.race,
+      background: character.background,
+      skills: character.skills,
+      image:
+        character.image && Buffer.isBuffer(character.image)
+          ? `data:image/jpeg;base64,${character.image.toString('base64')}`
+          : character.image || null,
+    };
   }
 
   async create(
@@ -78,6 +98,44 @@ export class CharacterService {
     }
     await this.characterRepository.update(id, character);
     return this.characterRepository.findOne({ where: { id } });
+  }
+
+  async partialUpdate(
+    id: number,
+    partialData: Partial<Character>,
+    userId: number,
+    image?: Express.Multer.File,
+  ): Promise<CharacterResponseDto> {
+    const character = await this.findOne(id, userId);
+
+    if (!character) {
+      throw new Error('Character not found or not owned by user');
+    }
+
+    Object.assign(character, partialData);
+
+    if (image) {
+      character.image = image.buffer;
+    }
+
+    const savedCharacter = await this.characterRepository.save({
+      ...character,
+      image: character.image || null,
+    });
+
+    return {
+      id: savedCharacter.id,
+      name: savedCharacter.name,
+      class: savedCharacter.class,
+      level: savedCharacter.level,
+      race: savedCharacter.race,
+      background: savedCharacter.background,
+      skills: savedCharacter.skills,
+      image:
+        savedCharacter.image && Buffer.isBuffer(savedCharacter.image)
+          ? `data:image/jpeg;base64,${savedCharacter.image.toString('base64')}`
+          : null,
+    };
   }
 
   async remove(id: number, userId: number): Promise<void> {

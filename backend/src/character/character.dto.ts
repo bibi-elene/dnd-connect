@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsNumber, IsOptional } from 'class-validator';
 
-// Create Character DTO
 export class CreateCharacterDto {
   @ApiProperty({ description: 'The unique identifier for the character' })
   id: number;
@@ -41,7 +40,6 @@ export class CreateCharacterDto {
   image?: string | Buffer;
 }
 
-// Response Character DTO
 export class CharacterResponseDto {
   @ApiProperty({ description: 'The unique ID of the character' })
   id: number;

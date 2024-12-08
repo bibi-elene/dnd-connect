@@ -8,6 +8,16 @@ export interface Character {
   image?: string;
 }
 
+export interface CharacterFormInputs {
+  name: string;
+  class: string;
+  level: number;
+  race: string;
+  background: string;
+  skills: string;
+  image?: File;
+}
+
 export interface LoadingProps {
   message?: string;
   size?: 'sm' | 'md' | 'lg';
