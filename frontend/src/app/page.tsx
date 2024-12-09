@@ -4,6 +4,7 @@ import { useContext, useState, useEffect } from 'react';
 import JoinUsButton from './components/widgets/JoinButton';
 import { AuthContext } from './components/AuthContext';
 import { useRouter } from 'next/navigation';
+import DiceRoller from './components/widgets/DiceRoller';
 
 export default function Home() {
   const { user, logout } = useContext(AuthContext);
@@ -131,6 +132,9 @@ export default function Home() {
           Welcome to D&D Connect!
         </h1>
         <JoinUsButton />
+        <div id="dice-box">
+          <DiceRoller />
+        </div>
       </div>
     </div>
   );
