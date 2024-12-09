@@ -14,7 +14,7 @@ export const skillsOptions = [
 ];
 
 export const characterImages: Record<string, Record<string, string>> = {
-  fighter: {
+  Fighter: {
     Elf: '/assets/fighter_elf.jpeg',
     Orc: '/assets/fighter_orc.jpeg',
     Human: '/assets/fighter_human.jpg',

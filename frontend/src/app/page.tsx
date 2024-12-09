@@ -4,7 +4,6 @@ import { useContext, useState, useEffect } from 'react';
 import JoinUsButton from './components/widgets/JoinButton';
 import { AuthContext } from './components/AuthContext';
 import { useRouter } from 'next/navigation';
-import Loading from './components/widgets/Loading';
 
 export default function Home() {
   const { user, logout } = useContext(AuthContext);
@@ -28,13 +27,6 @@ export default function Home() {
     };
   }, [isDropdownOpen]);
 
-  if (!user) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <Loading message="Loading data..." size="lg" />
-      </div>
-    );
-  }
   return (
     <div
       className="relative flex flex-col min-h-screen"

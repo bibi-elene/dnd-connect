@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { ROLES } from '../utils/constants';
 import Loading from '../components/widgets/Loading';
 import { Character } from '../utils/types';
+import EditButton from '../components/widgets/EditButton';
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
@@ -107,12 +108,7 @@ const Dashboard = () => {
                           </strong>
                           - {character.class} (Level {character.level})
                         </div>
-                        <button
-                          onClick={() => handleEditCharacter(character.id)}
-                          className="bg-blue-500 text-white px-3 py-1 rounded shadow hover:bg-blue-600 transition"
-                        >
-                          Edit
-                        </button>
+                        <EditButton onClick={() => handleEditCharacter(character.id)} />
                       </li>
                     ))}
                   </ul>
@@ -154,12 +150,7 @@ const Dashboard = () => {
                           </strong>
                           - {character.class} (Level {character.level})
                         </div>
-                        <button
-                          onClick={() => handleEditCharacter(character.id)}
-                          className="bg-blue-500 text-white px-3 py-1 rounded shadow hover:bg-blue-600 transition"
-                        >
-                          Edit
-                        </button>
+                        <EditButton onClick={() => handleEditCharacter(character.id)} />
                       </li>
                     ))}
                   </ul>

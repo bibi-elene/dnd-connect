@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../components/AuthContext';
 import Link from 'next/link';
+import Loading from '@/app/components/widgets/Loading';
 
 interface LoginFormInputs {
   username: string;
@@ -18,13 +19,17 @@ const Login = () => {
   } = useForm<LoginFormInputs>();
   const { login } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setIsLoading] = useState(false);
 
   const onSubmit = async (data: LoginFormInputs) => {
+    setIsLoading(true);
     try {
       await login(data.username, data.password);
     } catch (error) {
       console.error(error, 'my error');
       setErrorMessage('Invalid username or password');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -71,6 +76,11 @@ const Login = () => {
           </Link>
         </p>
       </form>
+      {loading && (
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
+          <Loading message="" size="sm" />
+        </div>
+      )}
     </div>
   );
 };

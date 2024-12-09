@@ -12,6 +12,7 @@ import {
   raceOptions,
   skillsOptions,
 } from '@/app/utils/constants';
+import BackButton from '@/app/components/widgets/BackButton';
 
 const EditCharacter = () => {
   const { id } = useParams();
@@ -23,6 +24,7 @@ const EditCharacter = () => {
     formState: { errors },
   } = useForm<CharacterFormInputs>();
   const [loading, setLoading] = useState(true);
+  const [loadingEditSave, setLoadingEditSave] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -100,6 +102,7 @@ const EditCharacter = () => {
   };
 
   const onSubmit = async (data: CharacterFormInputs) => {
+    setLoadingEditSave(true);
     const formData = new FormData();
 
     Object.entries(data).forEach(([key, value]) => {
@@ -121,10 +124,12 @@ const EditCharacter = () => {
       }
 
       setSuccessMessage('Character updated successfully!');
-      setTimeout(() => router.push('/characters'), 2000);
     } catch (error) {
       setErrorMessage('Failed to update character.');
       console.error('Error:', error);
+    } finally {
+      setLoadingEditSave(false);
+      router.push('/characters');
     }
   };
 
@@ -138,6 +143,7 @@ const EditCharacter = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <BackButton fallbackUrl="/characters" />
       <form
         onSubmit={handleSubmit(onSubmit)}
         encType="multipart/form-data"
@@ -252,15 +258,19 @@ const EditCharacter = () => {
             </p>
           )}
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Upload Avatar</label>
-          <input
-            type="file"
-            name="image"
-            accept="image/*"
-            onChange={handleImageUpload}
-            className="block w-full text-sm text-gray-900 border border-gray-300 rounded cursor-pointer bg-gray-50 focus:outline-none"
-          />
+        <div className="mb-6">
+          <label className="block text-gray-700 font-medium mb-2">
+            Upload Avatar
+          </label>
+          <div className="relative group">
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"
+            />
+          </div>
           {fileError && (
             <p className="text-red-500 text-sm mt-2">{fileError}</p>
           )}
@@ -287,6 +297,11 @@ const EditCharacter = () => {
             style={{ maxHeight: '550px' }}
             alt="Character Preview"
           />
+        </div>
+      )}
+      {loadingEditSave && (
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
+          <Loading message="" size="md" />
         </div>
       )}
     </div>

@@ -7,16 +7,20 @@ import { ROLES } from '../utils/constants';
 import Loading from '../components/widgets/Loading';
 import { Character } from '../utils/types';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import EditButton from '../components/widgets/EditButton';
+import BackButton from '../components/widgets/BackButton';
 
 const CharactersList = () => {
   const { user } = useContext(AuthContext);
   const [characters, setCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+  const router = useRouter();
 
-  // const handleEditCharacter = (id: number) => {
-  //   router.push(`/character/${id}`);
-  // };
+  const handleEditCharacter = (id: number) => {
+    router.push(`/characters/${id}`);
+  };
 
   useEffect(() => {
     const fetchCharacters = async () => {
@@ -58,7 +62,8 @@ const CharactersList = () => {
   }
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 p-6 flex items-center justify-center">
+    <div className="relative min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 p-5 flex items-center justify-center">
+      <BackButton fallbackUrl="/dashboard" />
       <div className="w-full max-w-2xl bg-white p-6 rounded shadow-md">
         <h2 className="text-2xl mb-4 text-center text-black">
           Your Characters
@@ -71,24 +76,28 @@ const CharactersList = () => {
             {characters.map((character) => (
               <li
                 key={character.id}
-                className="flex items-center space-x-4 border-b pb-2"
+                className="bg-gray-100 p-3 rounded-lg shadow hover:bg-gray-200 transition flex items-center justify-between"
               >
-                {character.image && (
-                  <Image
-                    src={character.image}
-                    alt={character.name}
-                    width={100}
-                    height={100}
-                    className="w-16 h-16 rounded-full object-cover"
-                  />
-                )}
-                <div>
-                  <p className="text-lg font-semibold">{character.name}</p>
-                  <p>
-                    {character.class} (Level: {character.level})
-                  </p>
-                  <p>{character.race}</p>
+                <div className="flex">
+                  {character.image && (
+                    <Image
+                      src={character.image}
+                      alt={character.name}
+                      width={100}
+                      height={100}
+                      className="w-16 h-16 rounded-full object-contain"
+                    />
+                  )}
+                  <div className="ml-5">
+                    <p className="text-lg font-semibold">{character.name}</p>
+                    <p>
+                      {character.class} (Level: {character.level})
+                    </p>
+                    <p>{character.race}</p>
+                  </div>
                 </div>
+
+                <EditButton onClick={() => handleEditCharacter(character.id)} />
               </li>
             ))}
           </ul>
