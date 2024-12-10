@@ -7,20 +7,16 @@ import { ROLES } from '../utils/constants';
 import Loading from '../components/widgets/Loading';
 import { Character } from '../utils/types';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import EditButton from '../components/widgets/EditButton';
-import BackButton from '../components/widgets/BackButton';
+import ReturnButtons from '../components/widgets/ReturnButtons';
+import { useNavigate } from '../utils/navigation';
 
 const CharactersList = () => {
   const { user } = useContext(AuthContext);
   const [characters, setCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
-  const router = useRouter();
-
-  const handleEditCharacter = (id: number) => {
-    router.push(`/characters/${id}`);
-  };
+  const { goToCharacter } = useNavigate();
 
   useEffect(() => {
     const fetchCharacters = async () => {
@@ -63,7 +59,7 @@ const CharactersList = () => {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 p-5 flex items-center justify-center">
-      <BackButton fallbackUrl="/dashboard" />
+      <ReturnButtons fallbackUrl="/dashboard" />
       <div className="w-full max-w-2xl bg-white p-6 rounded shadow-md">
         <h2 className="text-2xl mb-4 text-center text-black">
           Your Characters
@@ -97,7 +93,7 @@ const CharactersList = () => {
                   </div>
                 </div>
 
-                <EditButton onClick={() => handleEditCharacter(character.id)} />
+                <EditButton onClick={() => goToCharacter(character.id)} />
               </li>
             ))}
           </ul>

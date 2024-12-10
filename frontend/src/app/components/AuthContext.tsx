@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useState, useEffect, ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from '../utils/navigation';
 
 interface User {
   id: number;
@@ -28,7 +28,7 @@ export const AuthContext = createContext<AuthContextType>({
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  const { goToDashboard, goToHome } = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (userResponse.ok) {
         const userData = await userResponse.json();
         setUser(userData);
-        router.push('/dashboard');
+        goToDashboard();
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -94,7 +94,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         throw new Error('Failed to register');
       }
 
-      router.push('/dashboard');
+      goToDashboard();
     } catch (error) {
       console.error('Registration error:', error);
       throw error;
@@ -109,7 +109,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       if (response.ok) {
         setUser(null);
-        router.push('/');
+        goToHome();
       } else {
         throw new Error('Failed to logout');
       }

@@ -1,18 +1,18 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 import { AuthContext } from '../AuthContext';
+import { useNavigate } from '@/app/utils/navigation';
 
 const JoinUsButton = () => {
-  const router = useRouter();
+  const { goToDashboard, goToRegister } = useNavigate();
   const { user } = useContext(AuthContext);
 
   const handleClick = () => {
     if (user) {
-      router.push('/dashboard');
+      goToDashboard();
     } else {
-      router.push('/auth/register');
+      goToRegister();
     }
   };
 

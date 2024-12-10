@@ -2,12 +2,12 @@
 
 import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from './components/AuthContext';
-import { useRouter } from 'next/navigation';
 import DiceRoller from './components/widgets/DiceRoller';
+import { useNavigate } from './utils/navigation';
 
 export default function Home() {
   const { user, logout } = useContext(AuthContext);
-  const router = useRouter();
+  const { goToDashboard, goToLogin } = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
@@ -67,7 +67,9 @@ export default function Home() {
                   className="flex items-center space-x-2 focus:outline-none"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
-                  <span className="text-xl hover:text-gray-300">{user.username}</span>
+                  <span className="text-xl hover:text-gray-300">
+                    {user.username}
+                  </span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
@@ -84,7 +86,7 @@ export default function Home() {
                 {isDropdownOpen && (
                   <div className="absolute right-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg overflow-hidden w-48">
                     <button
-                      onClick={() => router.push('/dashboard')}
+                      onClick={() => goToDashboard()}
                       className="w-full text-left px-4 py-3 hover:bg-gray-100 flex items-center space-x-2"
                     >
                       <svg
@@ -120,7 +122,7 @@ export default function Home() {
               </div>
             ) : (
               <button
-                onClick={() => router.push('/auth/login')}
+                onClick={() => goToLogin()}
                 className="hover:text-gray-300 text-xl"
                 style={{ fontFamily: 'Cinzel' }}
               >

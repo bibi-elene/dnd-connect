@@ -1,7 +1,7 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { useRouter, useParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Loading from '@/app/components/widgets/Loading';
 import { CharacterFormInputs } from '@/app/utils/types';
@@ -12,11 +12,12 @@ import {
   raceOptions,
   skillsOptions,
 } from '@/app/utils/constants';
-import BackButton from '@/app/components/widgets/BackButton';
+import ReturnButtons from '@/app/components/widgets/ReturnButtons';
+import { useNavigate } from '@/app/utils/navigation';
 
 const EditCharacter = () => {
   const { id } = useParams();
-  const router = useRouter();
+  const { goToCharacters } = useNavigate();
   const {
     register,
     handleSubmit,
@@ -129,7 +130,7 @@ const EditCharacter = () => {
       console.error('Error:', error);
     } finally {
       setLoadingEditSave(false);
-      router.push('/characters');
+      goToCharacters();
     }
   };
 
@@ -143,7 +144,7 @@ const EditCharacter = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <BackButton fallbackUrl="/characters" />
+      <ReturnButtons fallbackUrl="/characters" />
       <form
         onSubmit={handleSubmit(onSubmit)}
         encType="multipart/form-data"

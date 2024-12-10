@@ -3,12 +3,18 @@
 import { useForm } from 'react-hook-form';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../components/AuthContext';
-import { useRouter } from 'next/navigation';
 import ProtectedRoute from '../../components/ProtectedRoute';
 import Loading from '@/app/components/widgets/Loading';
 import Image from 'next/image';
 import { CharacterFormInputs } from '@/app/utils/types';
-import { characterImages, classOptions, raceOptions, backgroundOptions, skillsOptions } from '@/app/utils/constants';
+import {
+  characterImages,
+  classOptions,
+  raceOptions,
+  backgroundOptions,
+  skillsOptions,
+} from '@/app/utils/constants';
+import { useNavigate } from '@/app/utils/navigation';
 
 const CreateCharacter = () => {
   const {
@@ -25,7 +31,7 @@ const CreateCharacter = () => {
   const [fileError, setFileError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const router = useRouter();
+  const { goToDashboard } = useNavigate();
 
   const selectedClass = watch('class');
   const selectedRace = watch('race');
@@ -84,7 +90,7 @@ const CreateCharacter = () => {
       }
 
       setSuccessMessage('Successfully created a new character');
-      router.push('/dashboard');
+      goToDashboard();
     } catch (error) {
       setErrorMessage('Failed to create character.');
       console.error(error);

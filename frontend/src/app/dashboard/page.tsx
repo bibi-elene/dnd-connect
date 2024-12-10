@@ -3,15 +3,16 @@
 import ProtectedRoute from '../components/ProtectedRoute';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../components/AuthContext';
-import { useRouter } from 'next/navigation';
 import { ROLES } from '../utils/constants';
 import Loading from '../components/widgets/Loading';
 import { Character } from '../utils/types';
 import EditButton from '../components/widgets/EditButton';
+import { useNavigate } from '../utils/navigation';
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
-  const router = useRouter();
+  const { goToCharacterCreation, goToCharacters, goToCharacter } =
+    useNavigate();
   const [characters, setCharacters] = useState<Character[]>([]);
   const [loadingCharacters, setLoadingCharacters] = useState(true);
   const [error, setError] = useState('');
@@ -47,15 +48,15 @@ const Dashboard = () => {
   }, [user]);
 
   const handleViewAllCharacters = () => {
-    router.push('/characters');
+    goToCharacters();
   };
 
   const handleCreateCharacter = () => {
-    router.push('/characters/create');
+    goToCharacterCreation();
   };
 
   const handleEditCharacter = (id: number) => {
-    router.push(`/characters/${id}`);
+    goToCharacter(id);
   };
 
   return (
@@ -108,7 +109,9 @@ const Dashboard = () => {
                           </strong>
                           - {character.class} (Level {character.level})
                         </div>
-                        <EditButton onClick={() => handleEditCharacter(character.id)} />
+                        <EditButton
+                          onClick={() => handleEditCharacter(character.id)}
+                        />
                       </li>
                     ))}
                   </ul>
@@ -150,7 +153,9 @@ const Dashboard = () => {
                           </strong>
                           - {character.class} (Level {character.level})
                         </div>
-                        <EditButton onClick={() => handleEditCharacter(character.id)} />
+                        <EditButton
+                          onClick={() => handleEditCharacter(character.id)}
+                        />
                       </li>
                     ))}
                   </ul>
