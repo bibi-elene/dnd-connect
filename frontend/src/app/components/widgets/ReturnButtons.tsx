@@ -6,9 +6,15 @@ import { useRouter } from 'next/navigation';
 interface ReturnButtonsProps {
   fallbackUrl?: string;
   className?: string;
+  buttonText?: string;
+  withDashboardButton?: boolean;
 }
 
-const ReturnButtons: React.FC<ReturnButtonsProps> = ({ className = '' }) => {
+const ReturnButtons: React.FC<ReturnButtonsProps> = ({
+  className = '',
+  buttonText = 'Back',
+  withDashboardButton = true,
+}) => {
   const router = useRouter();
   const { goToHome, goToDashboard } = useNavigate();
 
@@ -22,21 +28,21 @@ const ReturnButtons: React.FC<ReturnButtonsProps> = ({ className = '' }) => {
 
   return (
     <div className="absolute top-10 left-10 flex space-x-4">
-      {/* Back Button */}
       <button
-        onClick={handleBack}
+        onClick={withDashboardButton ? handleBack : () => router.push('/')}
         className={`bg-gray-500 text-white px-3 py-1.5 rounded shadow-lg hover:bg-gray-600 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 ${className}`}
       >
-        &#8592; Back
+        &#8592; {buttonText}
       </button>
 
-      {/* Dashboard Button */}
-      <button
-        onClick={goToDashboard}
-        className="bg-blue-500 text-white px-3 py-1.5 rounded shadow-lg hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-      >
-        Dashboard
-      </button>
+      {withDashboardButton && (
+        <button
+          onClick={goToDashboard}
+          className="bg-blue-500 text-white px-3 py-1.5 rounded shadow-lg hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          Dashboard
+        </button>
+      )}
     </div>
   );
 };

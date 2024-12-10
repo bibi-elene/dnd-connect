@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { AuthContext } from './components/AuthContext';
 import DiceRoller from './components/DiceRoller/DiceRoller';
 import Navbar from './components/widgets/NavBar';
+import JoinUsButton from './components/widgets/JoinButton';
 
 export default function Home() {
   const { user, logout } = useContext(AuthContext);
@@ -27,6 +28,7 @@ export default function Home() {
         >
           Welcome to D&D Connect!
         </h1>
+        <JoinUsButton />
         <DiceRoller />
       </div>
     </div>

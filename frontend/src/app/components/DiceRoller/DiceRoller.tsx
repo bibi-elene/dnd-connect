@@ -3,7 +3,7 @@ import DiceBox from '@3d-dice/dice-box';
 import './DiceRoller.styles.scss';
 
 const DiceRoller = () => {
-  const diceBoxRef = useRef(null);
+  const diceBoxRef = useRef<DiceBox | null>(null);
   const [isDiceBoxReady, setIsDiceBoxReady] = useState(false);
 
   useEffect(() => {
@@ -80,9 +80,9 @@ const DiceRoller = () => {
       <button
         onClick={rollDice}
         disabled={!isDiceBoxReady}
-        className="roll-dice-button px-4 py-2"
+        className="roll-dice-button main-button px-4 py-2"
       >
-        {isDiceBoxReady ? 'Roll' : '...'}
+        {isDiceBoxReady ? 'Roll Dice' : '...'}
       </button>
     </div>
   );

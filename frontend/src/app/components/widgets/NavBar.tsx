@@ -57,12 +57,10 @@ const Navbar: React.FC<NavbarProps> = ({ user, logout }) => {
           {user ? (
             <div>
               <button
-                className="flex items-center space-x-2 focus:outline-none group"
+                className="flex navbar-user items-center space-x-2 focus:outline-none group"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
-                <span className="group-hover:text-yellow-300 transition-colors duration-200">
-                  {user.username}
-                </span>
+                {user.username}
                 <DropDownArrowIcon />
               </button>
               {isDropdownOpen && (
@@ -79,10 +77,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, logout }) => {
               )}
             </div>
           ) : (
-            <button
-              onClick={goToLogin}
-              className="hover:text-gray-300 text-xl transition-colors duration-200"
-            >
+            <button onClick={goToLogin} className="navbar-user">
               Log In
             </button>
           )}

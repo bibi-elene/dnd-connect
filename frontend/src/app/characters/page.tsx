@@ -68,7 +68,7 @@ const CharactersList = () => {
         {characters.length === 0 ? (
           <p className="text-black">No characters found.</p>
         ) : (
-          <ul className="text-black space-y-4">
+          <ul className="text-black space-y-4 px-0">
             {characters.map((character) => (
               <li
                 key={character.id}
