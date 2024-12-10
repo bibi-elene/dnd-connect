@@ -6,61 +6,70 @@ const DiceRoller = () => {
     const diceBoxRef = useRef(null);
 
   useEffect(() => {
-    const setupDiceBox = async () => {
-      const diceBox = new DiceBox({
-        assetPath: "/assets/dice-box/", // Required path to static assets
-        container: "#dice-box", // The container for the dice box
-        id: "dice-canvas", // ID of the canvas element
-        gravity: 1,
-        mass: 1,
-        friction: 0.8,
-        restitution: 0,
-        angularDamping: 0.4,
-        linearDamping: 0.4,
-        spinForce: 4,
-        throwForce: 5,
-        startingHeight: 8,
-        settleTimeout: 5000,
-        offscreen: true,
-        delay: 10,
-        lightIntensity: 1,
-        enableShadows: true,
-        shadowTransparency: 0.8,
-        theme: "default",
-        themeColor: "#2e8555",
-        scale: 6,
-        onRollComplete: (results) => {
-          console.log("Roll results:", results);
-        },
-      });
+  const setupDiceBox = async () => {
+    const container = document.querySelector("#dice-box");
 
-      await diceBox.init(); // Initialize the DiceBox
-      diceBoxRef.current = diceBox;
-    };
+    
+    if (container) {
+      container.innerHTML = ""; 
+    }
 
-    setupDiceBox();
+    const diceBox = new DiceBox({
+      assetPath: "/assets/dice-box/",
+      container: "#dice-box",
+      id: "dice-canvas",
+      gravity: 1,
+      mass: 1,
+      friction: 0.8,
+      restitution: 0,
+      angularDamping: 0.4,
+      linearDamping: 0.4,
+      spinForce: 4,
+      throwForce: 5,
+      startingHeight: 20,
+      settleTimeout: 5000,
+      offscreen: true,
+      delay: 10,
+      lightIntensity: 1,
+      enableShadows: true,
+      shadowTransparency: 0.8,
+      theme: "default",
+      themeColor: "#852e33",
+      scale: 10,
+      onRollComplete: (results) => {
+        console.log("Roll results:", results);
+      },
+    });
 
-    // return () => {
-    //   // Cleanup on component unmount
-    //   diceBoxRef.current?.clear();
-    //   diceBoxRef.current = null;
-    // };
-  }, []);
+    await diceBox.init(); 
+    diceBoxRef.current = diceBox;
+  };
+
+  setupDiceBox();
+
+  return () => {
+    diceBoxRef.current?.clear(); 
+    diceBoxRef.current = null;
+  };
+}, []);
+
 
   const rollDice = () => {
     if (diceBoxRef.current) {
-      diceBoxRef.current.roll("2d6"); // Roll two 6-sided dice
+      diceBoxRef.current.roll("2d20"); 
     }
   };
 
   return (
-    <div>
-      <div id="dice-box" style={{ width: "100%", height: "300px" }} />
+    <div className="dice-box-container">
+      <div id="dice-box" />
       <button
         onClick={rollDice}
-        className="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition"
+        className="absolute roll-dice-button text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition"
+        style={{ fontFamily: 'Cinzel Decorative' }}
+
       >
-        Roll Dice
+        Roll
       </button>
     </div>
   );

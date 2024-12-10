@@ -1,7 +1,6 @@
 'use client';
 
 import { useContext, useState, useEffect } from 'react';
-import JoinUsButton from './components/widgets/JoinButton';
 import { AuthContext } from './components/AuthContext';
 import { useRouter } from 'next/navigation';
 import DiceRoller from './components/widgets/DiceRoller';
@@ -38,9 +37,15 @@ export default function Home() {
         backgroundPosition: 'center',
       }}
     >
-      <nav className="fixed top-0 left-0 w-full bg-gray-800 text-white shadow-md z-50">
+      <nav
+        className="fixed top-0 left-0 w-full text-white shadow-md z-50"
+        style={{ background: '#852e33' }}
+      >
         <div className="container mx-auto flex items-center justify-between py-4 px-6">
-          <div className="flex items-center space-x-4">
+          <div
+            className="flex items-center space-x-4"
+            style={{ fontFamily: 'Cinzel Decorative' }}
+          >
             <a href="#" className="text-lg font-bold hover:text-gray-300">
               Home
             </a>
@@ -62,7 +67,7 @@ export default function Home() {
                   className="flex items-center space-x-2 focus:outline-none"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
-                  <span className="text-lg">{user.username}</span>
+                  <span className="text-xl hover:text-gray-300">{user.username}</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
@@ -116,7 +121,8 @@ export default function Home() {
             ) : (
               <button
                 onClick={() => router.push('/auth/login')}
-                className="hover:text-gray-300"
+                className="hover:text-gray-300 text-xl"
+                style={{ fontFamily: 'Cinzel' }}
               >
                 Log In
               </button>
@@ -128,13 +134,13 @@ export default function Home() {
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
       <div className="relative flex flex-grow flex-col items-center justify-center text-center">
-        <h1 className="text-6xl font-bold text-white">
+        <h1
+          className="text-4xl font-bold text-white"
+          style={{ fontFamily: 'Cinzel Decorative' }}
+        >
           Welcome to D&D Connect!
         </h1>
-        <JoinUsButton />
-        <div id="dice-box">
-          <DiceRoller />
-        </div>
+        <DiceRoller />
       </div>
     </div>
   );
