@@ -2,12 +2,7 @@
 
 import { createContext, useState, useEffect, ReactNode } from 'react';
 import { useNavigate } from '../utils/navigation';
-
-interface User {
-  id: number;
-  username: string;
-  role: string;
-}
+import { User } from '../utils/types';
 
 interface AuthContextType {
   user: User | null;

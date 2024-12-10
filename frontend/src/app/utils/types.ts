@@ -8,6 +8,12 @@ export interface Character {
   image?: string;
 }
 
+export interface User {
+  id: number;
+  username: string;
+  role: string;
+}
+
 export interface CharacterFormInputs {
   name: string;
   class: string;
