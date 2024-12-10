@@ -29,9 +29,11 @@ export class CharacterService {
     }));
   }
 
-  async findOne(id: number, userId: number): Promise<CreateCharacterDto> {
+  async findOne(id: number, userId: number, isAdmin: boolean): Promise<CreateCharacterDto> {
+    const whereClause = isAdmin ? { id } : { id, user: { id: userId } };
+
     const character = await this.characterRepository.findOne({
-      where: { id, user: { id: userId } },
+      where: whereClause,
     });
 
     if (!character) {
@@ -91,8 +93,9 @@ export class CharacterService {
     }));
   }
 
-  async update(id: number, character: Character, userId: number): Promise<Character> {
-    const existingCharacter = await this.findOne(id, userId);
+  async update(id: number, character: Character, userId: number, isAdmin: boolean): Promise<Character> {
+    const existingCharacter = await this.findOne(id, userId, isAdmin);
+  
     if (!existingCharacter) {
       throw new Error('Character not found or not owned by user');
     }
@@ -104,9 +107,10 @@ export class CharacterService {
     id: number,
     partialData: Partial<Character>,
     userId: number,
+    isAdmin: boolean,
     image?: Express.Multer.File,
   ): Promise<CharacterResponseDto> {
-    const character = await this.findOne(id, userId);
+    const character = await this.findOne(id, userId, isAdmin);
 
     if (!character) {
       throw new Error('Character not found or not owned by user');
@@ -138,8 +142,8 @@ export class CharacterService {
     };
   }
 
-  async remove(id: number, userId: number): Promise<void> {
-    const existingCharacter = await this.findOne(id, userId);
+  async remove(id: number, userId: number, isAdmin: boolean): Promise<void> {
+    const existingCharacter = await this.findOne(id, userId, isAdmin);
     if (!existingCharacter) {
       throw new Error('Character not found or not owned by user');
     }

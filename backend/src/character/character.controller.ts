@@ -19,6 +19,7 @@ import { ApiTags, ApiOperation, ApiResponse, ApiConsumes } from '@nestjs/swagger
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { CreateCharacterDto } from './character.dto';
+import { isAdmin } from 'src/utils/characterUtils';
 
 @ApiTags('characters')
 @Controller('characters')
@@ -49,7 +50,7 @@ export class CharacterController {
   @ApiResponse({ status: 200, description: 'Character found.' })
   @ApiResponse({ status: 404, description: 'Character not found.' })
   async findOne(@Param('id') id: number, @Request() req): Promise<CreateCharacterDto> {
-    return this.characterService.findOne(id, req.user.id);
+    return this.characterService.findOne(id, req.user.id, isAdmin(req.user.role));
   }
 
   @Post()
@@ -73,7 +74,7 @@ export class CharacterController {
     @Body() character: Character,
     @Request() req,
   ): Promise<Character> {
-    return this.characterService.update(id, character, req.user.id);
+    return this.characterService.update(id, character, req.user.id, isAdmin(req.user.role));
   }
 
   @Patch(':id')
@@ -87,13 +88,19 @@ export class CharacterController {
     @UploadedFile() image: Express.Multer.File,
     @Request() req,
   ): Promise<CreateCharacterDto> {
-    return this.characterService.partialUpdate(id, partialData, req.user.id, image);
+    return this.characterService.partialUpdate(
+      id,
+      partialData,
+      req.user.id,
+      isAdmin(req.user.role),
+      image,
+    );
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a character' })
   @ApiResponse({ status: 204, description: 'Character deleted.' })
   remove(@Param('id') id: number, @Request() req): Promise<void> {
-    return this.characterService.remove(id, req.user.id);
+    return this.characterService.remove(id, req.user.id, isAdmin(req.user.role));
   }
 }
