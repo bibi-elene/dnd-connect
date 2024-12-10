@@ -5,6 +5,7 @@ import { useNavigate } from '@/app/utils/navigation';
 import { LogoutIcon } from '../icons/LogoutIcon';
 import { AccountSettingsIcon } from '../icons/AccountSettingsIcon';
 import { DropDownArrowIcon } from '../icons/DropDownArrowIcon';
+import './NavBar.styles.scss';
 
 interface NavbarProps {
   user: { username: string } | null;
@@ -33,56 +34,44 @@ const Navbar: React.FC<NavbarProps> = ({ user, logout }) => {
   }, [isDropdownOpen]);
 
   return (
-    <nav
-      className="fixed top-0 left-0 w-full text-white shadow-md z-50"
-      style={{ background: '#852e33' }}
-    >
-      <div className="container mx-auto flex items-center justify-between py-4 px-6">
+    <nav className="navbar fixed top-0 left-0 w-full z-50">
+      <div className="navbar-container container mx-auto">
         {/* Navigation Links */}
-        <div
-          className="flex items-center space-x-4"
-          style={{ fontFamily: 'Cinzel Decorative' }}
-        >
-          <a href="#" className="text-lg font-bold hover:text-gray-300">
+        <div className="navbar-links">
+          <a href="#" className="navbar-link">
             Home
           </a>
-          <a href="#features" className="hover:text-gray-300">
+          <a href="#features" className="navbar-link">
             Features
           </a>
-          <a href="#about" className="hover:text-gray-300">
+          <a href="#about" className="navbar-link">
             About
           </a>
-          <a href="#contact" className="hover:text-gray-300">
+          <a href="#contact" className="navbar-link">
             Contact
           </a>
         </div>
 
-        {/* User Dropdown or Login Button */}
-        <div id="account-dropdown">
+        {/* Account Dropdown */}
+        <div id="account-dropdown" className="account-dropdown">
           {user ? (
             <div>
               <button
-                className="flex items-center space-x-2 focus:outline-none"
+                className="flex items-center space-x-2 focus:outline-none group"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
-                <span className="text-xl hover:text-gray-300">
+                <span className="group-hover:text-yellow-300 transition-colors duration-200">
                   {user.username}
                 </span>
                 <DropDownArrowIcon />
               </button>
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg overflow-hidden w-48">
-                  <button
-                    onClick={goToDashboard}
-                    className="w-full text-left px-4 py-3 hover:bg-gray-100 flex items-center space-x-2"
-                  >
+                <div className="account-dropdown-menu">
+                  <button onClick={goToDashboard}>
                     <AccountSettingsIcon />
                     <span>Account Settings</span>
                   </button>
-                  <button
-                    onClick={logout}
-                    className="w-full text-left px-4 py-3 hover:bg-gray-100 flex items-center space-x-2"
-                  >
+                  <button onClick={logout}>
                     <LogoutIcon />
                     <span>Log Out</span>
                   </button>
@@ -92,8 +81,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, logout }) => {
           ) : (
             <button
               onClick={goToLogin}
-              className="hover:text-gray-300 text-xl"
-              style={{ fontFamily: 'Cinzel' }}
+              className="hover:text-gray-300 text-xl transition-colors duration-200"
             >
               Log In
             </button>

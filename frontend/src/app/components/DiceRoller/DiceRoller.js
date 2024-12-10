@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import DiceBox from '@3d-dice/dice-box';
-import './DiceRoller.css';
+import './DiceRoller.styles.scss';
 
 const DiceRoller = () => {
   const diceBoxRef = useRef(null);
@@ -80,14 +80,9 @@ const DiceRoller = () => {
       <button
         onClick={rollDice}
         disabled={!isDiceBoxReady}
-        className={`roll-dice-button px-4 py-2 ${
-          isDiceBoxReady
-            ? 'hover:bg-blue-600'
-            : 'bg-gray-400 cursor-not-allowed'
-        }`}
-        style={{ fontFamily: 'Cinzel Decorative' }}
+        className="roll-dice-button px-4 py-2"
       >
-        {isDiceBoxReady ? 'Roll' : 'Loading...'}
+        {isDiceBoxReady ? 'Roll' : '...'}
       </button>
     </div>
   );

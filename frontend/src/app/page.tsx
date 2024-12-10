@@ -3,7 +3,7 @@
 import { useContext } from 'react';
 import { AuthContext } from './components/AuthContext';
 import DiceRoller from './components/DiceRoller/DiceRoller';
-import Navbar from './components/widgets/NavLink';
+import Navbar from './components/widgets/NavBar';
 
 export default function Home() {
   const { user, logout } = useContext(AuthContext);
