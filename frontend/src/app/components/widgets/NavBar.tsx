@@ -52,7 +52,6 @@ const Navbar: React.FC<NavbarProps> = ({ user, logout }) => {
           </a>
         </div>
 
-        {/* Account Dropdown */}
         <div id="account-dropdown" className="account-dropdown">
           {user ? (
             <div>
@@ -66,11 +65,9 @@ const Navbar: React.FC<NavbarProps> = ({ user, logout }) => {
               {isDropdownOpen && (
                 <div className="account-dropdown-menu">
                   <button onClick={goToDashboard}>
-                    <AccountSettingsIcon />
                     <span>Account Settings</span>
                   </button>
                   <button onClick={logout}>
-                    <LogoutIcon />
                     <span>Log Out</span>
                   </button>
                 </div>

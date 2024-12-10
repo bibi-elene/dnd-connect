@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import { useContext, useState } from 'react';
-import { AuthContext } from '../../components/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 import ProtectedRoute from '../../components/ProtectedRoute';
 import Loading from '@/app/components/widgets/Loading';
 import Image from 'next/image';
@@ -15,6 +15,7 @@ import {
   skillsOptions,
 } from '@/app/utils/constants';
 import { useNavigate } from '@/app/utils/navigation';
+import { apiRoutes } from '@/app/api/apiRoutes';
 
 const CreateCharacter = () => {
   const {
@@ -80,7 +81,7 @@ const CreateCharacter = () => {
         formData.append('image', imageBlob, 'default_character_image.jpeg');
       }
 
-      const response = await fetch('/api/characters', {
+      const response = await fetch(apiRoutes.characters.all, {
         method: 'POST',
         body: formData,
       });
@@ -102,7 +103,7 @@ const CreateCharacter = () => {
   if (!user) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Loading message="Fetching data..." size="lg" />
+        <Loading message="" size="lg" />
       </div>
     );
   }

@@ -2,7 +2,7 @@
 
 import ProtectedRoute from '../components/ProtectedRoute';
 import { useContext } from 'react';
-import { AuthContext } from '../components/AuthContext';
+import { AuthContext } from '../context/AuthContext';
 import { ROLES } from '../utils/constants';
 import { useFetchCharacters } from '../hooks/useFetchCharacters';
 import Header from '../components/widgets/Header';

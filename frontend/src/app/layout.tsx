@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './globals.css';
-import { AuthProvider } from './components/AuthContext';
+import { AuthProvider } from './context/AuthContext';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {

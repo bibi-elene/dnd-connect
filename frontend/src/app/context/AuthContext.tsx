@@ -1,8 +1,9 @@
 'use client';
 
-import { createContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useState, useEffect, ReactNode, useMemo } from 'react';
 import { useNavigate } from '../utils/navigation';
 import { User } from '../utils/types';
+import { apiRoutes } from '../api/apiRoutes';
 
 interface AuthContextType {
   user: User | null;
@@ -28,7 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch('/api/auth/me');
+        const response = await fetch(apiRoutes.auth.me);
 
         if (response.ok) {
           const userData = await response.json();
@@ -49,7 +50,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (username: string, password: string) => {
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch(apiRoutes.auth.login, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -62,7 +63,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         throw new Error('Failed to log in');
       }
 
-      const userResponse = await fetch('/api/auth/me');
+      const userResponse = await fetch(apiRoutes.auth.me);
 
       if (userResponse.ok) {
         const userData = await userResponse.json();
@@ -77,7 +78,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const register = async (username: string, password: string) => {
     try {
-      const response = await fetch('/api/auth/register', {
+      const response = await fetch(apiRoutes.auth.register, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -97,7 +98,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
   const logout = async () => {
     try {
-      const response = await fetch('/api/auth/logout', {
+      const response = await fetch(apiRoutes.auth.logout, {
         method: 'POST',
         credentials: 'include',
       });
@@ -113,9 +114,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const contextValue = useMemo(
+    () => ({
+      user,
+      loading,
+      login,
+      register,
+      logout,
+    }),
+    [user, loading]
+  );
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };

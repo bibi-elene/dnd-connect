@@ -1,13 +1,26 @@
 'use client';
 
-import { useContext } from 'react';
-import { AuthContext } from './components/AuthContext';
+import { useContext, useMemo } from 'react';
+import { AuthContext } from './context/AuthContext';
 import DiceRoller from './components/DiceRoller/DiceRoller';
 import Navbar from './components/widgets/NavBar';
 import JoinUsButton from './components/widgets/JoinButton';
+import Loading from './components/widgets/Loading';
 
 export default function Home() {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout, loading } = useContext(AuthContext);
+  const homeButtonText = useMemo(
+    () => (user ? '🚀 Explore' : '🚀 Sign Up'),
+    [user]
+  );
+
+  if (loading) {
+    return (
+      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
+        <Loading message="" size="sm" />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -28,7 +41,7 @@ export default function Home() {
         >
           Welcome to D&D Connect!
         </h1>
-        <JoinUsButton />
+        <JoinUsButton homeButtonText={homeButtonText} />
         <DiceRoller />
       </div>
     </div>

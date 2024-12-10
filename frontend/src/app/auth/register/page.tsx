@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import { useContext, useState } from 'react';
-import { AuthContext } from '../../components/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 import Link from 'next/link';
 
 interface RegisterFormInputs {

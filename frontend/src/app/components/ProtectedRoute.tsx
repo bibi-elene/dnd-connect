@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext, useEffect } from 'react';
-import { AuthContext } from './AuthContext';
+import { AuthContext } from '../context/AuthContext';
 import Loading from './widgets/Loading';
 import { useNavigate } from '../utils/navigation';
 

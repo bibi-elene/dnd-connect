@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { ROLES } from '../utils/constants';
 import { Character, User } from '../utils/types';
+import { apiRoutes } from '../api/apiRoutes';
 
 export const useFetchCharacters = (user: User | null) => {
   const [characters, setCharacters] = useState<Character[]>([]);
@@ -11,7 +12,7 @@ export const useFetchCharacters = (user: User | null) => {
     const fetchCharacters = async () => {
       try {
         const url =
-          user?.role === ROLES.ADMIN ? '/api/characters' : '/api/characters/me';
+          user?.role === ROLES.ADMIN ? apiRoutes.characters.all : apiRoutes.characters.userCharacters;
 
         const response = await fetch(url, {
           method: 'GET',
@@ -37,5 +38,14 @@ export const useFetchCharacters = (user: User | null) => {
     }
   }, [user]);
 
-  return { characters, loading, error };
+  const memoizedData = useMemo(
+    () => ({
+      characters,
+      loading,
+      error,
+    }),
+    [characters, loading, error]
+  );
+
+  return memoizedData;
 };

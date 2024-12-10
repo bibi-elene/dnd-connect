@@ -82,7 +82,7 @@ const DiceRoller = () => {
         disabled={!isDiceBoxReady}
         className="roll-dice-button main-button px-4 py-2"
       >
-        {isDiceBoxReady ? 'Roll Dice' : '...'}
+        Roll Dice
       </button>
     </div>
   );
