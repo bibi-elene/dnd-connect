@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from '@/app/utils/navigation';
-import { LogoutIcon } from '../icons/LogoutIcon';
-import { AccountSettingsIcon } from '../icons/AccountSettingsIcon';
 import { DropDownArrowIcon } from '../icons/DropDownArrowIcon';
 import './NavBar.styles.scss';
 
