@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch('/api/auth/me');
+        const response = await fetch(apiRoutes.auth.me);
 
         if (response.ok) {
           const userData = await response.json();
@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         throw new Error('Failed to log in');
       }
 
-      const userResponse = await fetch('/api/auth/me');
+      const userResponse = await fetch(apiRoutes.auth.me);
 
       if (userResponse.ok) {
         const userData = await userResponse.json();

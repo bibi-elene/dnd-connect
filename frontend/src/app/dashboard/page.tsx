@@ -31,7 +31,7 @@ const Dashboard = () => {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 p-6 flex items-center justify-center">
-      <ReturnButtons withDashboardButton={false} buttonText='Home'/>
+      <ReturnButtons withDashboardButton={false} buttonText="Home" />
       <div className="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg w-full max-w-4xl">
         <Header
           title={user?.role === ROLES.ADMIN ? 'Admin Panel' : 'Dashboard'}

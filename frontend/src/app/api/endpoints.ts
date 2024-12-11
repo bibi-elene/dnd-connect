@@ -8,7 +8,7 @@ export const endpoints = {
   characters: {
     all: '/characters',
     userCharacters: '/characters/me',
-    character: (id: string) => `/characters/${id}`,
+    character: (id: number) => `/characters/${id}`,
     create: '/characters',
   },
 };

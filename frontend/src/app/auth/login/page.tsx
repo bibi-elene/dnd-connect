@@ -5,6 +5,8 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import Link from 'next/link';
 import Loading from '@/app/components/widgets/Loading';
+import { routes } from '@/app/utils/routes';
+import ReturnButtons from '@/app/components/widgets/ReturnButtons';
 
 interface LoginFormInputs {
   username: string;
@@ -35,6 +37,7 @@ const Login = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <ReturnButtons withDashboardButton={false} buttonText="Home" />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-6 rounded shadow-md w-full max-w-sm"
@@ -71,7 +74,7 @@ const Login = () => {
         </button>
         <p className="mt-4 text-black text-center">
           Don`t have an account?
-          <Link href="/auth/register" className="text-blue-500">
+          <Link href={routes.register} className="text-blue-500 ml-2">
             Register
           </Link>
         </p>

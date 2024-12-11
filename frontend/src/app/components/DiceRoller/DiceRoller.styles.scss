@@ -32,7 +32,10 @@
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
   font-family: 'Montserrat';
   font-weight: 400 !important;
 }
@@ -60,7 +63,7 @@
 }
 
 .roll-dice-button:before {
-  content: "🎲";
+  content: '🎲';
   margin-right: 8px;
   font-size: 1.4rem;
 }

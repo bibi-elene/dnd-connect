@@ -14,6 +14,7 @@ import {
 } from '@/app/utils/constants';
 import ReturnButtons from '@/app/components/widgets/ReturnButtons';
 import { useNavigate } from '@/app/utils/navigation';
+import { apiRoutes } from '@/app/api/apiRoutes';
 
 const EditCharacter = () => {
   const { id } = useParams();
@@ -36,10 +37,13 @@ const EditCharacter = () => {
     const fetchCharacter = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`/api/characters/${id}`, {
-          method: 'GET',
-          credentials: 'include',
-        });
+        const response = await fetch(
+          apiRoutes.characters.character(Number(id)),
+          {
+            method: 'GET',
+            credentials: 'include',
+          }
+        );
 
         if (!response.ok) {
           throw new Error('Failed to fetch character details');
@@ -115,7 +119,7 @@ const EditCharacter = () => {
     }
 
     try {
-      const response = await fetch(`/api/characters/${id}`, {
+      const response = await fetch(apiRoutes.characters.character(Number(id)), {
         method: 'PATCH',
         body: formData,
       });

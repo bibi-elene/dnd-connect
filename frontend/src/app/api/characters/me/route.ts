@@ -15,13 +15,16 @@ export async function GET(req: Request) {
     const cookies = parse(cookieHeader);
     const accessToken = cookies['access_token'];
 
-    const response = await axios.get(`${API_BASE_URL}${endpoints.characters.userCharacters}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      withCredentials: true,
-    });
+    const response = await axios.get(
+      `${API_BASE_URL}${endpoints.characters.userCharacters}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      }
+    );
 
     return NextResponse.json(response.data, { status: response.status });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

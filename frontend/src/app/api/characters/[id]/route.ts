@@ -4,6 +4,7 @@ import axios from 'axios';
 import { parse } from 'cookie';
 import { isDynamicServerError } from 'next/dist/client/components/hooks-server-context';
 import { NextResponse } from 'next/server';
+import { endpoints } from '../../endpoints';
 
 export async function GET(req: Request) {
   const cookieHeader = req.headers.get('cookie');
@@ -27,7 +28,7 @@ export async function GET(req: Request) {
     }
 
     const response = await axios.get(
-      `${API_BASE_URL}/characters/${id}`,
+      `${API_BASE_URL}${endpoints.characters.character(Number(id))}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -76,7 +77,7 @@ export async function PATCH(req: Request) {
     });
 
     const response = await axios.patch(
-      `${API_BASE_URL}/characters/${id}`,
+      `${API_BASE_URL}${endpoints.characters.character(Number(id))}`,
       payload,
       {
         headers: {

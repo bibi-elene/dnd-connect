@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import Link from 'next/link';
+import { routes } from '@/app/utils/routes';
+import ReturnButtons from '@/app/components/widgets/ReturnButtons';
 
 interface RegisterFormInputs {
   username: string;
@@ -36,6 +38,7 @@ const Register = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <ReturnButtons withDashboardButton={false} buttonText="Home" />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-6 rounded shadow-md w-full max-w-sm"
@@ -79,7 +82,7 @@ const Register = () => {
         </button>
         <p className="mt-4 text-center text-black">
           Already have an account?
-          <Link href="/auth/login" className="text-blue-500">
+          <Link href={routes.login} className="text-blue-500 ml-2">
             Login
           </Link>
         </p>
