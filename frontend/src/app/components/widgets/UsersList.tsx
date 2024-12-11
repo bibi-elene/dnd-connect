@@ -16,7 +16,7 @@ const UsersList: React.FC<UserListProps> = ({
   onEditUser,
 }) => {
   if (loading) {
-    return <Loading message="Loading characters..." size="sm" />;
+    return <Loading message="Loading users..." size="sm" />;
   }
 
   if (error) {

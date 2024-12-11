@@ -11,46 +11,13 @@ import EditButton from '../components/widgets/EditButton';
 import ReturnButtons from '../components/widgets/ReturnButtons';
 import { useNavigate } from '../utils/navigation';
 import { apiRoutes } from '../api/apiRoutes';
+import { useFetchCharacters } from '../hooks/useFetchCharacters';
 
 const CharactersList = () => {
   const { user } = useContext(AuthContext);
-  const [characters, setCharacters] = useState<Character[]>([]);
-  const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const { goToCharacter } = useNavigate();
-
-  useEffect(() => {
-    const fetchCharacters = async () => {
-      try {
-        setLoading(true);
-        const url =
-          user?.role === ROLES.ADMIN
-            ? apiRoutes.characters.all
-            : apiRoutes.characters.userCharacters;
-
-        const response = await fetch(url, {
-          method: 'GET',
-          credentials: 'include',
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch characters');
-        }
-
-        const data = await response.json();
-        setCharacters(data);
-      } catch (error) {
-        setErrorMessage('Failed to fetch characters.');
-        console.error('Error:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (user) {
-      fetchCharacters();
-    }
-  }, [user]);
+  const { characters, error, loading } = useFetchCharacters(user);
 
   if (!user || loading) {
     return (

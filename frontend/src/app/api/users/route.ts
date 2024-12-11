@@ -16,11 +16,17 @@ export async function GET(req: Request) {
     const cookies = parse(cookieHeader);
 
     const accessToken = cookies['access_token'];
+
+    const url = new URL(req.url);
+
+    const limit = url.searchParams.get('limit');
+
     const response = await axios.get(`${API_BASE_URL}${endpoints.users.all}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
       },
+      params: { limit },
       withCredentials: true,
     });
 

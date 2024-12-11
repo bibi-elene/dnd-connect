@@ -11,6 +11,7 @@ import {
   UploadedFile,
   UseInterceptors,
   Patch,
+  Query,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CharacterService } from './character.service';
@@ -30,8 +31,8 @@ export class CharacterController {
   @Get()
   @ApiOperation({ summary: 'Get all characters' })
   @ApiResponse({ status: 200, description: 'List of characters.' })
-  findAll(): Promise<CreateCharacterDto[]> {
-    return this.characterService.findAll();
+  findAll(@Query('limit') limit?: number): Promise<CreateCharacterDto[]> {
+    return this.characterService.findAll(limit);
   }
 
   @Get('me')
@@ -40,9 +41,12 @@ export class CharacterController {
     status: 200,
     description: 'List of characters for the current user.',
   })
-  async findCurrentUserCharacters(@Request() req): Promise<CreateCharacterDto[]> {
+  async findCurrentUserCharacters(
+    @Request() req,
+    @Query('limit') limit?: number,
+  ): Promise<CreateCharacterDto[]> {
     const userId = req.user.id;
-    return this.characterService.findAllForUser(userId);
+    return this.characterService.findAllForUser(userId, limit);
   }
 
   @Get(':id')

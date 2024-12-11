@@ -1,9 +1,11 @@
+import axios from 'axios';
+
 import { useState, useEffect, useMemo } from 'react';
 import { ROLES } from '../utils/constants';
 import { Character, User } from '../utils/types';
 import { apiRoutes } from '../api/apiRoutes';
 
-export const useFetchCharacters = (user: User | null) => {
+export const useFetchCharacters = (user: User | null, limit?: number) => {
   const [characters, setCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -11,22 +13,17 @@ export const useFetchCharacters = (user: User | null) => {
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
-        const url =
+        const baseUrl =
           user?.role === ROLES.ADMIN
             ? apiRoutes.characters.all
             : apiRoutes.characters.userCharacters;
 
-        const response = await fetch(url, {
-          method: 'GET',
-          credentials: 'include',
+        const response = await axios.get(baseUrl, {
+          params: limit ? { limit } : undefined,
+          withCredentials: true,
         });
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch characters');
-        }
-
-        const data = await response.json();
-        setCharacters(data.slice(-3));
+        setCharacters(response.data);
       } catch (err) {
         setError('Oops! Looks like you need to create a champion. You have 0');
         console.error('Error:', err);
@@ -38,7 +35,7 @@ export const useFetchCharacters = (user: User | null) => {
     if (user) {
       fetchCharacters();
     }
-  }, [user]);
+  }, [user, limit]);
 
   const memoizedData = useMemo(
     () => ({

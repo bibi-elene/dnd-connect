@@ -16,8 +16,8 @@ import UserActions from '../components/widgets/UserActions';
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
-  const { characters, loading, error } = useFetchCharacters(user);
-  const { users } = useFetchUsers(user);
+  const { characters, loading, error } = useFetchCharacters(user, 3);
+  const { users } = useFetchUsers(user, 3);
   const {
     goToCharacters,
     goToCharacterCreation,

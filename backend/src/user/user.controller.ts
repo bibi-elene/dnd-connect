@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Request } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Patch, Query, Request } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { User, UserRole } from './user.entity';
@@ -9,8 +9,8 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  findAllUsers(): Promise<User[]> {
-    return this.userService.findAllUsers();
+  findAllUsers(@Query('limit') limit?: number): Promise<User[]> {
+    return this.userService.findAllUsers(limit);
   }
 
   @Get(':id')

@@ -33,8 +33,18 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  async findAllUsers(): Promise<User[]> {
-    return this.userRepository.find({ where: { role: UserRole.USER } });
+  async findAllUsers(limit?: number): Promise<User[]> {
+    const queryBuilder = this.userRepository
+      .createQueryBuilder('user')
+      .where('user.role = :role', { role: UserRole.USER });
+
+    if (limit) {
+      queryBuilder.limit(limit);
+    }
+
+    const users = await queryBuilder.getMany();
+
+    return users;
   }
 
   async updateUser(id: number, username: string, role: UserRole): Promise<User> {

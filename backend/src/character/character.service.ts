@@ -11,8 +11,13 @@ export class CharacterService {
     private readonly characterRepository: Repository<Character>,
   ) {}
 
-  async findAll(): Promise<CreateCharacterDto[]> {
-    const characters = await this.characterRepository.find();
+  async findAll(limit?: number): Promise<CreateCharacterDto[]> {
+    const queryBuilder = this.characterRepository.createQueryBuilder('character');
+    if (limit) {
+      queryBuilder.limit(limit);
+    }
+
+    const characters = await queryBuilder.getMany();
 
     return characters.map((character) => ({
       id: character.id,
@@ -73,7 +78,16 @@ export class CharacterService {
 
     return await this.characterRepository.save(character);
   }
-  async findAllForUser(userId: number): Promise<CreateCharacterDto[]> {
+
+  async findAllForUser(userId: number, limit?: number): Promise<CreateCharacterDto[]> {
+    const queryBuilder = this.characterRepository
+      .createQueryBuilder('character')
+      .where('character.userId = :userId', { userId });
+
+    if (limit) {
+      queryBuilder.limit(limit);
+    }
+
     const characters = await this.characterRepository.find({
       where: { user: { id: userId } },
     });
@@ -93,9 +107,14 @@ export class CharacterService {
     }));
   }
 
-  async update(id: number, character: Character, userId: number, isAdmin: boolean): Promise<Character> {
+  async update(
+    id: number,
+    character: Character,
+    userId: number,
+    isAdmin: boolean,
+  ): Promise<Character> {
     const existingCharacter = await this.findOne(id, userId, isAdmin);
-  
+
     if (!existingCharacter) {
       throw new Error('Character not found or not owned by user');
     }
