@@ -10,6 +10,7 @@ import Image from 'next/image';
 import EditButton from '../components/widgets/EditButton';
 import ReturnButtons from '../components/widgets/ReturnButtons';
 import { useNavigate } from '../utils/navigation';
+import { apiRoutes } from '../api/apiRoutes';
 
 const CharactersList = () => {
   const { user } = useContext(AuthContext);
@@ -23,7 +24,9 @@ const CharactersList = () => {
       try {
         setLoading(true);
         const url =
-          user?.role === ROLES.ADMIN ? '/api/characters' : '/api/characters/me';
+          user?.role === ROLES.ADMIN
+            ? apiRoutes.characters.all
+            : apiRoutes.characters.userCharacters;
 
         const response = await fetch(url, {
           method: 'GET',
