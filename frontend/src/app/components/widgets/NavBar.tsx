@@ -34,7 +34,6 @@ const Navbar: React.FC<NavbarProps> = ({ user, logout }) => {
   return (
     <nav className="navbar fixed top-0 left-0 w-full z-50">
       <div className="navbar-container container mx-auto">
-        {/* Navigation Links */}
         <div className="navbar-links">
           <a href="#" className="navbar-link">
             Home

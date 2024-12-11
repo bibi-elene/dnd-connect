@@ -103,7 +103,7 @@ export class CharacterService {
     return this.characterRepository.findOne({ where: { id } });
   }
 
-  async partialUpdate(
+  async updateCharacter(
     id: number,
     partialData: Partial<Character>,
     userId: number,

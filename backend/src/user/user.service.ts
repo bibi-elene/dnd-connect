@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User, UserRole } from './user.entity';
 import { Repository } from 'typeorm';
@@ -15,6 +15,14 @@ export class UserService {
     return this.userRepository.findOne({ where: { username } });
   }
 
+  async findUserById(id: number): Promise<User> {
+    const user = await this.userRepository.findOneBy({ id });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return user;
+  }
+
   async create(username: string, password: string, role: UserRole): Promise<User> {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = this.userRepository.create({
@@ -27,5 +35,13 @@ export class UserService {
 
   async findAllUsers(): Promise<User[]> {
     return this.userRepository.find({ where: { role: UserRole.USER } });
+  }
+
+  async updateUser(id: number, username: string, role: UserRole): Promise<User> {
+    const user = await this.userRepository.findOneBy({ id });
+    if (!user) throw new NotFoundException('User not found');
+    user.username = username;
+    user.role = role;
+    return this.userRepository.save(user);
   }
 }

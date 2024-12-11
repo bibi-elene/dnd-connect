@@ -2,7 +2,7 @@ export enum ROLES {
   ADMIN = 'admin',
   USER = 'user',
 }
-
+export const roleOptions = ['user', 'admin'];
 export const classOptions = ['Fighter', 'Mage', 'Rogue'];
 export const raceOptions = ['Elf', 'Orc', 'Human'];
 export const backgroundOptions = ['Noble', 'Acolyte', 'Folk-Hero', 'Thief'];

@@ -82,13 +82,13 @@ export class CharacterController {
   @ApiConsumes('multipart/form-data')
   @ApiOperation({ summary: 'Partially update an existing character' })
   @ApiResponse({ status: 200, description: 'Character partially updated.' })
-  async partialUpdate(
+  async updateCharacter(
     @Param('id') id: number,
     @Body() partialData: Partial<Character>,
     @UploadedFile() image: Express.Multer.File,
     @Request() req,
   ): Promise<CreateCharacterDto> {
-    return this.characterService.partialUpdate(
+    return this.characterService.updateCharacter(
       id,
       partialData,
       req.user.id,

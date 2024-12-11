@@ -12,5 +12,7 @@ export const useNavigate = () => {
     goToCharacter: (id: number) => router.push(routes.character(id)),
     goToCharacters: () => router.push(routes.characters),
     goToCharacterCreation: () => router.push(routes.characterCreate),
+    goToUser: (id: number) => router.push(routes.user(id)),
+    goToUsers: () => router.push(routes.users),
   };
 };

@@ -12,16 +12,26 @@ import { useNavigate } from '../utils/navigation';
 import ReturnButtons from '../components/widgets/ReturnButtons';
 import { useFetchUsers } from '../hooks/useFetchUsers';
 import UsersList from '../components/widgets/UsersList';
+import UserActions from '../components/widgets/UserActions';
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
   const { characters, loading, error } = useFetchCharacters(user);
   const { users } = useFetchUsers(user);
-  const { goToCharacters, goToCharacterCreation, goToCharacter } =
-    useNavigate();
+  const {
+    goToCharacters,
+    goToCharacterCreation,
+    goToCharacter,
+    goToUser,
+    goToUsers,
+  } = useNavigate();
 
   const handleViewAllCharacters = () => {
     goToCharacters();
+  };
+
+  const handleViewAllUsers = () => {
+    goToUsers();
   };
 
   const handleCreateCharacter = () => {
@@ -30,6 +40,10 @@ const Dashboard = () => {
 
   const handleEditCharacter = (id: number) => {
     goToCharacter(id);
+  };
+
+  const handleEditUser = (id: number) => {
+    goToUser(id);
   };
 
   return (
@@ -44,16 +58,26 @@ const Dashboard = () => {
 
         <main>
           {user?.role === ROLES.ADMIN ? (
-            <div>
-              <CharacterActions onViewAll={handleViewAllCharacters} />
-              <CharacterList
-                characters={characters}
-                loading={loading}
-                error={error}
-                onEdit={handleEditCharacter}
-              />
-              <div>
-                <UsersList users={users} loading={loading} error={error} />
+            <div className="flex">
+              <div className="w-1/2 pr-4">
+                <h2 className="text-xl font-semibold mb-4">Characters</h2>
+                <CharacterActions onViewAll={handleViewAllCharacters} />
+                <CharacterList
+                  characters={characters}
+                  loading={loading}
+                  error={error}
+                  onEdit={handleEditCharacter}
+                />
+              </div>
+              <div className="w-1/2 pl-4">
+                <h2 className="text-xl font-semibold mb-4">Users</h2>
+                <UserActions onViewAll={handleViewAllUsers} />
+                <UsersList
+                  users={users}
+                  loading={loading}
+                  error={error}
+                  onEditUser={handleEditUser}
+                />
               </div>
             </div>
           ) : (

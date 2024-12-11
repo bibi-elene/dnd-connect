@@ -6,12 +6,14 @@ interface UserListProps {
   users: User[];
   loading: boolean;
   error: string;
+  onEditUser: (id: number) => void;
 }
 
 const UsersList: React.FC<UserListProps> = ({
   users,
   loading,
   error,
+  onEditUser,
 }) => {
   if (loading) {
     return <Loading message="Loading characters..." size="sm" />;
@@ -31,7 +33,7 @@ const UsersList: React.FC<UserListProps> = ({
           <div>
             <strong className="text-gray-700">{user.username}</strong>
           </div>
-          {/* <EditButton onClick={() => onEdit(user.id)} /> */}
+          <EditButton onClick={() => onEditUser(user.id)} />
         </li>
       ))}
     </ul>

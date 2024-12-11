@@ -13,5 +13,6 @@ export const endpoints = {
   },
   users: {
     all: '/users',
+    user: (id: number) => `/users/${id}`,
   },
 };

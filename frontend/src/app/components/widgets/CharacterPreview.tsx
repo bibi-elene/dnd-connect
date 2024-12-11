@@ -7,9 +7,7 @@ export const CharacterPreview = ({
 }) => {
   return (
     <div className="flex flex-col items-center">
-      {/* Character Container */}
       <div className="w-32 h-48 relative">
-        {/* Body */}
         <div
           className="absolute bottom-0 w-24 h-36 rounded-md"
           style={{
@@ -17,7 +15,6 @@ export const CharacterPreview = ({
           }}
         ></div>
 
-        {/* Head */}
         <div
           className="absolute top-0 left-6 w-12 h-12 rounded-full"
           style={{
@@ -25,7 +22,6 @@ export const CharacterPreview = ({
           }}
         ></div>
 
-        {/* Accessory */}
         {raceAttributes.accessory === 'pointy ears' && (
           <>
             <div
@@ -51,7 +47,6 @@ export const CharacterPreview = ({
         )}
       </div>
 
-      {/* Text Descriptions */}
       <p className="text-center mt-4 text-gray-700">
         {classAttributes.apparel || 'No apparel selected'}
       </p>
