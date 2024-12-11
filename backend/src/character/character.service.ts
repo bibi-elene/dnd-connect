@@ -93,14 +93,9 @@ export class CharacterService {
     }));
   }
 
-  async update(
-    id: number,
-    character: Character,
-    userId: number,
-    isAdmin: boolean,
-  ): Promise<Character> {
+  async update(id: number, character: Character, userId: number, isAdmin: boolean): Promise<Character> {
     const existingCharacter = await this.findOne(id, userId, isAdmin);
-
+  
     if (!existingCharacter) {
       throw new Error('Character not found or not owned by user');
     }

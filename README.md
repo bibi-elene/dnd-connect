@@ -63,7 +63,6 @@ D&D Connect is a web-based platform designed to enhance the experience of tablet
 
 - **Styling**:
   - Google Fonts (Cinzel Decorative, Roboto).
-  - Fully responsive design optimized for both desktop and mobile.
 
 ### **Backend**
 - **Framework**:
@@ -86,10 +85,10 @@ D&D Connect is a web-based platform designed to enhance the experience of tablet
   - Vercel for Next.js deployment.
 
 - **Backend Hosting**:
-  - AWS or Heroku for API hosting.
+  - Vercel for API hosting.
 
 - **Database Hosting**:
-  - AWS RDS or ElephantSQL for PostgreSQL.
+  - pgAdmin for PostgreSQL.
 
 ---
 

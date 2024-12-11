@@ -2,11 +2,13 @@
 import API_BASE_URL from '@/config';
 import axios from 'axios';
 import { parse } from 'cookie';
+import { isDynamicServerError } from 'next/dist/client/components/hooks-server-context';
 import { NextResponse } from 'next/server';
 
 export async function GET(req: Request) {
+  const cookieHeader = req.headers.get('cookie');
+
   try {
-    const cookieHeader = req.headers.get('cookie');
     if (!cookieHeader) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
@@ -24,14 +26,20 @@ export async function GET(req: Request) {
       );
     }
 
-    const response = await axios.get(`${API_BASE_URL}/characters/${id}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await axios.get(
+      `${API_BASE_URL}/characters/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
 
     return NextResponse.json(response.data, { status: response.status });
   } catch (error: any) {
+    if (isDynamicServerError(error)) {
+      throw error;
+    }
     console.error('Error fetching character:', error?.message || error);
     return NextResponse.json(
       { message: error.response?.data || 'Error fetching character' },
@@ -41,8 +49,9 @@ export async function GET(req: Request) {
 }
 
 export async function PATCH(req: Request) {
+  const cookieHeader = req.headers.get('cookie');
+
   try {
-    const cookieHeader = req.headers.get('cookie');
     if (!cookieHeader) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
@@ -78,6 +87,9 @@ export async function PATCH(req: Request) {
 
     return NextResponse.json(response.data, { status: response.status });
   } catch (error: any) {
+    if (isDynamicServerError(error)) {
+      throw error;
+    }
     console.error('Error updating character:', error?.message || error);
     return NextResponse.json(
       { message: error.response?.data || 'Error updating character' },

@@ -2,10 +2,13 @@ import API_BASE_URL from '@/config';
 import axios from 'axios';
 import { parse } from 'cookie';
 import { NextResponse } from 'next/server';
+import { endpoints } from '../../endpoints';
+import { isDynamicServerError } from 'next/dist/client/components/hooks-server-context';
 
 export async function GET(req: Request) {
+  const cookieHeader = req.headers.get('cookie');
+
   try {
-    const cookieHeader = req.headers.get('cookie');
     if (!cookieHeader) {
       console.error('No cookies found in request');
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
@@ -15,7 +18,7 @@ export async function GET(req: Request) {
 
     const accessToken = cookies['access_token'];
 
-    const response = await axios.get(`${API_BASE_URL}/auth/me`, {
+    const response = await axios.get(`${API_BASE_URL}${endpoints.auth.me}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
@@ -26,6 +29,9 @@ export async function GET(req: Request) {
     return NextResponse.json(response.data, { status: response.status });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
+    if (isDynamicServerError(error)) {
+      throw error;
+    }
     console.error('Error proxying /auth/me:', error?.message || error);
     return NextResponse.json(
       { message: error.response?.data || 'Error forwarding request' },

@@ -118,6 +118,7 @@ const EditCharacter = () => {
       const response = await fetch(`/api/characters/${id}`, {
         method: 'PATCH',
         body: formData,
+        credentials: 'include',
       });
 
       if (!response.ok) {
@@ -125,12 +126,12 @@ const EditCharacter = () => {
       }
 
       setSuccessMessage('Character updated successfully!');
+      // goToCharacters();
     } catch (error) {
-      setErrorMessage('Failed to update character.');
-      console.error('Error:', error);
+      setErrorMessage(`Failed to update character - ${error}`);
+      console.log('Error:', error);
     } finally {
       setLoadingEditSave(false);
-      goToCharacters();
     }
   };
 

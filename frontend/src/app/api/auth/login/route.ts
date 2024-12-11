@@ -1,12 +1,14 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 import API_BASE_URL from '@/config';
+import { endpoints } from '../../endpoints';
+import { isDynamicServerError } from 'next/dist/client/components/hooks-server-context';
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const response = await axios.post(`${API_BASE_URL}/auth/login`, body, {
+    const response = await axios.post(`${API_BASE_URL}${endpoints.auth.login}`, body, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -22,6 +24,9 @@ export async function POST(req: Request) {
     return NextResponse.json(response.data, { status: response.status });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
+    if (isDynamicServerError(error)) {
+      throw error;
+    }
     console.error('Error proxying /auth/login:', error.message);
     return NextResponse.json(
       { message: error.response?.data || 'Error forwarding login request' },

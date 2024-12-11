@@ -2,10 +2,13 @@ import { NextResponse } from 'next/server';
 import axios from 'axios';
 import API_BASE_URL from '@/config';
 import { parse } from 'cookie';
+import { endpoints } from '../../endpoints';
+import { isDynamicServerError } from 'next/dist/client/components/hooks-server-context';
 
 export async function POST(req: Request) {
+  const cookieHeader = req.headers.get('cookie');
+
   try {
-    const cookieHeader = req.headers.get('cookie');
     if (!cookieHeader) {
       console.error('No cookies found in request');
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
@@ -21,7 +24,7 @@ export async function POST(req: Request) {
     }
 
     const response = await axios.post(
-      `${API_BASE_URL}/auth/logout`,
+      `${API_BASE_URL}${endpoints.auth.logout}`,
       {},
       {
         headers: {
@@ -40,6 +43,9 @@ export async function POST(req: Request) {
     return res;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
+    if (isDynamicServerError(error)) {
+      throw error;
+    }
     console.error('Error processing logout:', error.message);
     return NextResponse.json(
       { message: 'Logout failed', error: error.response?.data },
