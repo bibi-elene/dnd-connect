@@ -6,12 +6,7 @@ import { useState, useEffect } from 'react';
 import Loading from '@/app/components/widgets/Loading';
 import { CharacterFormInputs } from '@/app/utils/types';
 import Image from 'next/image';
-import {
-  backgroundOptions,
-  classOptions,
-  raceOptions,
-  skillsOptions,
-} from '@/app/utils/constants';
+import { backgroundOptions, classOptions, raceOptions, skillsOptions } from '@/app/utils/constants';
 import ReturnButtons from '@/app/components/widgets/ReturnButtons';
 import { useNavigate } from '@/app/utils/navigation';
 import { apiRoutes } from '@/app/api/apiRoutes';
@@ -25,7 +20,7 @@ const EditCharacter = () => {
     setValue,
     formState: { errors, isDirty },
   } = useForm<CharacterFormInputs>();
-  
+
   const [loading, setLoading] = useState(true);
   const [loadingEditSave, setLoadingEditSave] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -39,13 +34,10 @@ const EditCharacter = () => {
     const fetchCharacter = async () => {
       setLoading(true);
       try {
-        const response = await fetch(
-          apiRoutes.characters.character(Number(id)),
-          {
-            method: 'GET',
-            credentials: 'include',
-          }
-        );
+        const response = await fetch(apiRoutes.characters.character(Number(id)), {
+          method: 'GET',
+          credentials: 'include',
+        });
 
         if (!response.ok) {
           throw new Error('Failed to fetch character details');
@@ -56,9 +48,7 @@ const EditCharacter = () => {
           if (key === 'image' && value) {
             const base64String = (value as string).split(',')[1];
             const byteCharacters = atob(base64String);
-            const byteNumbers = Array.from(byteCharacters).map((char) =>
-              char.charCodeAt(0)
-            );
+            const byteNumbers = Array.from(byteCharacters).map((char) => char.charCodeAt(0));
             const byteArray = new Uint8Array(byteNumbers);
             const blob = new Blob([byteArray], { type: 'image/jpeg' });
 
@@ -152,8 +142,7 @@ const EditCharacter = () => {
     );
   }
 
-  const isButtonDisabled =
-    !!fileError || (!isDirty && uploadedImage === originalUploadedImage);
+  const isButtonDisabled = !!fileError || (!isDirty && uploadedImage === originalUploadedImage);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -165,9 +154,7 @@ const EditCharacter = () => {
       >
         <h2 className="text-2xl mb-4 text-center">Edit Character</h2>
         {errorMessage && <p className="text-red-500 mb-2">{errorMessage}</p>}
-        {successMessage && (
-          <p className="text-green-500 mb-2">{successMessage}</p>
-        )}
+        {successMessage && <p className="text-green-500 mb-2">{successMessage}</p>}
         <div className="mb-4">
           <label className="block text-gray-700">Name</label>
           <input
@@ -177,9 +164,7 @@ const EditCharacter = () => {
               errors.name ? 'border-red-500' : 'border-gray-300'
             } rounded`}
           />
-          {errors.name && (
-            <p className="text-red-500 text-sm">Name is required</p>
-          )}
+          {errors.name && <p className="text-red-500 text-sm">Name is required</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Class</label>
@@ -196,9 +181,7 @@ const EditCharacter = () => {
               </option>
             ))}
           </select>
-          {errors.class && (
-            <p className="text-red-500 text-sm">Class is required</p>
-          )}
+          {errors.class && <p className="text-red-500 text-sm">Class is required</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Race</label>
@@ -215,9 +198,7 @@ const EditCharacter = () => {
               </option>
             ))}
           </select>
-          {errors.race && (
-            <p className="text-red-500 text-sm">Race is required</p>
-          )}
+          {errors.race && <p className="text-red-500 text-sm">Race is required</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Background</label>
@@ -234,9 +215,7 @@ const EditCharacter = () => {
               </option>
             ))}
           </select>
-          {errors.background && (
-            <p className="text-red-500 text-sm">Background is required</p>
-          )}
+          {errors.background && <p className="text-red-500 text-sm">Background is required</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Skills</label>
@@ -253,9 +232,7 @@ const EditCharacter = () => {
               </option>
             ))}
           </select>
-          {errors.skills && (
-            <p className="text-red-500 text-sm">Skills are required</p>
-          )}
+          {errors.skills && <p className="text-red-500 text-sm">Skills are required</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Level</label>
@@ -267,15 +244,11 @@ const EditCharacter = () => {
             } rounded`}
           />
           {errors.level && (
-            <p className="text-red-500 text-sm">
-              Level is required and must be at least 1
-            </p>
+            <p className="text-red-500 text-sm">Level is required and must be at least 1</p>
           )}
         </div>
         <div className="mb-6">
-          <label className="block text-gray-700 font-medium mb-2">
-            Upload Avatar
-          </label>
+          <label className="block text-gray-700 font-medium mb-2">Upload Avatar</label>
           <div className="relative group">
             <input
               type="file"
@@ -285,17 +258,13 @@ const EditCharacter = () => {
               className="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"
             />
           </div>
-          {fileError && (
-            <p className="text-red-500 text-sm mt-2">{fileError}</p>
-          )}
+          {fileError && <p className="text-red-500 text-sm mt-2">{fileError}</p>}
         </div>
         <button
           type="submit"
           disabled={isButtonDisabled}
           className={`w-full py-2 rounded text-white ${
-            isButtonDisabled
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-blue-500 hover:bg-blue-600'
+            isButtonDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
           }`}
         >
           Save Changes

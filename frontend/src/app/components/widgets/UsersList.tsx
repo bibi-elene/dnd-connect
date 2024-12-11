@@ -9,12 +9,7 @@ interface UserListProps {
   onEditUser: (id: number) => void;
 }
 
-const UsersList: React.FC<UserListProps> = ({
-  users,
-  loading,
-  error,
-  onEditUser,
-}) => {
+const UsersList: React.FC<UserListProps> = ({ users, loading, error, onEditUser }) => {
   if (loading) {
     return <Loading message="Loading users..." size="sm" />;
   }

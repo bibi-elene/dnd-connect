@@ -31,9 +31,7 @@ const CharactersList = () => {
     <div className="relative min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 p-5 flex items-center justify-center">
       <ReturnButtons fallbackUrl="/dashboard" />
       <div className="w-full max-w-2xl bg-white p-6 rounded shadow-md">
-        <h2 className="text-2xl mb-4 text-center text-black">
-          Your Characters
-        </h2>
+        <h2 className="text-2xl mb-4 text-center text-black">Your Characters</h2>
         {errorMessage && <p className="text-red-500 mb-2">{errorMessage}</p>}
         {characters.length === 0 ? (
           <p className="text-black">No characters found.</p>

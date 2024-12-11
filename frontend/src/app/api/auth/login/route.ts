@@ -8,15 +8,11 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const response = await axios.post(
-      `${API_BASE_URL}${endpoints.auth.login}`,
-      body,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    const response = await axios.post(`${API_BASE_URL}${endpoints.auth.login}`, body, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
     const backendCookies = response.headers['set-cookie'];
     if (backendCookies) {

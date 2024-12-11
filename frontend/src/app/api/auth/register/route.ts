@@ -8,15 +8,11 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const response = await axios.post(
-      `${API_BASE_URL}${endpoints.auth.register}`,
-      body,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    const response = await axios.post(`${API_BASE_URL}${endpoints.auth.register}`, body, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
     return NextResponse.json(response.data, { status: response.status });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

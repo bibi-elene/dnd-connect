@@ -20,10 +20,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
 
   return (
     <div className="relative">
-      <button
-        className="flex items-center space-x-2 focus:outline-none"
-        onClick={toggleDropdown}
-      >
+      <button className="flex items-center space-x-2 focus:outline-none" onClick={toggleDropdown}>
         <span className="text-xl hover:text-gray-300">{username}</span>
         <DropDownArrowIcon />
       </button>

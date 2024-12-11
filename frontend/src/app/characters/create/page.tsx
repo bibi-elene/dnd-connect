@@ -38,8 +38,7 @@ const CreateCharacter = () => {
   const selectedRace = watch('race');
 
   const defaultImagePath =
-    characterImages[selectedClass]?.[selectedRace] ||
-    '/assets/default_character.jpeg';
+    characterImages[selectedClass]?.[selectedRace] || '/assets/default_character.jpeg';
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
@@ -115,13 +114,9 @@ const CreateCharacter = () => {
         encType="multipart/form-data"
         className="bg-white p-6 rounded shadow-md w-full max-w-md"
       >
-        <h2 className="text-2xl text-black mb-4 text-center">
-          Create New Character
-        </h2>
+        <h2 className="text-2xl text-black mb-4 text-center">Create New Character</h2>
         {errorMessage && <p className="text-red-500 mb-2">{errorMessage}</p>}
-        {successMessage && (
-          <p className="text-green-500 mb-2">{successMessage}</p>
-        )}
+        {successMessage && <p className="text-green-500 mb-2">{successMessage}</p>}
         <div className="mb-4">
           <label className="block text-gray-700">Name</label>
           <input
@@ -131,9 +126,7 @@ const CreateCharacter = () => {
               errors.name ? 'border-red-500' : 'border-gray-300'
             } rounded`}
           />
-          {errors.name && (
-            <p className="text-red-500 text-sm">Name is required</p>
-          )}
+          {errors.name && <p className="text-red-500 text-sm">Name is required</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Class</label>
@@ -150,9 +143,7 @@ const CreateCharacter = () => {
               </option>
             ))}
           </select>
-          {errors.class && (
-            <p className="text-red-500 text-sm">Class is required</p>
-          )}
+          {errors.class && <p className="text-red-500 text-sm">Class is required</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Race</label>
@@ -169,9 +160,7 @@ const CreateCharacter = () => {
               </option>
             ))}
           </select>
-          {errors.race && (
-            <p className="text-red-500 text-sm">Race is required</p>
-          )}
+          {errors.race && <p className="text-red-500 text-sm">Race is required</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Background</label>
@@ -188,9 +177,7 @@ const CreateCharacter = () => {
               </option>
             ))}
           </select>
-          {errors.background && (
-            <p className="text-red-500 text-sm">Background is required</p>
-          )}
+          {errors.background && <p className="text-red-500 text-sm">Background is required</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Skills</label>
@@ -207,9 +194,7 @@ const CreateCharacter = () => {
               </option>
             ))}
           </select>
-          {errors.skills && (
-            <p className="text-red-500 text-sm">Skills are required</p>
-          )}
+          {errors.skills && <p className="text-red-500 text-sm">Skills are required</p>}
         </div>
 
         <div className="mb-4">
@@ -222,9 +207,7 @@ const CreateCharacter = () => {
             } rounded`}
           />
           {errors.level && (
-            <p className="text-red-500 text-sm">
-              Level is required and must be at least 1
-            </p>
+            <p className="text-red-500 text-sm">Level is required and must be at least 1</p>
           )}
         </div>
         <div className="mb-4">
@@ -236,9 +219,7 @@ const CreateCharacter = () => {
             onChange={handleImageUpload}
             className="block w-full text-sm text-gray-900 border border-gray-300 rounded cursor-pointer bg-gray-50 focus:outline-none"
           />
-          {fileError && (
-            <p className="text-red-500 text-sm mt-2">{fileError}</p>
-          )}
+          {fileError && <p className="text-red-500 text-sm mt-2">{fileError}</p>}
         </div>
         <button
           type="submit"

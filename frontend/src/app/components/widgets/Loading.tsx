@@ -1,9 +1,6 @@
 import { LoadingProps } from '@/app/utils/types';
 
-const Loading: React.FC<LoadingProps> = ({
-  message = 'Loading...',
-  size = 'md',
-}) => {
+const Loading: React.FC<LoadingProps> = ({ message = 'Loading...', size = 'md' }) => {
   const sizeClasses: { sm: string; md: string; lg: string } = {
     sm: 'w-3 h-3',
     md: 'w-5 h-5',

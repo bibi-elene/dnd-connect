@@ -9,10 +9,7 @@ import Loading from './components/widgets/Loading';
 
 export default function Home() {
   const { user, logout, loading } = useContext(AuthContext);
-  const homeButtonText = useMemo(
-    () => (user ? '🚀 Explore' : '🚀 Sign Up'),
-    [user]
-  );
+  const homeButtonText = useMemo(() => (user ? '🚀 Explore' : '🚀 Sign Up'), [user]);
 
   if (loading) {
     return (
@@ -35,10 +32,7 @@ export default function Home() {
       <Navbar user={user} logout={logout} />
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
       <div className="relative flex flex-grow flex-col items-center justify-center text-center">
-        <h1
-          className="text-4xl font-bold text-white"
-          style={{ fontFamily: 'Cinzel Decorative' }}
-        >
+        <h1 className="text-4xl font-bold text-white" style={{ fontFamily: 'Cinzel Decorative' }}>
           Welcome to D&D Connect!
         </h1>
         <JoinUsButton homeButtonText={homeButtonText} />

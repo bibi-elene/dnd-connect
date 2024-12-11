@@ -6,12 +6,7 @@ export const roleOptions = ['user', 'admin'];
 export const classOptions = ['Fighter', 'Mage', 'Rogue'];
 export const raceOptions = ['Elf', 'Orc', 'Human'];
 export const backgroundOptions = ['Noble', 'Acolyte', 'Folk-Hero', 'Thief'];
-export const skillsOptions = [
-  'History',
-  'Athletics',
-  'Survival',
-  'Performance',
-];
+export const skillsOptions = ['History', 'Athletics', 'Survival', 'Performance'];
 
 export const characterImages: Record<string, Record<string, string>> = {
   Fighter: {

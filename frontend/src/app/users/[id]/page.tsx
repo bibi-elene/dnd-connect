@@ -101,9 +101,7 @@ const EditUser = () => {
       >
         <h2 className="text-2xl mb-4 text-center">Edit User</h2>
         {errorMessage && <p className="text-red-500 mb-2">{errorMessage}</p>}
-        {successMessage && (
-          <p className="text-green-500 mb-2">{successMessage}</p>
-        )}
+        {successMessage && <p className="text-green-500 mb-2">{successMessage}</p>}
         <div className="mb-4">
           <label className="block text-gray-700">Username</label>
           <input
@@ -113,9 +111,7 @@ const EditUser = () => {
               errors.username ? 'border-red-500' : 'border-gray-300'
             } rounded`}
           />
-          {errors.username && (
-            <p className="text-red-500 text-sm">Username is required</p>
-          )}
+          {errors.username && <p className="text-red-500 text-sm">Username is required</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Role</label>
@@ -133,17 +129,13 @@ const EditUser = () => {
               </option>
             ))}
           </select>
-          {errors.role && (
-            <p className="text-red-500 text-sm">Role is required</p>
-          )}
+          {errors.role && <p className="text-red-500 text-sm">Role is required</p>}
         </div>
         <button
           type="submit"
           disabled={isButtonDisabled}
           className={`w-full py-2 rounded text-white ${
-            isButtonDisabled
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-blue-500 hover:bg-blue-600'
+            isButtonDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
           }`}
         >
           Save Changes

@@ -29,9 +29,7 @@ const Register = () => {
       setErrorMessage('');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      setErrorMessage(
-        error.message || 'Registration failed. Username might be taken.'
-      );
+      setErrorMessage(error.message || 'Registration failed. Username might be taken.');
       setSuccessMessage('');
     }
   };
@@ -45,9 +43,7 @@ const Register = () => {
       >
         <h2 className="text-2xl text-black mb-4 text-center">Register</h2>
         {errorMessage && <p className="text-red-500 mb-2">{errorMessage}</p>}
-        {successMessage && (
-          <p className="text-green-500 mb-2">{successMessage}</p>
-        )}
+        {successMessage && <p className="text-green-500 mb-2">{successMessage}</p>}
         <div className="mb-4">
           <label className="block text-gray-700">Username</label>
           <input
@@ -57,9 +53,7 @@ const Register = () => {
               errors.username ? 'border-red-500' : 'border-gray-300'
             } rounded`}
           />
-          {errors.username && (
-            <p className="text-red-500 text-sm">Username is required</p>
-          )}
+          {errors.username && <p className="text-red-500 text-sm">Username is required</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Password</label>
@@ -70,9 +64,7 @@ const Register = () => {
               errors.password ? 'border-red-500' : 'border-gray-300'
             } rounded`}
           />
-          {errors.password && (
-            <p className="text-red-500 text-sm">Password is required</p>
-          )}
+          {errors.password && <p className="text-red-500 text-sm">Password is required</p>}
         </div>
         <button
           type="submit"

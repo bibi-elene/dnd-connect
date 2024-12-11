@@ -80,17 +80,15 @@ export class CharacterService {
   }
 
   async findAllForUser(userId: number, limit?: number): Promise<CreateCharacterDto[]> {
-    const queryBuilder = this.characterRepository
-      .createQueryBuilder('character')
-      .where('character.userId = :userId', { userId });
+    const queryBuilder = this.characterRepository.createQueryBuilder('character');
+
+    queryBuilder.where('character.userId = :userId', { userId });
 
     if (limit) {
       queryBuilder.limit(limit);
     }
 
-    const characters = await this.characterRepository.find({
-      where: { user: { id: userId } },
-    });
+    const characters = await queryBuilder.getMany();
 
     return characters.map((character) => ({
       id: character.id,

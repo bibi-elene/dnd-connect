@@ -5,9 +5,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { useNavigate } from '@/app/utils/navigation';
 import '../DiceRoller/DiceRoller.styles.scss';
 
-const JoinUsButton: React.FC<{ homeButtonText?: string | null }> = ({
-  homeButtonText,
-}) => {
+const JoinUsButton: React.FC<{ homeButtonText?: string | null }> = ({ homeButtonText }) => {
   const { goToDashboard, goToRegister } = useNavigate();
   const { user } = useContext(AuthContext);
   const handleClick = () => {

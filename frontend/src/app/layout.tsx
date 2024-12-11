@@ -8,11 +8,7 @@ export const metadata: Metadata = {
   description: 'Connect with D&D characters',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>

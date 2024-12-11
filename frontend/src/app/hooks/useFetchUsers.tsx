@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState, useEffect, useMemo } from 'react';
 import { User } from '../utils/types';
 import { apiRoutes } from '../api/apiRoutes';
+import { ROLES } from '../utils/constants';
 
 export const useFetchUsers = (user: User | null, limit?: number) => {
   const [users, setUsers] = useState<User[]>([]);
@@ -10,6 +11,10 @@ export const useFetchUsers = (user: User | null, limit?: number) => {
 
   useEffect(() => {
     const fetchUsers = async () => {
+      if (user?.role !== ROLES.ADMIN) {
+        setLoading(false);
+        return;
+      }
       try {
         const response = await axios.get(apiRoutes.users.all, {
           params: limit ? { limit } : undefined,

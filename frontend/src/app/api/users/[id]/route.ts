@@ -18,19 +18,13 @@ export async function GET(req: Request) {
     const id = url.pathname.split('/').pop();
 
     if (!id) {
-      return NextResponse.json(
-        { message: 'Character ID is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: 'Character ID is required' }, { status: 400 });
     }
-    const response = await axios.get(
-      `${API_BASE_URL}${endpoints.users.user(Number(id))}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
+    const response = await axios.get(`${API_BASE_URL}${endpoints.users.user(Number(id))}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     return NextResponse.json(response.data, { status: response.status });
   } catch (error: any) {
     if (isDynamicServerError(error)) {
@@ -57,20 +51,14 @@ export async function PATCH(req: Request) {
     const id = url.pathname.split('/').pop();
 
     if (!id) {
-      return NextResponse.json(
-        { message: 'User ID is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: 'User ID is required' }, { status: 400 });
     }
 
     const body = await req.json();
     const { username, role } = body;
 
     if (!username || !role) {
-      return NextResponse.json(
-        { message: 'Username and role are required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: 'Username and role are required' }, { status: 400 });
     }
 
     const response = await axios.patch(

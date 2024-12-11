@@ -19,17 +19,14 @@ export async function GET(req: Request) {
     const url = new URL(req.url);
     const limit = url.searchParams.get('limit') || null;
 
-    const response = await axios.get(
-      `${API_BASE_URL}${endpoints.characters.all}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-        params: { limit },
-        withCredentials: true,
-      }
-    );
+    const response = await axios.get(`${API_BASE_URL}${endpoints.characters.all}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      params: { limit },
+      withCredentials: true,
+    });
 
     return NextResponse.json(response.data, { status: response.status });
   } catch (error: any) {
@@ -57,15 +54,11 @@ export async function POST(req: Request) {
       payload.append(key, value);
     });
 
-    const response = await axios.post(
-      `${API_BASE_URL}${endpoints.characters.all}`,
-      payload,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
+    const response = await axios.post(`${API_BASE_URL}${endpoints.characters.all}`, payload, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
     return NextResponse.json(response.data, { status: response.status });
   } catch (error: any) {

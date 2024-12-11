@@ -9,12 +9,7 @@ interface CharacterListProps {
   onEdit: (id: number) => void;
 }
 
-const CharacterList: React.FC<CharacterListProps> = ({
-  characters,
-  loading,
-  error,
-  onEdit,
-}) => {
+const CharacterList: React.FC<CharacterListProps> = ({ characters, loading, error, onEdit }) => {
   if (loading) {
     return <Loading message="Loading characters..." size="sm" />;
   }
@@ -31,8 +26,8 @@ const CharacterList: React.FC<CharacterListProps> = ({
           className="bg-gray-100 p-3 text-gray-600 rounded-lg shadow hover:bg-gray-200 transition flex items-center justify-between"
         >
           <div>
-            <strong className="text-gray-700">{character.name}</strong> -{' '}
-            {character.class} (Level {character.level})
+            <strong className="text-gray-700">{character.name}</strong> - {character.class} (Level{' '}
+            {character.level})
           </div>
           <EditButton onClick={() => onEdit(character.id)} />
         </li>

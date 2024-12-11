@@ -51,9 +51,7 @@ const Login = () => {
             {...register('username', { required: true })}
             className={`w-full px-3 py-2 border ${errors.username ? 'border-red-500' : 'border-gray-300'} rounded`}
           />
-          {errors.username && (
-            <p className="text-red-500 text-sm">Username is required</p>
-          )}
+          {errors.username && <p className="text-red-500 text-sm">Username is required</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Password</label>
@@ -62,9 +60,7 @@ const Login = () => {
             {...register('password', { required: true })}
             className={`w-full px-3 py-2 border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded`}
           />
-          {errors.password && (
-            <p className="text-red-500 text-sm">Password is required</p>
-          )}
+          {errors.password && <p className="text-red-500 text-sm">Password is required</p>}
         </div>
         <button
           type="submit"

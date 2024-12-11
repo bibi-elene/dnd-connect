@@ -21,10 +21,7 @@ export async function GET(req: Request) {
     const id = url.pathname.split('/').pop();
 
     if (!id) {
-      return NextResponse.json(
-        { message: 'Character ID is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: 'Character ID is required' }, { status: 400 });
     }
 
     const response = await axios.get(
@@ -64,10 +61,7 @@ export async function PATCH(req: Request) {
     const id = url.pathname.split('/').pop();
 
     if (!id) {
-      return NextResponse.json(
-        { message: 'Character ID is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: 'Character ID is required' }, { status: 400 });
     }
 
     const formData = await req.formData();

@@ -18,13 +18,8 @@ const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
   const { characters, loading, error } = useFetchCharacters(user, 3);
   const { users } = useFetchUsers(user, 3);
-  const {
-    goToCharacters,
-    goToCharacterCreation,
-    goToCharacter,
-    goToUser,
-    goToUsers,
-  } = useNavigate();
+  const { goToCharacters, goToCharacterCreation, goToCharacter, goToUser, goToUsers } =
+    useNavigate();
 
   const handleViewAllCharacters = () => {
     goToCharacters();

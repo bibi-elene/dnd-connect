@@ -3,10 +3,7 @@ interface CharacterActionsProps {
   onCreate?: () => void;
 }
 
-const CharacterActions: React.FC<CharacterActionsProps> = ({
-  onViewAll,
-  onCreate,
-}) => (
+const CharacterActions: React.FC<CharacterActionsProps> = ({ onViewAll, onCreate }) => (
   <div className="mb-5">
     <button
       onClick={onViewAll}
