@@ -10,10 +10,13 @@ import CharacterList from '../components/widgets/CharacterList';
 import CharacterActions from '../components/widgets/CharacterActions';
 import { useNavigate } from '../utils/navigation';
 import ReturnButtons from '../components/widgets/ReturnButtons';
+import { useFetchUsers } from '../hooks/useFetchUsers';
+import UsersList from '../components/widgets/UsersList';
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
   const { characters, loading, error } = useFetchCharacters(user);
+  const { users } = useFetchUsers(user);
   const { goToCharacters, goToCharacterCreation, goToCharacter } =
     useNavigate();
 
@@ -49,6 +52,9 @@ const Dashboard = () => {
                 error={error}
                 onEdit={handleEditCharacter}
               />
+              <div>
+                <UsersList users={users} loading={loading} error={error} />
+              </div>
             </div>
           ) : (
             <div>

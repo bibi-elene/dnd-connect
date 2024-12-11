@@ -23,14 +23,16 @@ const EditCharacter = () => {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<CharacterFormInputs>();
+  
   const [loading, setLoading] = useState(true);
   const [loadingEditSave, setLoadingEditSave] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
+  const [originalUploadedImage, setOriginalUploadedImage] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -52,10 +54,7 @@ const EditCharacter = () => {
         const data = await response.json();
         Object.entries(data).forEach(([key, value]) => {
           if (key === 'image' && value) {
-            // Remove Base64 prefix
             const base64String = (value as string).split(',')[1];
-
-            // Decode Base64 string to create a Blob or File
             const byteCharacters = atob(base64String);
             const byteNumbers = Array.from(byteCharacters).map((char) =>
               char.charCodeAt(0)
@@ -66,9 +65,8 @@ const EditCharacter = () => {
             const file = new File([blob], 'character-image.jpg', {
               type: 'image/jpeg',
             });
-            // if img is not updated, existing image will be used
             setUploadedImage(file);
-            // set the preview image as a URL for rendering
+            setOriginalUploadedImage(file);
             const imageUrl = URL.createObjectURL(blob);
             setPreviewImage(imageUrl);
           } else {
@@ -103,6 +101,14 @@ const EditCharacter = () => {
         setPreviewImage(reader.result as string);
       };
       reader.readAsDataURL(file);
+    } else {
+      if (originalUploadedImage) {
+        const imageUrl = URL.createObjectURL(originalUploadedImage);
+        setPreviewImage(imageUrl);
+        setUploadedImage(originalUploadedImage);
+      } else {
+        setPreviewImage(null);
+      }
     }
   };
 
@@ -145,6 +151,9 @@ const EditCharacter = () => {
       </div>
     );
   }
+
+  const isButtonDisabled =
+    !!fileError || (!isDirty && uploadedImage === originalUploadedImage);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -282,9 +291,9 @@ const EditCharacter = () => {
         </div>
         <button
           type="submit"
-          disabled={!!fileError}
+          disabled={isButtonDisabled}
           className={`w-full py-2 rounded text-white ${
-            fileError
+            isButtonDisabled
               ? 'bg-gray-400 cursor-not-allowed'
               : 'bg-blue-500 hover:bg-blue-600'
           }`}

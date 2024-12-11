@@ -10,7 +10,7 @@ export const apiRoutes = {
     userCharacters: '/api/characters/me',
     character: (id: number) => `/api/characters/${id}`,
   },
-  dashboard: {
-    stats: '/api/dashboard/stats',
+  users: {
+    all: '/api/users',
   },
 };

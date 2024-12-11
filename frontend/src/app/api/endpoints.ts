@@ -11,4 +11,7 @@ export const endpoints = {
     character: (id: number) => `/characters/${id}`,
     create: '/characters',
   },
+  users: {
+    all: '/users',
+  },
 };
