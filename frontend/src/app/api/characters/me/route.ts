@@ -15,10 +15,9 @@ export async function GET(req: Request) {
     const cookies = parse(cookieHeader);
     const accessToken = cookies['access_token'];
 
-    const url = new URL(req.url); // Extract the full URL
-    const limit = url.searchParams.get('limit'); // Extract `limit` query parameter
+    const url = new URL(req.url);
+    const limit = url.searchParams.get('limit');
 
-    // Construct the API URL with optional limit
     const apiUrl = `${API_BASE_URL}${endpoints.characters.userCharacters}${
       limit ? `?limit=${limit}` : ''
     }`;

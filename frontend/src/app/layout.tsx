@@ -13,9 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <AuthProvider>
-          <div
-            className="relative min-h-screen"
-          >
+          <div className="relative min-h-screen">
             <div className="absolute inset-0 bg-black bg-opacity-50"></div>
             <div className="relative z-10">{children}</div>
           </div>

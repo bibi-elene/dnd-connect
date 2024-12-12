@@ -1,25 +1,21 @@
+import { Button, ButtonGroup } from 'react-bootstrap';
+
 interface UserActionProps {
   onViewAll: () => void;
   onCreate?: () => void;
 }
 
 const UserActions: React.FC<UserActionProps> = ({ onViewAll, onCreate }) => (
-  <div className="mb-5">
-    <button
-      onClick={onViewAll}
-      className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition"
-    >
+  <ButtonGroup className="mb-5">
+    <Button variant="primary" className="btn-sm btn-md-lg" onClick={onViewAll}>
       View All Users
-    </button>
+    </Button>
     {onCreate && (
-      <button
-        onClick={onCreate}
-        className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition ml-3"
-      >
+      <Button variant="success" className="btn-sm btn-md-lg" onClick={onCreate}>
         Create New User
-      </button>
+      </Button>
     )}
-  </div>
+  </ButtonGroup>
 );
 
 export default UserActions;

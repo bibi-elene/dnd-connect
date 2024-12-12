@@ -3,6 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-bootstrap';
 import Loading from '@/app/components/widgets/Loading';
 import { CharacterFormInputs } from '@/app/utils/types';
 import Image from 'next/image';
@@ -136,158 +137,155 @@ const EditCharacter = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <Container fluid className="vh-100 d-flex align-items-center justify-content-center bg-light">
         <Loading message="Loading character details..." size="lg" />
-      </div>
+      </Container>
     );
   }
 
   const isButtonDisabled = !!fileError || (!isDirty && uploadedImage === originalUploadedImage);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <ReturnButtons fallbackUrl="/characters" />
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        encType="multipart/form-data"
-        className="bg-white p-6 rounded shadow-md w-full max-w-md"
-      >
-        <h2 className="text-2xl mb-4 text-center">Edit Character</h2>
-        {errorMessage && <p className="text-red-500 mb-2">{errorMessage}</p>}
-        {successMessage && <p className="text-green-500 mb-2">{successMessage}</p>}
-        <div className="mb-4">
-          <label className="block text-gray-700">Name</label>
-          <input
-            type="text"
-            {...register('name', { required: true })}
-            className={`w-full px-3 py-2 border ${
-              errors.name ? 'border-red-500' : 'border-gray-300'
-            } rounded`}
-          />
-          {errors.name && <p className="text-red-500 text-sm">Name is required</p>}
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Class</label>
-          <select
-            {...register('class', { required: true })}
-            className={`w-full px-3 py-2 border ${
-              errors.class ? 'border-red-500' : 'border-gray-300'
-            } rounded`}
-          >
-            <option value="">Select Class</option>
-            {classOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-          {errors.class && <p className="text-red-500 text-sm">Class is required</p>}
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Race</label>
-          <select
-            {...register('race', { required: true })}
-            className={`w-full px-3 py-2 border ${
-              errors.race ? 'border-red-500' : 'border-gray-300'
-            } rounded`}
-          >
-            <option value="">Select Race</option>
-            {raceOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-          {errors.race && <p className="text-red-500 text-sm">Race is required</p>}
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Background</label>
-          <select
-            {...register('background', { required: true })}
-            className={`w-full px-3 py-2 border ${
-              errors.background ? 'border-red-500' : 'border-gray-300'
-            } rounded`}
-          >
-            <option value="">Select Background</option>
-            {backgroundOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-          {errors.background && <p className="text-red-500 text-sm">Background is required</p>}
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Skills</label>
-          <select
-            {...register('skills', { required: true })}
-            className={`w-full px-3 py-2 border ${
-              errors.skills ? 'border-red-500' : 'border-gray-300'
-            } rounded`}
-          >
-            <option value="">Select Skills</option>
-            {skillsOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-          {errors.skills && <p className="text-red-500 text-sm">Skills are required</p>}
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Level</label>
-          <input
-            type="number"
-            {...register('level', { required: true, min: 1 })}
-            className={`w-full px-3 py-2 border ${
-              errors.level ? 'border-red-500' : 'border-gray-300'
-            } rounded`}
-          />
-          {errors.level && (
-            <p className="text-red-500 text-sm">Level is required and must be at least 1</p>
-          )}
-        </div>
-        <div className="mb-6">
-          <label className="block text-gray-700 font-medium mb-2">Upload Avatar</label>
-          <div className="relative group">
-            <input
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={handleImageUpload}
-              className="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"
-            />
-          </div>
-          {fileError && <p className="text-red-500 text-sm mt-2">{fileError}</p>}
-        </div>
-        <button
-          type="submit"
-          disabled={isButtonDisabled}
-          className={`w-full py-2 rounded text-white ${
-            isButtonDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
-          }`}
-        >
-          Save Changes
-        </button>
-      </form>
-      {previewImage && (
-        <div className="bg-gradient-to-br text-black from-green-100 to-green-300 p-6 rounded shadow-md ml-6 w-1/2 max-w-sm flex flex-col items-center">
-          <h3 className="text-xl mb-4 text-center">Character Preview</h3>
-          <Image
-            src={previewImage || ''}
-            width={320}
-            height={480}
-            style={{ maxHeight: '550px' }}
-            alt="Character Preview"
-          />
-        </div>
-      )}
-      {loadingEditSave && (
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
-          <Loading message="" size="md" />
-        </div>
-      )}
-    </div>
+    <Container fluid className="min-vh-100 p-4 d-flex align-items-center bg-light">
+      <Col xs="auto" className=" z-index-3">
+        <ReturnButtons fallbackUrl="/characters" />
+      </Col>
+      <Row className="w-100 mt-5 pt-5 justify-content-center">
+        <Col md={6} lg={4} sm={8} className="mt-2">
+          <Card className="shadow-lg">
+            <Card.Body>
+              <Card.Title className="text-center mb-2">Edit Character</Card.Title>
+              {errorMessage && (
+                <Alert variant="danger" className="text-center">
+                  {errorMessage}
+                </Alert>
+              )}
+              {successMessage && (
+                <Alert variant="success" className="text-center">
+                  {successMessage}
+                </Alert>
+              )}
+              <Form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+                <Form.Group className="mb-2">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    isInvalid={!!errors.name}
+                    {...register('name', { required: true })}
+                  />
+                  <Form.Control.Feedback type="invalid">Name is required</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-2">
+                  <Form.Label>Class</Form.Label>
+                  <Form.Select
+                    isInvalid={!!errors.class}
+                    {...register('class', { required: true })}
+                  >
+                    <option value="">Select Class</option>
+                    {classOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </Form.Select>
+                  <Form.Control.Feedback type="invalid">Class is required</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-2">
+                  <Form.Label>Race</Form.Label>
+                  <Form.Select isInvalid={!!errors.race} {...register('race', { required: true })}>
+                    <option value="">Select Race</option>
+                    {raceOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </Form.Select>
+                  <Form.Control.Feedback type="invalid">Race is required</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-2">
+                  <Form.Label>Background</Form.Label>
+                  <Form.Select
+                    isInvalid={!!errors.background}
+                    {...register('background', { required: true })}
+                  >
+                    <option value="">Select Background</option>
+                    {backgroundOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </Form.Select>
+                  <Form.Control.Feedback type="invalid">
+                    Background is required
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-2">
+                  <Form.Label>Skills</Form.Label>
+                  <Form.Select
+                    isInvalid={!!errors.skills}
+                    {...register('skills', { required: true })}
+                  >
+                    <option value="">Select Skills</option>
+                    {skillsOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </Form.Select>
+                  <Form.Control.Feedback type="invalid">Skills are required</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-2">
+                  <Form.Label>Level</Form.Label>
+                  <Form.Control
+                    type="number"
+                    isInvalid={!!errors.level}
+                    {...register('level', { required: true, min: 1 })}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Level is required and must be at least 1
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-2">
+                  <Form.Label>Upload Avatar</Form.Label>
+                  <Form.Control
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    isInvalid={!!fileError}
+                  />
+                  {fileError && <div className="text-danger">{fileError}</div>}
+                </Form.Group>
+                <Button
+                  type="submit"
+                  disabled={isButtonDisabled}
+                  className="w-100"
+                  variant={isButtonDisabled ? 'secondary' : 'primary'}
+                >
+                  {loadingEditSave ? <Spinner animation="border" size="sm" /> : 'Save Changes'}
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+        {previewImage && (
+          <Col md={6} lg={4} sm={8} className="text-center mt-2">
+            <Card>
+              <Card.Body className="d-flex flex-column">
+                <Card.Title>Character Preview</Card.Title>
+                <Image
+                  src={previewImage}
+                  alt="Preview"
+                  width={300}
+                  height={400}
+                  className="align-self-center"
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+        )}
+      </Row>
+    </Container>
   );
 };
 

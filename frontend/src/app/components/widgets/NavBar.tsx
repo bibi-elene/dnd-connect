@@ -32,7 +32,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, logout }) => {
   }, [isDropdownOpen]);
 
   return (
-    <nav className="navbar fixed top-0 left-0 w-full z-50">
+    <nav className="navbar top-0 left-0 w-full z-50">
       <div className="navbar-container container mx-auto">
         <div className="navbar-links">
           <a href="#" className="navbar-link">

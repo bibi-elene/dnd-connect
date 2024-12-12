@@ -2,6 +2,7 @@
 
 import { useNavigate } from '@/app/utils/navigation';
 import { useRouter } from 'next/navigation';
+import { Button, ButtonGroup, Container } from 'react-bootstrap';
 
 interface ReturnButtonsProps {
   fallbackUrl?: string;
@@ -27,23 +28,26 @@ const ReturnButtons: React.FC<ReturnButtonsProps> = ({
   };
 
   return (
-    <div className="absolute top-10 left-10 flex space-x-4">
-      <button
-        onClick={withDashboardButton ? handleBack : () => router.push('/')}
-        className={`bg-gray-500 text-white px-3 py-1.5 rounded shadow-lg hover:bg-gray-600 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 ${className}`}
-      >
-        &#8592; {buttonText}
-      </button>
-
-      {withDashboardButton && (
-        <button
-          onClick={goToDashboard}
-          className="bg-blue-500 text-white px-3 py-1.5 rounded shadow-lg hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+    <Container
+      fluid
+      className={`position-fixed top-0 start-0 p-3 d-flex ${className}`}
+      style={{ zIndex: 3 }}
+    >
+      <ButtonGroup>
+        <Button
+          variant="secondary"
+          onClick={withDashboardButton ? handleBack : () => router.push('/')}
+          className="me-2 rounded pe-4"
         >
-          Dashboard
-        </button>
-      )}
-    </div>
+          &#8592; {buttonText}
+        </Button>
+        {withDashboardButton && (
+          <Button variant="primary" onClick={goToDashboard} className="rounded">
+            Dashboard
+          </Button>
+        )}
+      </ButtonGroup>
+    </Container>
   );
 };
 

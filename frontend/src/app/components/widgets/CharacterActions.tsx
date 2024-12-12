@@ -1,25 +1,29 @@
+import { Button, ButtonGroup } from 'react-bootstrap';
+
 interface CharacterActionsProps {
   onViewAll: () => void;
   onCreate?: () => void;
 }
 
 const CharacterActions: React.FC<CharacterActionsProps> = ({ onViewAll, onCreate }) => (
-  <div className="mb-5">
-    <button
+  <ButtonGroup className="mb-5">
+    <Button
+      variant="primary"
+      className="btn-sm rounded me-2 btn-md-lg shadow rounded-lg bg-blue-500 hover:bg-blue-600 transition px-4 py-2"
       onClick={onViewAll}
-      className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition"
     >
       View All Characters
-    </button>
+    </Button>
     {onCreate && (
-      <button
+      <Button
+        variant="success"
+        className="btn-sm rounded btn-md-lg shadow rounded-lg bg-green-500 hover:bg-green-600 transition px-4 py-2"
         onClick={onCreate}
-        className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition ml-3"
       >
         Create New Character
-      </button>
+      </Button>
     )}
-  </div>
+  </ButtonGroup>
 );
 
 export default CharacterActions;

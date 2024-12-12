@@ -13,6 +13,7 @@ import ReturnButtons from '../components/widgets/ReturnButtons';
 import { useFetchUsers } from '../hooks/useFetchUsers';
 import UsersList from '../components/widgets/UsersList';
 import UserActions from '../components/widgets/UserActions';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import './dashboard.styles.scss';
 
 const Dashboard = () => {
@@ -44,7 +45,7 @@ const Dashboard = () => {
 
   return (
     <div
-      className="relative min-h-screen  p-6 flex items-center justify-center"
+      className="vh-100 d-flex align-items-center justify-content-center"
       style={{
         backgroundImage: `url('/assets/camp.jpg')`,
         backgroundSize: 'cover',
@@ -52,54 +53,57 @@ const Dashboard = () => {
         backgroundPosition: 'center',
       }}
     >
-      <ReturnButtons withDashboardButton={false} buttonText="Home" />
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
-        <Header
-          title={user?.role === ROLES.ADMIN ? 'Admin Panel' : 'Dashboard'}
-          username={user?.username}
-          onLogout={logout}
-        />
-
-        <main>
-          {user?.role === ROLES.ADMIN ? (
-            <div className="flex">
-              <div className="w-1/2 pr-4">
-                <h2 className="text-xl font-semibold mb-4">Characters</h2>
-                <CharacterActions onViewAll={handleViewAllCharacters} />
-                <CharacterList
-                  characters={characters}
-                  loading={loading}
-                  error={error}
-                  onEdit={handleEditCharacter}
-                />
-              </div>
-              <div className="w-1/2 pl-4">
-                <h2 className="text-xl font-semibold mb-4">Users</h2>
-                <UserActions onViewAll={handleViewAllUsers} />
-                <UsersList
-                  users={users}
-                  loading={loading}
-                  error={error}
-                  onEditUser={handleEditUser}
-                />
-              </div>
-            </div>
-          ) : (
-            <div>
-              <CharacterActions
-                onViewAll={handleViewAllCharacters}
-                onCreate={handleCreateCharacter}
-              />
-              <CharacterList
-                characters={characters}
-                loading={loading}
-                error={error}
-                onEdit={handleEditCharacter}
-              />
-            </div>
-          )}
-        </main>
-      </div>
+      <Container className="d-flex justify-center">
+        <ReturnButtons withDashboardButton={false} buttonText="Home" />
+        <Card className="shadow-lg col-md-8 p-4 rounded">
+          <Header
+            title={user?.role === ROLES.ADMIN ? 'Admin Panel' : 'Dashboard'}
+            username={user?.username}
+            onLogout={logout}
+          />
+          <main>
+            {user?.role === ROLES.ADMIN ? (
+              <Row>
+                <Col md={6}>
+                  <h2 className="h5 mb-3">Characters</h2>
+                  <CharacterActions onViewAll={handleViewAllCharacters} />
+                  <CharacterList
+                    characters={characters}
+                    loading={loading}
+                    error={error}
+                    onEdit={handleEditCharacter}
+                  />
+                </Col>
+                <Col md={6}>
+                  <h2 className="h5 mb-3">Users</h2>
+                  <UserActions onViewAll={handleViewAllUsers} />
+                  <UsersList
+                    users={users}
+                    loading={loading}
+                    error={error}
+                    onEditUser={handleEditUser}
+                  />
+                </Col>
+              </Row>
+            ) : (
+              <Row>
+                <Col>
+                  <CharacterActions
+                    onViewAll={handleViewAllCharacters}
+                    onCreate={handleCreateCharacter}
+                  />
+                  <CharacterList
+                    characters={characters}
+                    loading={loading}
+                    error={error}
+                    onEdit={handleEditCharacter}
+                  />
+                </Col>
+              </Row>
+            )}
+          </main>
+        </Card>
+      </Container>
     </div>
   );
 };
