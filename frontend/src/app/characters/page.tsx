@@ -1,23 +1,20 @@
 'use client';
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import ProtectedRoute from '../components/ProtectedRoute';
-import { ROLES } from '../utils/constants';
 import Loading from '../components/widgets/Loading';
-import { Character } from '../utils/types';
 import Image from 'next/image';
 import EditButton from '../components/widgets/EditButton';
 import ReturnButtons from '../components/widgets/ReturnButtons';
 import { useNavigate } from '../utils/navigation';
-import { apiRoutes } from '../api/apiRoutes';
 import { useFetchCharacters } from '../hooks/useFetchCharacters';
 
 const CharactersList = () => {
   const { user } = useContext(AuthContext);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage] = useState('');
   const { goToCharacter } = useNavigate();
-  const { characters, error, loading } = useFetchCharacters(user);
+  const { characters, loading } = useFetchCharacters(user);
 
   if (!user || loading) {
     return (

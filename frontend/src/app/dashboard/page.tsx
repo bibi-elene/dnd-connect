@@ -13,6 +13,7 @@ import ReturnButtons from '../components/widgets/ReturnButtons';
 import { useFetchUsers } from '../hooks/useFetchUsers';
 import UsersList from '../components/widgets/UsersList';
 import UserActions from '../components/widgets/UserActions';
+import './dashboard.styles.scss';
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
@@ -42,9 +43,17 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 p-6 flex items-center justify-center">
+    <div
+      className="relative min-h-screen  p-6 flex items-center justify-center"
+      style={{
+        backgroundImage: `url('/assets/camp.jpg')`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+      }}
+    >
       <ReturnButtons withDashboardButton={false} buttonText="Home" />
-      <div className="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg w-full max-w-4xl">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
         <Header
           title={user?.role === ROLES.ADMIN ? 'Admin Panel' : 'Dashboard'}
           username={user?.username}
