@@ -49,17 +49,6 @@ select {
   margin: 0;
 }
 
-a {
-  color: inherit;
-  text-decoration: none !important;
-  border: none !important;
-  color: white;
-}
-
-a:hover {
-  opacity: 80% !important;
-}
-
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

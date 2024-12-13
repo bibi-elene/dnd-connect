@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Navbar, Nav, Container, Dropdown, Button } from 'react-bootstrap';
 import { useNavigate } from '@/app/utils/navigation';
 import { DropDownArrowIcon } from '../icons/DropDownArrowIcon';
 import './NavBar.styles.scss';
@@ -10,75 +10,49 @@ interface NavbarProps {
   logout: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ user, logout }) => {
+const CustomNavbar: React.FC<NavbarProps> = ({ user, logout }) => {
   const { goToLogin, goToDashboard } = useNavigate();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (!target.closest('#account-dropdown')) {
-        setIsDropdownOpen(false);
-      }
-    };
-
-    if (isDropdownOpen) {
-      document.addEventListener('click', handleOutsideClick);
-    }
-
-    return () => {
-      document.removeEventListener('click', handleOutsideClick);
-    };
-  }, [isDropdownOpen]);
 
   return (
-    <nav className="navbar top-0 left-0 w-full z-50">
-      <div className="navbar-container container mx-auto">
-        <div className="navbar-links">
-          <a href="#" className="navbar-link">
-            Home
-          </a>
-          <a href="#features" className="navbar-link">
-            Features
-          </a>
-          <a href="#about" className="navbar-link">
-            About
-          </a>
-          <a href="#contact" className="navbar-link">
-            Contact
-          </a>
-        </div>
+    <Navbar bg="dark" variant="dark" expand="lg" fixed="top" className="shadow">
+      <Container>
+        <Navbar.Brand href="#">D&D Connect</Navbar.Brand>
 
-        <div id="account-dropdown" className="account-dropdown">
-          {user ? (
-            <div>
-              <button
-                className="flex navbar-user items-center space-x-2 focus:outline-none group"
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              >
-                {user.username}
-                <DropDownArrowIcon />
-              </button>
-              {isDropdownOpen && (
-                <div className="account-dropdown-menu">
-                  <button onClick={goToDashboard}>
-                    <span>Account Settings</span>
-                  </button>
-                  <button onClick={logout}>
-                    <span>Log Out</span>
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <button onClick={goToLogin} className="navbar-user">
-              Log In
-            </button>
-          )}
-        </div>
-      </div>
-    </nav>
+        <Navbar.Toggle aria-controls="navbar-nav" />
+
+        <Navbar.Collapse id="navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="#classes">Classes</Nav.Link>
+            <Nav.Link href="#races">Species</Nav.Link>
+            <Nav.Link href="#review">Contacts</Nav.Link>
+          </Nav>
+
+          <Nav>
+            {user ? (
+              <Dropdown align="end">
+                <Dropdown.Toggle
+                  variant="outline-light"
+                  id="account-dropdown"
+                  className="d-flex align-items-center"
+                >
+                  {user.username}
+                  <DropDownArrowIcon />
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="dropdown-menu-end">
+                  <Dropdown.Item onClick={goToDashboard}>Account Settings</Dropdown.Item>
+                  <Dropdown.Item onClick={logout}>Log Out</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            ) : (
+              <Button variant="outline-light" onClick={goToLogin}>
+                Log In
+              </Button>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
 
-export default Navbar;
+export default CustomNavbar;

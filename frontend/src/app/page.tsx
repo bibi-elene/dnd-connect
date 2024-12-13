@@ -1,13 +1,12 @@
 'use client';
 
 import { useContext, useMemo } from 'react';
-import { Container, Row, Col, Button, Card, Form } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { AuthContext } from './context/AuthContext';
 import DiceRoller from './components/DiceRoller/DiceRoller';
 import Navbar from './components/widgets/NavBar';
 import JoinUsButton from './components/widgets/JoinButton';
 import Loading from './components/widgets/Loading';
-import { characterClasses, characterRaces } from './utils/constants';
 import './page.styles.scss';
 import CharacterClassesCards from './components/landingPage/CharacterClassesCards';
 import CharacterRacesCards from './components/landingPage/CharacterRacesCards';

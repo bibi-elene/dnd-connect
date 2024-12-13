@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { characterClasses } from '@/app/utils/constants';
-import { Container, Row, Col, Card, Modal, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Modal } from 'react-bootstrap';
+import Image from 'next/image';
 interface CharacterClass {
   name: string;
   img: string;
@@ -8,8 +9,8 @@ interface CharacterClass {
   details: string;
 }
 const CharacterClassesCards = () => {
-  const [selectedClass, setSelectedClass] = useState<CharacterClass | null>(null); 
-  const [showModal, setShowModal] = useState(false); 
+  const [selectedClass, setSelectedClass] = useState<CharacterClass | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   const handleShow = (cls: any) => {
     setSelectedClass(cls);
@@ -45,7 +46,7 @@ const CharacterClassesCards = () => {
             <Col md={6} lg={3} key={idx} className="mb-4">
               <Card
                 className="bg-dark text-white border-0 card-img"
-                onClick={() => handleShow(cls)} 
+                onClick={() => handleShow(cls)}
                 style={{ cursor: 'pointer' }}
               >
                 <Card.Img src={cls.img} alt={cls.name} />
@@ -59,34 +60,34 @@ const CharacterClassesCards = () => {
       </Container>
 
       {selectedClass && (
-  <Modal size='lg' show={showModal} onHide={handleClose} centered className="custom-modal">
-    <Modal.Header closeButton className='text-white'>
-      <Modal.Title className="text-white ml-5">{selectedClass.name}</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-      <Container fluid>
-        <Row className="align-items-center">
-          <Col md={6} className="text-center">
-            <img
-              src={selectedClass.img}
-              alt={selectedClass.name}
-              className="img-fluid rounded shadow"
-            />
-          </Col>
-          <Col md={6}>
-            <h5 className="text-white mb-3">{selectedClass.description}</h5>
-            <p className="text-white">
-              <strong>Details:</strong> {selectedClass.details}
-            </p>
-          </Col>
-        </Row>
-      </Container>
-    </Modal.Body>
-    <Modal.Footer>
-    </Modal.Footer>
-  </Modal>
-)}
-
+        <Modal size="lg" show={showModal} onHide={handleClose} centered className="custom-modal">
+          <Modal.Header closeButton className="text-white">
+            <Modal.Title className="text-white ml-5">{selectedClass.name}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Container fluid>
+              <Row className="align-items-center">
+                <Col md={6} className="text-center">
+                  <Image
+                    src={selectedClass.img}
+                    alt={selectedClass.name}
+                    className="img-fluid rounded shadow"
+                    width={400}
+                    height={100}
+                  />
+                </Col>
+                <Col md={6}>
+                  <h5 className="text-white mb-3">{selectedClass.description}</h5>
+                  <p className="text-white">
+                    <strong>Details:</strong> {selectedClass.details}
+                  </p>
+                </Col>
+              </Row>
+            </Container>
+          </Modal.Body>
+          <Modal.Footer></Modal.Footer>
+        </Modal>
+      )}
     </section>
   );
 };

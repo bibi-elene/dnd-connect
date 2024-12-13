@@ -95,14 +95,44 @@ export const characterClasses = [
 ];
 
 export const characterRaces = [
-  { name: 'Elf', description: 'Graceful and wise.', img: '/assets/fighter_human.jpg' },
-  { name: 'Dwarf', description: 'Stout and sturdy.', img: '/assets/fighter_human.jpg' },
-  { name: 'Dwarf', description: 'Stout and sturdy.', img: '/assets/fighter_human.jpg' },
-  { name: 'Dwarf', description: 'Stout and sturdy.', img: '/assets/fighter_human.jpg' },
-  { name: 'Dwarf', description: 'Stout and sturdy.', img: '/assets/fighter_human.jpg' },
+  { name: 'Human', description: 'Versatile and ambitious.', img: '/assets/human.jpg' },
+  { name: 'Elf', description: 'Graceful and wise.', img: '/assets/elf.jpg' },
+  { name: 'Dwarf', description: 'Stout and sturdy.', img: '/assets/dwarf.jpg' },
+  { name: 'Halfling', description: 'Small, nimble, and resourceful.', img: '/assets/halfling.jpg' },
   {
-    name: 'Human',
-    description: 'Versatile and ambitious.',
-    img: '/assets/fighter_human.jpg',
+    name: 'Dragonborn',
+    description: 'Born of dragons, proud and strong.',
+    img: '/assets/dragonborn.jpg',
+  },
+  {
+    name: 'Tiefling',
+    description: 'Fiendish ancestry with a touch of infernal power.',
+    img: '/assets/tiefling.jpg',
+  },
+  {
+    name: 'Half-Orc',
+    description: 'Strong and resilient, with a savage grace.',
+    img: '/assets/halforc.jpg',
+  },
+  { name: 'Gnome', description: 'Inventive and curious.', img: '/assets/gnome.jpg' },
+  {
+    name: 'Half-Elf',
+    description: 'A blend of human ambition and elven grace.',
+    img: '/assets/halfelf.jpg',
+  },
+  {
+    name: 'Aasimar',
+    description: 'Celestial beings with a divine purpose.',
+    img: '/assets/aasimar.jpg',
+  },
+  {
+    name: 'Genasi',
+    description: 'Mortals touched by elemental planes.',
+    img: '/assets/genasi.jpg',
+  },
+  {
+    name: 'Firbolg',
+    description: 'Gentle giants with a strong connection to nature.',
+    img: '/assets/firbolg.jpg',
   },
 ];
