@@ -1,0 +1,10 @@
+.card-img:hover {
+  transform: scale(1.1); /* Zoom effect */
+  transition: transform 0.3s ease, filter 0.3s ease; /* Smooth zoom and brightness transition */
+  filter: brightness(1.2); /* Make the image brighter */
+}
+
+.card-img {
+  transition: transform 0.3s ease, filter 0.3s ease !important; /* Apply transitions on hover */
+  filter: brightness(0.8) !important; /* Slightly darken image initially */
+}

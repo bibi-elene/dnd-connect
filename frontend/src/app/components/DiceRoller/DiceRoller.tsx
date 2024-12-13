@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import DiceBox from '@3d-dice/dice-box';
+import { Container, Row, Col, Button, Spinner } from 'react-bootstrap';
 import './DiceRoller.styles.scss';
 
 const DiceRoller = () => {
@@ -75,16 +76,22 @@ const DiceRoller = () => {
   };
 
   return (
-    <div className="dice-box-container">
-      <div id="dice-box" />
-      <button
-        onClick={rollDice}
-        disabled={!isDiceBoxReady}
-        className="roll-dice-button main-button px-4 py-2"
-      >
-        Roll Dice
-      </button>
-    </div>
+    <>
+      <Container fluid>
+        <div className="dice-box-container">
+          <div id="dice-box" className="w-100 h-100"></div>
+        </div>
+
+        <Button
+          onClick={rollDice}
+          disabled={!isDiceBoxReady}
+          className="roll-dice-button"
+          variant="dark"
+        >
+          {isDiceBoxReady ? 'Roll Dice' : <Spinner animation="border" size="sm" />}
+        </Button>
+      </Container>
+    </>
   );
 };
 
