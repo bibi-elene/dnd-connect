@@ -10,6 +10,7 @@ export const classOptions = ['Fighter', 'Mage', 'Rogue'];
 export const raceOptions = ['Elf', 'Orc', 'Human'];
 export const backgroundOptions = ['Noble', 'Acolyte', 'Folk-Hero', 'Thief'];
 export const skillsOptions = ['History', 'Athletics', 'Survival', 'Performance'];
+export const diceTypes = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'd100'];
 
 export const characterImages: Record<string, Record<string, string>> = {
   Fighter: {

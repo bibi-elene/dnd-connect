@@ -39,12 +39,18 @@
   transform: scale(1.1);
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
-
-.roll-dice-button {
+.dice-buttons {
   position: fixed;
   right: 20px;
   bottom: 20px;
   z-index: 999;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.roll-dice-button {
   font-family: 'Cinzel Decorative';
   background: linear-gradient(45deg, #0f6b4090, #02290ac2);
   color: white;
@@ -61,6 +67,13 @@
     background 0.3s ease;
 }
 
+#dice-type-dropdown,
+#dice-count-dropdown {
+  width: 75px !important;
+  height: 40px !important;
+  font-size: 12px !important;
+}
+
 .roll-dice-button:hover {
   transform: scale(1.1);
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
@@ -75,4 +88,13 @@
   content: '🎲';
   margin-right: 8px;
   font-size: 1.4rem;
+}
+
+.roll-results {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  align-items: start;
+  display: flex;
+  width: 400px;
 }

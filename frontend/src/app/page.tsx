@@ -49,7 +49,7 @@ export default function Home() {
               <JoinUsButton homeButtonText={homeButtonText} />
               <DiceRoller />
               <p className="lead mb-4">
-                Your gateway to thrilling adventures and a vibrant D&D community.
+                Your gateway to exciting adventures and a vibrant D&D community
               </p>
             </Col>
           </Row>
