@@ -1,16 +1,27 @@
+* {
+  font-family: 'Montserrat';
+}
 .card-img {
   position: relative;
   transition:
     transform 0.3s ease,
     filter 0.3s ease !important;
-  filter: brightness(0.8) !important;
-  height: 400px;
-  width: 100%;
+  filter: brightness(1) !important;
+  object-fit: cover; 
+  width: 100%; 
+  height: 250px; 
 }
 
 .card-img:hover {
   transform: scale(1.02) !important;
   filter: brightness(1.8) !important;
+}
+
+.card {
+  height: 100%; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between; 
 }
 
 .card-img-overlay {
@@ -39,4 +50,44 @@
 .card-text {
   font-size: 1rem;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.custom-modal .modal-content {
+  background: linear-gradient(to bottom, #3f1111, #741010c3);
+  border: none; 
+}
+
+.custom-modal .modal-header,
+.modal-footer {
+  border: none; 
+}
+
+.btn-close {
+  background-color: rgba(255, 255, 255, 0.536) !important;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+}
+
+.text-white {
+  color: white !important; 
+}
+
+.modal-title {
+  font-size: 2rem;
+  position: relative; 
+  display: inline-block; 
+}
+
+.modal-title::after {
+  content: ''; 
+  position: absolute;
+  bottom: -8px; 
+  left: 0;
+  width: 100%; 
+  height: 2px; 
+  background: white; 
 }
