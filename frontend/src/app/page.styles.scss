@@ -1,10 +1,42 @@
-.card-img:hover {
-  transform: scale(1.1); /* Zoom effect */
-  transition: transform 0.3s ease, filter 0.3s ease; /* Smooth zoom and brightness transition */
-  filter: brightness(1.2); /* Make the image brighter */
+.card-img {
+  position: relative;
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease !important;
+  filter: brightness(0.8) !important;
+  height: 400px;
+  width: 100%;
 }
 
-.card-img {
-  transition: transform 0.3s ease, filter 0.3s ease !important; /* Apply transitions on hover */
-  filter: brightness(0.8) !important; /* Slightly darken image initially */
+.card-img:hover {
+  transform: scale(1.02) !important;
+  filter: brightness(1.8) !important;
+}
+
+.card-img-overlay {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+  transition: background 0.3s ease;
+}
+
+.card-img:hover + .card-img-overlay {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
+}
+
+.card-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+}
+
+.card-text {
+  font-size: 1rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }

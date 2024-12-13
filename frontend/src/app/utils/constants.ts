@@ -36,29 +36,26 @@ export const characterClasses = [
     img: '/assets/fighter.jpg',
   },
   {
-    name: 'Wizard',
-    description: 'A scholarly magic-user capable of manipulating reality.',
-    img: '/assets/wizard.jpg',
-  },
-  {
-    name: 'Rogue',
-    description: 'A scoundrel who uses stealth and trickery.',
-    img: '/assets/rogue.jpg',
-  },
-  {
     name: 'Cleric',
     description: 'A priestly champion wielding divine magic.',
     img: '/assets/cleric.jpg',
+  },
+
+  {
+    name: 'Paladin',
+    description: 'A holy warrior bound to a sacred oath.',
+    img: '/assets/paladin.jpg',
   },
   {
     name: 'Barbarian',
     description: 'A fierce warrior who can enter a battle rage.',
     img: '/assets/barbarian.jpg',
   },
+
   {
-    name: 'Paladin',
-    description: 'A holy warrior bound to a sacred oath.',
-    img: '/assets/paladin.jpg',
+    name: 'Warlock',
+    description: 'A wielder of magic derived from a pact with an otherworldly being.',
+    img: '/assets/warlock.jpg',
   },
   {
     name: 'Ranger',
@@ -66,19 +63,24 @@ export const characterClasses = [
     img: '/assets/ranger.jpg',
   },
   {
+    name: 'Wizard',
+    description: 'A scholarly magic-user capable of manipulating reality.',
+    img: '/assets/wizard.jpg',
+  },
+  {
     name: 'Sorcerer',
     description: 'A spellcaster who draws magic from innate ability.',
     img: '/assets/sorcerer.jpg',
   },
   {
-    name: 'Warlock',
-    description: 'A wielder of magic derived from a pact with an otherworldly being.',
-    img: '/assets/warlock.jpg',
-  },
-  {
     name: 'Monk',
     description: 'A master of martial arts and spiritual discipline.',
     img: '/assets/monk.jpg',
+  },
+  {
+    name: 'Rogue',
+    description: 'A scoundrel who uses stealth and trickery.',
+    img: '/assets/rogue.jpg',
   },
   {
     name: 'Druid',
@@ -89,5 +91,18 @@ export const characterClasses = [
     name: 'Bard',
     description: 'A performer who weaves magic through music and storytelling.',
     img: '/assets/bard.jpg',
+  },
+];
+
+export const characterRaces = [
+  { name: 'Elf', description: 'Graceful and wise.', img: '/assets/fighter_human.jpg' },
+  { name: 'Dwarf', description: 'Stout and sturdy.', img: '/assets/fighter_human.jpg' },
+  { name: 'Dwarf', description: 'Stout and sturdy.', img: '/assets/fighter_human.jpg' },
+  { name: 'Dwarf', description: 'Stout and sturdy.', img: '/assets/fighter_human.jpg' },
+  { name: 'Dwarf', description: 'Stout and sturdy.', img: '/assets/fighter_human.jpg' },
+  {
+    name: 'Human',
+    description: 'Versatile and ambitious.',
+    img: '/assets/fighter_human.jpg',
   },
 ];

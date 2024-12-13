@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import DiceBox from '@3d-dice/dice-box';
-import { Container, Row, Col, Button, Spinner } from 'react-bootstrap';
+import { Container, Button, Spinner } from 'react-bootstrap';
 import './DiceRoller.styles.scss';
 
 const DiceRoller = () => {

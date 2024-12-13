@@ -7,10 +7,7 @@ import DiceRoller from './components/DiceRoller/DiceRoller';
 import Navbar from './components/widgets/NavBar';
 import JoinUsButton from './components/widgets/JoinButton';
 import Loading from './components/widgets/Loading';
-import About from './components/landingPage/About';
-import Features from './components/landingPage/Features';
-import Contact from './components/landingPage/Contacts';
-import { characterClasses } from './utils/constants';
+import { characterClasses, characterRaces } from './utils/constants';
 import './page.styles.scss';
 
 export default function Home() {
@@ -30,7 +27,7 @@ export default function Home() {
       <header>
         <Navbar user={user} logout={logout} />
       </header>
-      {/* Hero Section */}
+
       <section
         className="d-flex align-items-center justify-content-center text-center position-relative vh-100"
         style={{
@@ -57,7 +54,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Classes Section */}
       <section
         id="classes"
         className="py-5 position-relative"
@@ -78,14 +74,10 @@ export default function Home() {
           </h2>
           <Row>
             {characterClasses.map((cls, idx) => (
-              <Col md={6} lg={4} key={idx} className="mb-4">
-                <Card className="bg-dark text-white border-0">
-                  <Card.Img
-                    src={cls.img}
-                    alt={cls.name}
-                    style={{ opacity: 0.5, width: '100%', height: '450px', objectFit: 'cover' }}
-                  />
-                  <Card.ImgOverlay>
+              <Col md={6} lg={3} key={idx} className="mb-4">
+                <Card className="bg-dark text-white border-0 card-img">
+                  <Card.Img src={cls.img} alt={cls.name} />
+                  <Card.ImgOverlay className="card-img-overlay">
                     <Card.Title className="display-6 fw-bold">{cls.name}</Card.Title>
                     <Card.Text>{cls.description}</Card.Text>
                   </Card.ImgOverlay>
@@ -96,7 +88,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Races Section */}
       <section
         id="races"
         className="py-5 position-relative"
@@ -116,25 +107,13 @@ export default function Home() {
             Races
           </h2>
           <Row>
-            {[
-              { name: 'Elf', description: 'Graceful and wise.', img: '/assets/fighter_human.jpg' },
-              { name: 'Dwarf', description: 'Stout and sturdy.', img: '/assets/fighter_human.jpg' },
-              { name: 'Dwarf', description: 'Stout and sturdy.', img: '/assets/fighter_human.jpg' },
-              { name: 'Dwarf', description: 'Stout and sturdy.', img: '/assets/fighter_human.jpg' },
-              { name: 'Dwarf', description: 'Stout and sturdy.', img: '/assets/fighter_human.jpg' },
-              {
-                name: 'Human',
-                description: 'Versatile and ambitious.',
-                img: '/assets/fighter_human.jpg',
-              },
-            ].map((race, idx) => (
-              <Col md={6} lg={4} key={idx} className="mb-4">
-                <Card className="bg-dark text-white border-0">
+            {characterRaces.map((race, idx) => (
+              <Col md={6} lg={3} key={idx} className="mb-4">
+                <Card className="bg-dark text-white border-0 card-img">
                   <Card.Img
                     src={race.img}
                     alt={race.name}
-                    className='card-img'
-                    style={{ opacity: 0.5, width: '100%', height: '450px', objectFit: 'cover' }}
+                    style={{ opacity: 0.5, width: '100%', height: '450px', objectFit: 'contain' }}
                   />
                   <Card.ImgOverlay>
                     <Card.Title className="display-6 fw-bold">{race.name}</Card.Title>
@@ -147,7 +126,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Review Section */}
       <section
         id="review"
         className="py-5 position-relative"
