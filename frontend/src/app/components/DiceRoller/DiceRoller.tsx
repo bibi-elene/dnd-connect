@@ -4,12 +4,15 @@ import { Container, Button, Spinner, Dropdown, DropdownButton, Row, Col } from '
 import './DiceRoller.styles.scss';
 import { diceTypes } from '@/app/utils/constants';
 
-const DiceRoller = () => {
+interface DiceCookieProps {
+  isDiceVisible: boolean;
+}
+const DiceRoller: React.FC<DiceCookieProps> = ({ isDiceVisible }) => {
   const diceBoxRef = useRef<DiceBox | null>(null);
   const [isDiceBoxReady, setIsDiceBoxReady] = useState(false);
-  const [selectedDiceType, setSelectedDiceType] = useState('d20'); // Default dice type
-  const [selectedDiceCount, setSelectedDiceCount] = useState(2); // Default dice count
-  const [rollResults, setRollResults] = useState<number[]>([]); // State to store roll results
+  const [selectedDiceType, setSelectedDiceType] = useState('d20');
+  const [selectedDiceCount, setSelectedDiceCount] = useState(2);
+  const [rollResults, setRollResults] = useState<number[]>([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -18,7 +21,6 @@ const DiceRoller = () => {
       try {
         const container = document.querySelector('#dice-box');
         if (!container) {
-          console.error('DiceBox container not found');
           return;
         }
 
@@ -49,12 +51,6 @@ const DiceRoller = () => {
           onRollComplete: (results) => {
             if (isMounted) {
               setRollResults(results.map((result) => result.value));
-
-              setTimeout(() => {
-                if (diceBoxRef.current) {
-                  diceBoxRef.current.clear();
-                }
-              }, 3000);
             }
           },
         });
@@ -85,13 +81,19 @@ const DiceRoller = () => {
     if (isDiceBoxReady && diceBoxRef.current) {
       const rollString = `${selectedDiceCount}${selectedDiceType}`;
       diceBoxRef.current.roll(rollString);
-      setRollResults([]); // Clear previous results
+    }
+  };
+
+  const clearResults = () => {
+    if (isDiceBoxReady && diceBoxRef.current) {
+      diceBoxRef.current.clear();
+      setRollResults([]);
     }
   };
 
   return (
     <>
-      <Container fluid>
+      <Container fluid className={!isDiceVisible ? `d-none` : ''}>
         <div className="dice-box-container">
           <div id="dice-box" className="w-100 h-100"></div>
         </div>
@@ -138,8 +140,11 @@ const DiceRoller = () => {
           </Button>
         </div>
         <Row className="roll-results mt-3">
-          <Col xs={12} md={8} lg={6} className="text-center text-white rounded shadow">
-            <h5 className="fw-bold">Roll Results: {rollResults.join(', ') || ''}</h5>
+          <Col xs={4} md={4} lg={4} className="text-center text-white rounded shadow">
+            <h5 className="fw-bold">Result: {rollResults.join(', ') || ''}</h5>
+            <Button variant="danger" onClick={clearResults}>
+              Clear
+            </Button>
           </Col>
         </Row>
       </Container>

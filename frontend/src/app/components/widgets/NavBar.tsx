@@ -1,6 +1,6 @@
 'use client';
 
-import { Navbar, Nav, Container, Dropdown, Button } from 'react-bootstrap';
+import { Navbar, Nav, Container, Dropdown, Button, Form } from 'react-bootstrap';
 import { useNavigate } from '@/app/utils/navigation';
 import { DropDownArrowIcon } from '../icons/DropDownArrowIcon';
 import './NavBar.styles.scss';
@@ -8,11 +8,17 @@ import './NavBar.styles.scss';
 interface NavbarProps {
   user: { username: string } | null;
   logout: () => void;
+  toggleDiceDisplay: () => void;
+  isDiceVisible: boolean;
 }
-
-const CustomNavbar: React.FC<NavbarProps> = ({ user, logout }) => {
+const CustomNavbar: React.FC<NavbarProps> = ({
+  user,
+  logout,
+  toggleDiceDisplay,
+  isDiceVisible,
+}) => {
   const { goToLogin, goToDashboard } = useNavigate();
-
+  console.log(isDiceVisible, 'jere');
   return (
     <Navbar bg="dark" variant="dark" expand="lg" fixed="top" className="shadow">
       <Container>
@@ -27,7 +33,16 @@ const CustomNavbar: React.FC<NavbarProps> = ({ user, logout }) => {
             <Nav.Link href="#review">Contacts</Nav.Link>
           </Nav>
 
-          <Nav>
+          <Nav className="align-items-center flex-row justify-between">
+            <Form.Check
+              type="switch"
+              id="dice-visibility-toggle"
+              label={isDiceVisible ? 'Hide Dice' : 'Show Dice'}
+              className="text-white me-3"
+              checked={isDiceVisible}
+              onChange={toggleDiceDisplay}
+            />
+
             {user ? (
               <Dropdown align="end">
                 <Dropdown.Toggle

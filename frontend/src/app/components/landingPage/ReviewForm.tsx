@@ -20,7 +20,7 @@ const ReviewForm = () => (
         Leave a Review
       </h2>
       <Row className="justify-content-center">
-        <Col md={8}>
+        <Col md={6} lg={6} sm={8}>
           <Form
             action="mailto:bibi.elene21@gmail.com"
             method="post"

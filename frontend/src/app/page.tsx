@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, useMemo } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { AuthContext } from './context/AuthContext';
 import DiceRoller from './components/DiceRoller/DiceRoller';
@@ -11,10 +11,23 @@ import './page.styles.scss';
 import CharacterClassesCards from './components/landingPage/CharacterClassesCards';
 import CharacterRacesCards from './components/landingPage/CharacterRacesCards';
 import ReviewForm from './components/landingPage/ReviewForm';
+import Cookies from 'js-cookie';
 
 export default function Home() {
   const { user, logout, loading } = useContext(AuthContext);
   const homeButtonText = useMemo(() => (user ? '🚀 Explore' : '🚀 Sign Up'), [user]);
+  const [isDiceVisible, setIsDiceVisible] = useState(true);
+
+  useEffect(() => {
+    const diceVisibleCookie = Cookies.get('diceVisible');
+    setIsDiceVisible(diceVisibleCookie === 'false' ? false : true); // Default to true if not set
+  }, []);
+
+  const toggleDiceDisplay = () => {
+    const newValue = !isDiceVisible;
+    setIsDiceVisible(newValue);
+    Cookies.set('diceVisible', newValue.toString(), { expires: 1 });
+  };
 
   if (loading) {
     return (
@@ -27,7 +40,12 @@ export default function Home() {
   return (
     <div className="relative">
       <header>
-        <Navbar user={user} logout={logout} />
+        <Navbar
+          user={user}
+          logout={logout}
+          toggleDiceDisplay={toggleDiceDisplay}
+          isDiceVisible={isDiceVisible}
+        />
       </header>
 
       <section
@@ -47,7 +65,7 @@ export default function Home() {
                 Welcome to D&D Connect!
               </h1>
               <JoinUsButton homeButtonText={homeButtonText} />
-              <DiceRoller />
+              <DiceRoller isDiceVisible={isDiceVisible} />
               <p className="lead mb-4">
                 Your gateway to exciting adventures and a vibrant D&D community
               </p>
