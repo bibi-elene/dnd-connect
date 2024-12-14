@@ -17,7 +17,7 @@ const CharacterActions: React.FC<CharacterActionsProps> = ({ onViewAll, onCreate
     {onCreate && (
       <Button
         variant="success"
-        className="btn-sm rounded btn-md-lg shadow rounded-lg bg-green-500 hover:bg-green-600 transition px-4 py-2"
+        className="btn-sm rounded btn-md-lg shadow rounded-lg transition px-4 py-2"
         onClick={onCreate}
       >
         Create New Character
