@@ -74,6 +74,7 @@ const CharacterClassesCards = () => {
                     className="img-fluid rounded shadow"
                     width={400}
                     height={100}
+                    loading='lazy'
                   />
                 </Col>
                 <Col md={6}>

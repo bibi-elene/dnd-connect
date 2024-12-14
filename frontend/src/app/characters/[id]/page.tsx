@@ -279,6 +279,7 @@ const EditCharacter = () => {
                   width={300}
                   height={400}
                   className="align-self-center"
+                  loading='lazy'
                 />
               </Card.Body>
             </Card>

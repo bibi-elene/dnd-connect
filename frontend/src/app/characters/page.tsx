@@ -65,6 +65,7 @@ const CharactersList = () => {
                                 width={100}
                                 height={100}
                                 className="rounded-full object-fit-cover w-16 h-16"
+                                loading='lazy'
                               />
                             )}
                           </Col>

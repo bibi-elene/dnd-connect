@@ -11,10 +11,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <link rel="preload" as="image" href="/assets/tavern.jpg" />
       <body>
         <AuthProvider>
           <div className="relative min-h-screen">
-            <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+            <div className="absolute inset-0"></div>
             <div className="relative z-10">{children}</div>
           </div>
         </AuthProvider>

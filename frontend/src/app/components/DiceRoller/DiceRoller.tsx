@@ -136,7 +136,7 @@ const DiceRoller: React.FC<DiceCookieProps> = ({ isDiceVisible }) => {
             className="roll-dice-button"
             variant="dark"
           >
-            {isDiceBoxReady ? 'Roll Dice' : <Spinner animation="border" size="sm" />}
+            Roll Dice
           </Button>
         </div>
         <Row className="roll-results mt-3">
