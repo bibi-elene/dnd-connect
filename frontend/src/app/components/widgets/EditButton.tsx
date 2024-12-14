@@ -7,11 +7,7 @@ interface EditButtonProps {
 
 const EditButton: React.FC<EditButtonProps> = ({ onClick, label = 'Edit' }) => {
   return (
-    <Button
-      variant="dark"
-      className="btn-sm rounded btn-md-lg shadow bg-gray hover-opacity-100 opacity-50 rounded-lg transition px-4 py-2"
-      onClick={onClick}
-    >
+    <Button variant="outline-primary" size="sm" onClick={onClick}>
       {label}
     </Button>
   );

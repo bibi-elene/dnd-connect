@@ -141,8 +141,8 @@ const DiceRoller: React.FC<DiceCookieProps> = ({ isDiceVisible }) => {
         </div>
         <Row className="roll-results mt-3">
           <Col xs={4} md={4} lg={4} className="text-center text-white rounded shadow">
-            <h5 className="fw-bold">Result: {rollResults.join(', ') || ''}</h5>
-            <Button variant="danger" onClick={clearResults}>
+            <p className="fw-bold">Result: {rollResults.join(', ') || ''}</p>
+            <Button variant="danger mt-2" onClick={clearResults}>
               Clear
             </Button>
           </Col>

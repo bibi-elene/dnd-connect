@@ -14,95 +14,110 @@ import { useFetchUsers } from '../hooks/useFetchUsers';
 import UsersList from '../components/widgets/UsersList';
 import UserActions from '../components/widgets/UserActions';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import './dashboard.styles.scss';
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
-  const { characters, loading, error } = useFetchCharacters(user, 3);
-  const { users } = useFetchUsers(user, 3);
+  const {
+    characters,
+    loading: charactersLoading,
+    error: charactersError,
+  } = useFetchCharacters(user, 3);
+  const { users, loading: usersLoading, error: usersError } = useFetchUsers(user, 3);
   const { goToCharacters, goToCharacterCreation, goToCharacter, goToUser, goToUsers } =
     useNavigate();
 
-  const handleViewAllCharacters = () => {
-    goToCharacters();
-  };
-
-  const handleViewAllUsers = () => {
-    goToUsers();
-  };
-
-  const handleCreateCharacter = () => {
-    goToCharacterCreation();
-  };
-
-  const handleEditCharacter = (id: number) => {
-    goToCharacter(id);
-  };
-
-  const handleEditUser = (id: number) => {
-    goToUser(id);
-  };
+  const handleViewAllCharacters = () => goToCharacters();
+  const handleViewAllUsers = () => goToUsers();
+  const handleCreateCharacter = () => goToCharacterCreation();
+  const handleEditCharacter = (id: number) => goToCharacter(id);
+  const handleEditUser = (id: number) => goToUser(id);
 
   return (
     <div
-      className="vh-100 d-flex align-items-center justify-content-center"
+      className="vh-100 justify-center"
       style={{
         backgroundImage: `url('/assets/camp.jpg')`,
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
+        overflowY: 'auto',
       }}
     >
-      <Container className="d-flex justify-center">
-        <ReturnButtons withDashboardButton={false} buttonText="Home" />
-        <Card className="shadow-lg col-md-8 p-4 rounded">
-          <Header
-            title={user?.role === ROLES.ADMIN ? 'Admin Panel' : 'Dashboard'}
-            username={user?.username}
-            onLogout={logout}
-          />
-          <main>
-            {user?.role === ROLES.ADMIN ? (
-              <Row>
-                <Col md={6}>
-                  <h2 className="h5 mb-3">Characters</h2>
-                  <CharacterActions onViewAll={handleViewAllCharacters} />
-                  <CharacterList
-                    characters={characters}
-                    loading={loading}
-                    error={error}
-                    onEdit={handleEditCharacter}
-                  />
-                </Col>
-                <Col md={6}>
-                  <h2 className="h5 mb-3">Users</h2>
-                  <UserActions onViewAll={handleViewAllUsers} />
-                  <UsersList
-                    users={users}
-                    loading={loading}
-                    error={error}
-                    onEditUser={handleEditUser}
-                  />
-                </Col>
-              </Row>
-            ) : (
-              <Row>
-                <Col>
+      <Container className="pt-4 mt-5 justify-center d-flex flex-column">
+        <Row className="align-items-center m-0 text-center py-4 bg-white shadow-sm rounded">
+          <Col md={12} lg={12} className='d-flex justify-between'>
+            <Header
+              title={user?.role === ROLES.ADMIN ? 'Admin Panel' : 'Dashboard'}
+              username={user?.username}
+              onLogout={logout}
+            />
+          </Col>
+        </Row>
+
+        <Row className="mt-1">
+          <Col>
+            <ReturnButtons withDashboardButton={false} buttonText="Home" />
+          </Col>
+        </Row>
+
+        <Row className="mb-4">
+          {user?.role === ROLES.ADMIN ? (
+            <>
+              <Col sm={12} md={12} lg={6} className="mt-2">
+                <Card className="shadow-lg h-100">
+                  <Card.Header className="bg-white">
+                    <h2 className="mb-0">Users</h2>
+                  </Card.Header>
+                  <Card.Body>
+                    <UserActions onViewAll={handleViewAllUsers} />
+                    <UsersList
+                      users={users}
+                      loading={usersLoading}
+                      error={usersError}
+                      onEditUser={handleEditUser}
+                    />
+                  </Card.Body>
+                </Card>
+              </Col>
+              <Col className="mt-2" sm={12} md={12} lg={6}>
+                <Card className="shadow-lg h-100">
+                  <Card.Header className="bg-white">
+                    <h1 className="text-xxl mb-0">Characters</h1>
+                  </Card.Header>
+                  <Card.Body>
+                    <CharacterActions onViewAll={handleViewAllCharacters} />
+                    <CharacterList
+                      characters={characters}
+                      loading={charactersLoading}
+                      error={charactersError}
+                      onEdit={handleEditCharacter}
+                    />
+                  </Card.Body>
+                </Card>
+              </Col>
+            </>
+          ) : (
+            <Col lg={12} className='mt-1'>
+              <Card className="shadow-lg">
+                <Card.Header className="bg-white">
+                  <h2 className="mb-0">Characters</h2>
+                </Card.Header>
+                <Card.Body>
                   <CharacterActions
                     onViewAll={handleViewAllCharacters}
                     onCreate={handleCreateCharacter}
                   />
                   <CharacterList
                     characters={characters}
-                    loading={loading}
-                    error={error}
+                    loading={charactersLoading}
+                    error={charactersError}
                     onEdit={handleEditCharacter}
                   />
-                </Col>
-              </Row>
-            )}
-          </main>
-        </Card>
+                </Card.Body>
+              </Card>
+            </Col>
+          )}
+        </Row>
       </Container>
     </div>
   );

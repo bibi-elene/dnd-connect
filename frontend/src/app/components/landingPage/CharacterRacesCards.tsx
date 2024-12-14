@@ -40,7 +40,7 @@ const CharacterRacesCards = () => {
           className="text-center display-4 fw-bold mb-5"
           style={{ fontFamily: 'Cinzel Decorative' }}
         >
-          Races
+          Species
         </h2>
         <Row>
           {characterRaces.map((race, idx) => (

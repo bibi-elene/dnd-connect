@@ -1,4 +1,4 @@
-import { Button, Container, Row, Col } from 'react-bootstrap';
+import { Button, Row, Col } from 'react-bootstrap';
 
 interface HeaderProps {
   title: string;
@@ -7,25 +7,15 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ title, username, onLogout }) => (
-  <header className="border-bottom pb-4 mb-6">
-    <Container fluid>
-      <Row className="align-items-center">
-        <Col>
-          <h1 className="text-3xl fw-semibold text-gray-700">{title}</h1>
-        </Col>
-        <Col className="text-end">
-          <span className="me-3 text-gray-700 fw-medium fs-5">Hello, {username}</span>
-          <Button
-            onClick={onLogout}
-            variant="danger"
-            className="text-white shadow rounded-lg px-4 py-2 transition hover:bg-red-600"
-          >
-            Log out
-          </Button>
-        </Col>
-      </Row>
-    </Container>
-  </header>
+  <>
+    <h1 className="text-2xl fw-semibold mb-0">{title}</h1>
+    <div>
+    <span className="me-3 fw-medium fs-5 text-muted">Hello, {username}</span>
+    <Button onClick={onLogout} variant="danger" className="text-white shadow rounded-lg px-4 py-2">
+      Log out
+    </Button>
+    </div>
+  </>
 );
 
 export default Header;

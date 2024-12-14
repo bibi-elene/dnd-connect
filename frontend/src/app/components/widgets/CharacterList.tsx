@@ -1,6 +1,7 @@
 import { Character } from '@/app/utils/types';
 import EditButton from './EditButton';
 import Loading from './Loading';
+import { ListGroup, Badge, Button } from 'react-bootstrap';
 
 interface CharacterListProps {
   characters: Character[];
@@ -15,24 +16,29 @@ const CharacterList: React.FC<CharacterListProps> = ({ characters, loading, erro
   }
 
   if (error) {
-    return <p className="text-red-500">{error}</p>;
+    return <p className="text-danger">{error}</p>;
   }
 
   return (
-    <ul className="space-y-2 px-0">
+    <ListGroup>
       {characters.map((character) => (
-        <li
+        <ListGroup.Item
           key={character.id}
-          className="bg-gray-100 p-3 text-gray-600 rounded-lg shadow hover:bg-gray-200 transition flex items-center justify-between"
+          className="d-flex justify-content-between align-items-center"
         >
           <div>
-            <strong className="text-gray-700">{character.name}</strong> - {character.class} (Level{' '}
-            {character.level})
+            <strong className="text-dark">{character.name}</strong>{' '}
+            <Badge bg="info" className="me-2">
+              {character.class}
+            </Badge>
+            <span>Level {character.level}</span>
           </div>
-          <EditButton onClick={() => onEdit(character.id)} />
-        </li>
+          <Button variant="outline-primary" size="sm" onClick={() => onEdit(character.id)}>
+            Edit
+          </Button>
+        </ListGroup.Item>
       ))}
-    </ul>
+    </ListGroup>
   );
 };
 

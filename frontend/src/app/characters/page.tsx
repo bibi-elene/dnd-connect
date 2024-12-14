@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext, useState } from 'react';
-import { Container, Row, Col, Card, ListGroup, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Card, ListGroup, Alert, Badge } from 'react-bootstrap';
 import { AuthContext } from '../context/AuthContext';
 import ProtectedRoute from '../components/ProtectedRoute';
 import Loading from '../components/widgets/Loading';
@@ -32,7 +32,7 @@ const CharactersList = () => {
     >
       <Container className="py-4">
         <Row className="justify-content-center">
-          <Col md={8} lg={6}>
+          <Col md={12} lg={6}>
             <ReturnButtons fallbackUrl="/dashboard" />
             <Card className="shadow-lg h-100 rounded-lg mt-4">
               <Card.Body>
@@ -57,7 +57,7 @@ const CharactersList = () => {
                         className="d-flex align-items-center justify-content-between p-3 rounded shadow-sm mb-3 bg-light"
                       >
                         <Row className="align-items-center w-100">
-                          <Col xs={3} className="d-flex justify-content-center">
+                          <Col xs={3} md={3}  className="d-flex justify-content-center">
                             {character.image && (
                               <Image
                                 src={character.image}
@@ -65,18 +65,23 @@ const CharactersList = () => {
                                 width={100}
                                 height={100}
                                 className="rounded-full object-fit-cover w-16 h-16"
-                                loading='lazy'
+                                loading="lazy"
                               />
                             )}
                           </Col>
-                          <Col xs={6}>
+                          <Col xs={6} md={6}>
                             <Card.Text className="fw-bold mb-1">{character.name}</Card.Text>
-                            <Card.Text className="mb-0 text-muted">
-                              {character.class} (Level {character.level})
-                            </Card.Text>
-                            <Card.Text className="mb-0 text-muted">{character.race}</Card.Text>
+                              <Badge bg="info" className="me-2">
+                                {character.class}
+                              </Badge>
+                            <Badge bg="success" className="me-2">
+                              (Lvl: {character.level})
+                            </Badge>
+                            <Badge bg="info" className="me-2">
+                              {character.race}
+                            </Badge>
                           </Col>
-                          <Col xs={3} className="d-flex justify-content-end">
+                          <Col xs={3} md={3} className="d-flex justify-content-end">
                             <EditButton onClick={() => goToCharacter(character.id)} />
                           </Col>
                         </Row>

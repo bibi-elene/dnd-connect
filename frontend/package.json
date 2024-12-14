@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@3d-dice/dice-box": "^1.1.4",
+    "@next/font": "^14.2.15",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "cookie": "^1.0.2",

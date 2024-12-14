@@ -9,7 +9,7 @@ const CharacterActions: React.FC<CharacterActionsProps> = ({ onViewAll, onCreate
   <ButtonGroup className="mb-5">
     <Button
       variant="primary"
-      className="btn-sm rounded me-2 btn-md-lg shadow rounded-lg bg-blue-500 hover:bg-blue-600 transition px-4 py-2"
+      className="rounded me-2 btn-md-lg shadow rounded-lg bg-blue-500 hover:bg-blue-600 transition px-4 py-2"
       onClick={onViewAll}
     >
       View All Characters
