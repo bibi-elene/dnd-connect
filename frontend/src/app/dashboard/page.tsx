@@ -34,7 +34,7 @@ const Dashboard = () => {
 
   return (
     <div
-      className="vh-100 justify-center"
+      className="vh-100 justify-content-center align-content-center"
       style={{
         backgroundImage: `url('/assets/camp.jpg')`,
         backgroundSize: 'cover',
@@ -43,27 +43,28 @@ const Dashboard = () => {
         overflowY: 'auto',
       }}
     >
-      <Container className="pt-4 mt-5 justify-center d-flex flex-column">
-        <Row className="align-items-center m-0 text-center py-4 bg-white shadow-sm rounded">
-          <Col md={12} lg={12} className='d-flex justify-between'>
-            <Header
-              title={user?.role === ROLES.ADMIN ? 'Admin Panel' : 'Dashboard'}
-              username={user?.username}
-              onLogout={logout}
-            />
-          </Col>
-        </Row>
-
+      <Container className="pt-4 mt-5 justify-content-center d-flex flex-column">
         <Row className="mt-1">
           <Col>
             <ReturnButtons withDashboardButton={false} buttonText="Home" />
           </Col>
         </Row>
+        {user?.role === ROLES.ADMIN && (
+          <Row className="align-items-center m-0 text-center py-4 bg-white shadow-sm rounded">
+            <Col md={12} lg={12} className="d-flex justify-between">
+              <Header
+                title={user?.role === ROLES.ADMIN ? 'Admin Panel' : 'Dashboard'}
+                username={user?.username}
+                onLogout={logout}
+              />
+            </Col>
+          </Row>
+        )}
 
         <Row className="mb-4">
           {user?.role === ROLES.ADMIN ? (
             <>
-              <Col sm={12} md={12} lg={6} className="mt-2">
+              <Col sm={12} md={6} lg={6} className="mt-2">
                 <Card className="shadow-lg h-100">
                   <Card.Header className="bg-white">
                     <h2 className="mb-0">Users</h2>
@@ -79,10 +80,10 @@ const Dashboard = () => {
                   </Card.Body>
                 </Card>
               </Col>
-              <Col className="mt-2" sm={12} md={12} lg={6}>
+              <Col className="mt-2" sm={12} md={6} lg={6}>
                 <Card className="shadow-lg h-100">
                   <Card.Header className="bg-white">
-                    <h1 className="text-xxl mb-0">Characters</h1>
+                    <h2 className="text-xxl mb-0">Characters</h2>
                   </Card.Header>
                   <Card.Body>
                     <CharacterActions onViewAll={handleViewAllCharacters} />
@@ -97,25 +98,40 @@ const Dashboard = () => {
               </Col>
             </>
           ) : (
-            <Col lg={12} className='mt-1'>
-              <Card className="shadow-lg">
-                <Card.Header className="bg-white">
-                  <h2 className="mb-0">Characters</h2>
-                </Card.Header>
-                <Card.Body>
-                  <CharacterActions
-                    onViewAll={handleViewAllCharacters}
-                    onCreate={handleCreateCharacter}
-                  />
-                  <CharacterList
-                    characters={characters}
-                    loading={charactersLoading}
-                    error={charactersError}
-                    onEdit={handleEditCharacter}
-                  />
-                </Card.Body>
-              </Card>
-            </Col>
+            <Container className="d-flex flex-column align-items-center">
+              <Col
+                md={12}
+                lg={8}
+                sm={12}
+                xs={12}
+                className="d-flex p-4 mb-2 justify-between align-items-center mt-0 text-center py-4 bg-white shadow-sm rounded"
+              >
+                <Header
+                  title={user?.role === ROLES.ADMIN ? 'Admin Panel' : 'Dashboard'}
+                  username={user?.username}
+                  onLogout={logout}
+                />
+              </Col>
+              <Col md={12} lg={8} sm={12} xs={12}>
+                <Card className="shadow-lg">
+                  <Card.Header className="bg-white">
+                    <h2 className="mb-0">Characters</h2>
+                  </Card.Header>
+                  <Card.Body>
+                    <CharacterActions
+                      onViewAll={handleViewAllCharacters}
+                      onCreate={handleCreateCharacter}
+                    />
+                    <CharacterList
+                      characters={characters}
+                      loading={charactersLoading}
+                      error={charactersError}
+                      onEdit={handleEditCharacter}
+                    />
+                  </Card.Body>
+                </Card>
+              </Col>
+            </Container>
           )}
         </Row>
       </Container>
