@@ -18,19 +18,18 @@ const CustomNavbar: React.FC<NavbarProps> = ({
   isDiceVisible,
 }) => {
   const { goToLogin, goToDashboard } = useNavigate();
-  console.log(isDiceVisible, 'jere');
   return (
     <Navbar bg="dark" variant="dark" expand="lg" fixed="top" className="shadow">
       <Container>
         <Navbar.Brand href="#">D&D Connect</Navbar.Brand>
         <Form.Check
-              type="switch"
-              id="dice-visibility-toggle"
-              label="🎲"
-              className="text-white me-3"
-              checked={isDiceVisible}
-              onChange={toggleDiceDisplay}
-            />
+          type="switch"
+          id="dice-visibility-toggle"
+          label="🎲"
+          className="text-white me-3"
+          checked={isDiceVisible}
+          onChange={toggleDiceDisplay}
+        />
         <Navbar.Toggle aria-controls="navbar-nav" />
 
         <Navbar.Collapse id="navbar-nav">
@@ -41,8 +40,6 @@ const CustomNavbar: React.FC<NavbarProps> = ({
           </Nav>
 
           <Nav className="align-items-center flex-row justify-between">
-            
-
             {user ? (
               <Dropdown align="end">
                 <Dropdown.Toggle
@@ -59,7 +56,7 @@ const CustomNavbar: React.FC<NavbarProps> = ({
                 </Dropdown.Menu>
               </Dropdown>
             ) : (
-              <Button size='sm' variant="outline-light" onClick={goToLogin}>
+              <Button size="sm" variant="outline-light" onClick={goToLogin}>
                 Log In
               </Button>
             )}

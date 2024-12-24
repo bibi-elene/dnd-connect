@@ -61,8 +61,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       if (!response.ok) {
         const errorResponse = await response.json();
-        console.log(errorResponse.message.message, 'err res')
-        throw new Error(errorResponse.message.message || 'Failed to log in. Please try again later.');
+        throw new Error(
+          errorResponse.message.message || 'Failed to log in. Please try again later.'
+        );
       }
 
       const userResponse = await fetch(apiRoutes.auth.me);

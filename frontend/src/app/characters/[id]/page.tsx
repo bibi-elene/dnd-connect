@@ -7,10 +7,10 @@ import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-b
 import Loading from '@/app/components/widgets/Loading';
 import { CharacterFormInputs } from '@/app/utils/types';
 import Image from 'next/image';
-import { backgroundOptions, classOptions, raceOptions, skillsOptions } from '@/app/utils/constants';
 import ReturnButtons from '@/app/components/widgets/ReturnButtons';
 import { useNavigate } from '@/app/utils/navigation';
 import { apiRoutes } from '@/app/api/apiRoutes';
+import data from '@/app/data/data.json';
 
 const EditCharacter = () => {
   const { id } = useParams();
@@ -182,7 +182,7 @@ const EditCharacter = () => {
                     {...register('class', { required: true })}
                   >
                     <option value="">Select Class</option>
-                    {classOptions.map((option) => (
+                    {data.classes.map((option) => (
                       <option key={option} value={option}>
                         {option}
                       </option>
@@ -194,7 +194,7 @@ const EditCharacter = () => {
                   <Form.Label>Race</Form.Label>
                   <Form.Select isInvalid={!!errors.race} {...register('race', { required: true })}>
                     <option value="">Select Race</option>
-                    {raceOptions.map((option) => (
+                    {data.species.map((option) => (
                       <option key={option} value={option}>
                         {option}
                       </option>
@@ -209,7 +209,7 @@ const EditCharacter = () => {
                     {...register('background', { required: true })}
                   >
                     <option value="">Select Background</option>
-                    {backgroundOptions.map((option) => (
+                    {data.characterBackgrounds.map((option) => (
                       <option key={option} value={option}>
                         {option}
                       </option>
@@ -226,7 +226,7 @@ const EditCharacter = () => {
                     {...register('skills', { required: true })}
                   >
                     <option value="">Select Skills</option>
-                    {skillsOptions.map((option) => (
+                    {data.characterSkills.map((option) => (
                       <option key={option} value={option}>
                         {option}
                       </option>
@@ -279,7 +279,7 @@ const EditCharacter = () => {
                   width={300}
                   height={400}
                   className="align-self-center"
-                  loading='lazy'
+                  loading="lazy"
                 />
               </Card.Body>
             </Card>

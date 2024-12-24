@@ -6,8 +6,8 @@ import { useState, useEffect } from 'react';
 import Loading from '@/app/components/widgets/Loading';
 import ReturnButtons from '@/app/components/widgets/ReturnButtons';
 import { apiRoutes } from '@/app/api/apiRoutes';
-import { roleOptions } from '@/app/utils/constants';
 import { useNavigate } from '@/app/utils/navigation';
+import data from '@/app/data/data.json';
 
 interface UserFormInputs {
   username: string;
@@ -123,7 +123,7 @@ const EditUser = () => {
             } rounded`}
           >
             <option value="">Select Role</option>
-            {roleOptions.map((option) => (
+            {data.roles.map((option) => (
               <option key={option} value={option}>
                 {option.toUpperCase()}
               </option>

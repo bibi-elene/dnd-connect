@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import DiceBox from '@3d-dice/dice-box';
 import { Container, Button, Spinner, Dropdown, DropdownButton, Row, Col } from 'react-bootstrap';
 import './DiceRoller.styles.scss';
-import { diceTypes } from '@/app/utils/constants';
+import data from '@/app/data/data.json';
 
 interface DiceCookieProps {
   isDiceVisible: boolean;
@@ -92,63 +92,61 @@ const DiceRoller: React.FC<DiceCookieProps> = ({ isDiceVisible }) => {
   };
 
   return (
-    <>
-      <Container fluid className={!isDiceVisible ? `d-none` : ''}>
-        <div className="dice-box-container">
-          <div id="dice-box" className="w-100 h-100"></div>
-        </div>
-        <div className="d-flex mb-4 dice-buttons align-items-center">
-          <Row className="align-items-center mb-2">
-            <Col xs="auto">
-              <DropdownButton
-                id="dice-type-dropdown"
-                title={`${selectedDiceType}`}
-                variant="outline-light"
-                className="dice-button mb-2"
-              >
-                {diceTypes.map((dice) => (
-                  <Dropdown.Item key={dice} onClick={() => setSelectedDiceType(dice)}>
-                    {dice}
-                  </Dropdown.Item>
-                ))}
-              </DropdownButton>
-            </Col>
+    <Container fluid className={!isDiceVisible ? `d-none` : ''}>
+      <div className="dice-box-container">
+        <div id="dice-box" className="w-100 h-100"></div>
+      </div>
+      <div className="d-flex mb-4 dice-buttons align-items-center">
+        <Row className="align-items-center mb-2">
+          <Col xs="auto">
+            <DropdownButton
+              id="dice-type-dropdown"
+              title={`${selectedDiceType}`}
+              variant="outline-light"
+              className="dice-button mb-2"
+            >
+              {data.dices.map((dice) => (
+                <Dropdown.Item key={dice} onClick={() => setSelectedDiceType(dice)}>
+                  {dice}
+                </Dropdown.Item>
+              ))}
+            </DropdownButton>
+          </Col>
 
-            <Col xs="auto">
-              <DropdownButton
-                id="dice-count-dropdown"
-                title={`${selectedDiceCount}`}
-                variant="outline-light"
-                className="dice-button mb-2"
-              >
-                {[...Array(10).keys()].map((count) => (
-                  <Dropdown.Item key={count + 1} onClick={() => setSelectedDiceCount(count + 1)}>
-                    {count + 1}
-                  </Dropdown.Item>
-                ))}
-              </DropdownButton>
-            </Col>
-          </Row>
-
-          <Button
-            onClick={rollDice}
-            disabled={!isDiceBoxReady}
-            className="roll-dice-button"
-            variant="dark"
-          >
-            Roll Dice
-          </Button>
-        </div>
-        <Row className="roll-results mt-3">
-          <Col xs={4} md={4} lg={4} className="text-center text-white rounded shadow">
-            <p className="fw-bold">Result: {rollResults.join(', ') || ''}</p>
-            <Button variant="danger mt-2" onClick={clearResults}>
-              Clear
-            </Button>
+          <Col xs="auto">
+            <DropdownButton
+              id="dice-count-dropdown"
+              title={`${selectedDiceCount}`}
+              variant="outline-light"
+              className="dice-button mb-2"
+            >
+              {[...Array(10).keys()].map((count) => (
+                <Dropdown.Item key={count + 1} onClick={() => setSelectedDiceCount(count + 1)}>
+                  {count + 1}
+                </Dropdown.Item>
+              ))}
+            </DropdownButton>
           </Col>
         </Row>
-      </Container>
-    </>
+
+        <Button
+          onClick={rollDice}
+          disabled={!isDiceBoxReady}
+          className="roll-dice-button"
+          variant="dark"
+        >
+          Roll Dice
+        </Button>
+      </div>
+      <Row className="roll-results mt-3">
+        <Col xs={4} md={4} lg={4} className="text-center text-white rounded shadow">
+          <p className="fw-bold">Result: {rollResults.join(', ') || ''}</p>
+          <Button variant="danger mt-2" onClick={clearResults}>
+            Clear
+          </Button>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

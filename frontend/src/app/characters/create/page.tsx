@@ -5,16 +5,10 @@ import { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-bootstrap';
 import { CharacterFormInputs } from '@/app/utils/types';
 import Image from 'next/image';
-import {
-  characterImages,
-  classOptions,
-  raceOptions,
-  backgroundOptions,
-  skillsOptions,
-} from '@/app/utils/constants';
 import ReturnButtons from '@/app/components/widgets/ReturnButtons';
 import { useNavigate } from '@/app/utils/navigation';
 import { apiRoutes } from '@/app/api/apiRoutes';
+import data from '@/app/data/data.json';
 
 const CreateCharacter = () => {
   const {
@@ -43,7 +37,9 @@ const CreateCharacter = () => {
     name && selectedClass && selectedRace && background && skills && level && !fileError;
 
   const defaultImagePath =
-    characterImages[selectedClass]?.[selectedRace] || '/assets/default_character.jpeg';
+    (data.metadata.avatars as Record<string, Record<string, string>>)[selectedClass]?.[
+      selectedRace
+    ] || '/assets/default_character.jpeg';
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
@@ -135,13 +131,13 @@ const CreateCharacter = () => {
                   <Form.Control.Feedback type="invalid">Name is required</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-2">
-                  <Form.Label>Class</Form.Label>
+                  <Form.Label>Class</Form.Label> <a href="/">Not sure? Check here </a>
                   <Form.Select
                     isInvalid={!!errors.class}
                     {...register('class', { required: true })}
                   >
                     <option value="">Select Class</option>
-                    {classOptions.map((option) => (
+                    {data.classes.map((option) => (
                       <option key={option} value={option}>
                         {option}
                       </option>
@@ -153,7 +149,7 @@ const CreateCharacter = () => {
                   <Form.Label>Race</Form.Label>
                   <Form.Select isInvalid={!!errors.race} {...register('race', { required: true })}>
                     <option value="">Select Race</option>
-                    {raceOptions.map((option) => (
+                    {data.species.map((option) => (
                       <option key={option} value={option}>
                         {option}
                       </option>
@@ -168,7 +164,7 @@ const CreateCharacter = () => {
                     {...register('background', { required: true })}
                   >
                     <option value="">Select Background</option>
-                    {backgroundOptions.map((option) => (
+                    {data.characterBackgrounds.map((option) => (
                       <option key={option} value={option}>
                         {option}
                       </option>
@@ -185,7 +181,7 @@ const CreateCharacter = () => {
                     {...register('skills', { required: true })}
                   >
                     <option value="">Select Skills</option>
-                    {skillsOptions.map((option) => (
+                    {data.characterSkills.map((option) => (
                       <option key={option} value={option}>
                         {option}
                       </option>
@@ -238,7 +234,7 @@ const CreateCharacter = () => {
                   width={300}
                   height={400}
                   className="align-self-center"
-                  loading='lazy'
+                  loading="lazy"
                 />
               </Card.Body>
             </Card>

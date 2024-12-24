@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { characterClasses } from '@/app/utils/constants';
 import { Container, Row, Col, Card, Modal } from 'react-bootstrap';
 import Image from 'next/image';
+import data from '@/app/data/data.json';
 interface CharacterClass {
   name: string;
   img: string;
@@ -42,7 +42,7 @@ const CharacterClassesCards = () => {
           Classes
         </h2>
         <Row>
-          {characterClasses.map((cls, idx) => (
+          {data.metadata.classes.map((cls, idx) => (
             <Col md={6} lg={3} key={idx} className="mb-4">
               <Card
                 className="bg-dark text-white border-0 card-img"
@@ -74,7 +74,7 @@ const CharacterClassesCards = () => {
                     className="img-fluid rounded shadow"
                     width={400}
                     height={100}
-                    loading='lazy'
+                    loading="lazy"
                   />
                 </Col>
                 <Col md={6}>
