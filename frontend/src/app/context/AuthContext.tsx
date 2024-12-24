@@ -60,7 +60,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to log in');
+        const errorResponse = await response.json();
+        console.log(errorResponse.message.message, 'err res')
+        throw new Error(errorResponse.message.message || 'Failed to log in. Please try again later.');
       }
 
       const userResponse = await fetch(apiRoutes.auth.me);
@@ -70,7 +72,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(userData);
         goToDashboard();
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Login error:', error);
       throw error;
     }

@@ -21,17 +21,16 @@ const Login = () => {
   } = useForm<LoginFormInputs>();
   const { login } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState('');
-  const [loading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data: LoginFormInputs) => {
-    setIsLoading(true);
+    setLoading(true);
     try {
       await login(data.username, data.password);
-    } catch (error) {
-      console.error(error, 'my error');
-      setErrorMessage('Invalid username or password');
+    } catch (error: any) {
+      setErrorMessage(error.message);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
