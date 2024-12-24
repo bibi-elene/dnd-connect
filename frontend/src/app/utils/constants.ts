@@ -6,8 +6,35 @@ export enum ROLES {
   USER = 'user',
 }
 export const roleOptions = ['user', 'admin'];
-export const classOptions = ['Fighter', 'Mage', 'Rogue'];
-export const raceOptions = ['Elf', 'Orc', 'Human'];
+export const classOptions = [
+  'Fighter',
+  'Cleric',
+  'Paladin',
+  'Barbarian',
+  'Warlock',
+  'Ranger',
+  'Wizard',
+  'Sorcerer',
+  'Monk',
+  'Rogue',
+  'Druid',
+  'Bard',
+];
+
+export const raceOptions = [
+  'Human',
+  'Elf',
+  'Dwarf',
+  'Halfling',
+  'Dragonborn',
+  'Tiefling',
+  'Half-Orc',
+  'Gnome',
+  'Half-Elf',
+  'Aasimar',
+  'Genasi',
+  'Firbolg',
+];
 export const backgroundOptions = ['Noble', 'Acolyte', 'Folk-Hero', 'Thief'];
 export const skillsOptions = ['History', 'Athletics', 'Survival', 'Performance'];
 export const diceTypes = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'd100'];

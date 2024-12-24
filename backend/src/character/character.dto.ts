@@ -39,29 +39,3 @@ export class CreateCharacterDto {
   @IsOptional()
   image?: string | Buffer;
 }
-
-export class CharacterResponseDto {
-  @ApiProperty({ description: 'The unique ID of the character' })
-  id: number;
-
-  @ApiProperty({ description: 'The name of the character' })
-  name: string;
-
-  @ApiProperty({ description: 'The class of the character' })
-  class: string;
-
-  @ApiProperty({ description: 'The level of the character' })
-  level: number;
-
-  @ApiProperty({ description: 'The race of the character' })
-  race: string;
-
-  @ApiProperty({ description: 'The background of the character' })
-  background: string;
-
-  @ApiProperty({ description: 'The skills of the character' })
-  skills: string;
-
-  @ApiProperty({ description: 'The base64-encoded image of the character', required: false })
-  image?: string | null;
-}

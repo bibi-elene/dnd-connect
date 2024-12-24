@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Character } from './character.entity';
 import { User } from '../user/user.entity';
-import { CharacterResponseDto, CreateCharacterDto } from './character.dto';
+import { CreateCharacterDto } from './character.dto';
 @Injectable()
 export class CharacterService {
   constructor(
@@ -126,7 +126,7 @@ export class CharacterService {
     userId: number,
     isAdmin: boolean,
     image?: Express.Multer.File,
-  ): Promise<CharacterResponseDto> {
+  ): Promise<CreateCharacterDto> {
     const character = await this.findOne(id, userId, isAdmin);
 
     if (!character) {
