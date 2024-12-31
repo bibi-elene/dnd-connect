@@ -31,7 +31,7 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="absolute inset-0 bg-black bg-opacity-50 d-flex align-items-center justify-content-center z-10">
+      <div className="vh-100 d-flex align-items-center justify-content-center">
         <Loading message="" size="sm" />
       </div>
     );

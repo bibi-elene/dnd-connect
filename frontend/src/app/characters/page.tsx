@@ -19,7 +19,7 @@ const CharactersList = () => {
 
   if (!user || loading) {
     return (
-      <Container fluid className="vh-100 d-flex align-items-center justify-content-center bg-light">
+      <Container fluid className="vh-100 d-flex align-items-center justify-content-center">
         <Loading message="Loading your characters..." size="lg" />
       </Container>
     );

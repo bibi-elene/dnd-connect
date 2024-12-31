@@ -23,7 +23,7 @@ const Loading: React.FC<LoadingProps> = ({ message = 'Loading...', size = 'md' }
           style={{ animationDelay: '0.4s' }}
         ></div>
       </div>
-      {message && <h2 className="text-gray-600 mt-2 text-lg">{message}</h2>}
+      {message && <h2 className="text-light mt-2 text-lg">{message}</h2>}
     </div>
   );
 };

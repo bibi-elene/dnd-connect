@@ -101,7 +101,7 @@ const CreateCharacter = () => {
   };
 
   return (
-    <Container fluid className="min-vh-100 p-4 d-flex align-items-center bg-light">
+    <Container fluid className="min-vh-100 p-4 d-flex align-items-center">
       <Col xs="auto" className="z-index-3">
         <ReturnButtons fallbackUrl="/dashboard" />
       </Col>

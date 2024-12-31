@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   title: 'D&D Connect',
   description: 'Connect with D&D characters',
   icons: {
-    icon: '/assets/dnd-logo.png',
-    apple: '/assets/dnd-logo.png',
+    icon: '/assets/D&D-2.png',
+    apple: '/assets/D&D-2.png',
   },
   openGraph: {
     title: 'D&D Connect',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     siteName: 'D&D Connect',
     images: [
       {
-        url: '/assets/dnd-logo.png',
+        url: '/assets/D&D-2.png',
         width: 800,
         height: 600,
         alt: 'D&D Connect logo2',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'D&D Connect',
     description: 'Join the ultimate D&D community!',
-    images: ['/assets/dnd-logo.png'],
+    images: ['/assets/D&D-2.png'],
   },
 };
 

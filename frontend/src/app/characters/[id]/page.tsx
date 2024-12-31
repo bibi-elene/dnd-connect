@@ -138,7 +138,7 @@ const EditCharacter = () => {
 
   if (loading) {
     return (
-      <Container fluid className="vh-100 d-flex align-items-center justify-content-center bg-light">
+      <Container fluid className="vh-100 d-flex align-items-center justify-content-center">
         <Loading message="Loading character details..." size="lg" />
       </Container>
     );
@@ -147,7 +147,7 @@ const EditCharacter = () => {
   const isButtonDisabled = !!fileError || (!isDirty && uploadedImage === originalUploadedImage);
 
   return (
-    <Container fluid className="min-vh-100 p-4 d-flex align-items-center bg-light">
+    <Container fluid className="min-vh-100 p-4 d-flex align-items-center">
       <Col xs="auto" className=" z-index-3">
         <ReturnButtons fallbackUrl="/characters" />
       </Col>

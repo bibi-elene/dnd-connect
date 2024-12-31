@@ -22,14 +22,18 @@ const CustomNavbar: React.FC<NavbarProps> = ({
   return (
     <Navbar variant="dark" expand="lg" fixed="top" className="shadow">
       <Container>
-        <Image
-          width={100}
-          height={100}
-          src="/assets/dnd-logo.png"
-          alt="D&D Connect Logo"
-          className="h-10 me-2"
-        />
-        <Navbar.Brand href="#">D&D Connect</Navbar.Brand>
+        <div className="d-flex align-items-center">
+          <Image
+            width={80}
+            height={120}
+            src="/assets/D&D-2.png"
+            alt="D&D Connect Logo"
+            className="navbar-logo"
+          />
+          <Navbar.Brand href="#" className="fs-5 fw-bold text-white">
+            D&D Connect
+          </Navbar.Brand>
+        </div>
         <Form.Check
           type="switch"
           id="dice-visibility-toggle"
