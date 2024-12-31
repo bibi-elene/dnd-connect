@@ -1,8 +1,9 @@
 'use client';
 
-import { Navbar, Nav, Container, Dropdown, Button, Form } from 'react-bootstrap';
+import { Navbar, Nav, Container, Dropdown, Form } from 'react-bootstrap';
 import { useNavigate } from '@/app/utils/navigation';
 import { DropDownArrowIcon } from '../icons/DropDownArrowIcon';
+import Image from 'next/image';
 import './NavBar.styles.scss';
 
 interface NavbarProps {
@@ -19,8 +20,15 @@ const CustomNavbar: React.FC<NavbarProps> = ({
 }) => {
   const { goToLogin, goToDashboard } = useNavigate();
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" fixed="top" className="shadow">
+    <Navbar variant="dark" expand="lg" fixed="top" className="shadow">
       <Container>
+        <Image
+          width={100}
+          height={100}
+          src="/assets/dnd-logo.png"
+          alt="D&D Connect Logo"
+          className="h-10 me-2"
+        />
         <Navbar.Brand href="#">D&D Connect</Navbar.Brand>
         <Form.Check
           type="switch"
@@ -56,9 +64,9 @@ const CustomNavbar: React.FC<NavbarProps> = ({
                 </Dropdown.Menu>
               </Dropdown>
             ) : (
-              <Button size="sm" variant="outline-light" onClick={goToLogin}>
+              <button className="primary-custom-button" onClick={goToLogin}>
                 Log In
-              </Button>
+              </button>
             )}
           </Nav>
         </Navbar.Collapse>

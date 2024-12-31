@@ -11,6 +11,7 @@ import ReturnButtons from '@/app/components/widgets/ReturnButtons';
 import { useNavigate } from '@/app/utils/navigation';
 import { apiRoutes } from '@/app/api/apiRoutes';
 import data from '@/app/data/data.json';
+import './EditCharacter.styles.scss';
 
 const EditCharacter = () => {
   const { id } = useParams();
@@ -259,7 +260,7 @@ const EditCharacter = () => {
                 <Button
                   type="submit"
                   disabled={isButtonDisabled}
-                  className="w-100"
+                  className="w-100 save-edit"
                   variant={isButtonDisabled ? 'secondary' : 'primary'}
                 >
                   {loadingEditSave ? <Spinner animation="border" size="sm" /> : 'Save Changes'}

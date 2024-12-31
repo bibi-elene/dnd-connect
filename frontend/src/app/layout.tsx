@@ -7,6 +7,32 @@ import { Montserrat, Cinzel_Decorative } from 'next/font/google';
 export const metadata: Metadata = {
   title: 'D&D Connect',
   description: 'Connect with D&D characters',
+  icons: {
+    icon: '/assets/dnd-logo.png',
+    apple: '/assets/dnd-logo.png',
+  },
+  openGraph: {
+    title: 'D&D Connect',
+    description: 'Join the ultimate D&D community!',
+    url: 'https://www.dndconnect.com',
+    siteName: 'D&D Connect',
+    images: [
+      {
+        url: '/assets/dnd-logo.png',
+        width: 800,
+        height: 600,
+        alt: 'D&D Connect logo2',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'D&D Connect',
+    description: 'Join the ultimate D&D community!',
+    images: ['/assets/dnd-logo.png'],
+  },
 };
 
 const montserrat = Montserrat({
@@ -19,7 +45,6 @@ const cinzelDecorative = Cinzel_Decorative({
   weight: ['400', '700'],
   variable: '--font-cinzel',
 });
-
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

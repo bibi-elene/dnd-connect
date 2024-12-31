@@ -6,7 +6,7 @@ interface CharacterClass {
   name: string;
   img: string;
   description: string;
-  details: string;
+  traits: string[];
 }
 const CharacterClassesCards = () => {
   const [selectedClass, setSelectedClass] = useState<CharacterClass | null>(null);
@@ -79,9 +79,19 @@ const CharacterClassesCards = () => {
                 </Col>
                 <Col md={6}>
                   <h5 className="text-white mb-3">{selectedClass.description}</h5>
-                  <p className="text-white">
-                    <strong>Details:</strong> {selectedClass.details}
-                  </p>
+                  <div className="traits-container">
+                    <h6 className="text-warning mb-2">Traits:</h6>
+                    <ul className="list-unstyled">
+                      {selectedClass.traits.map((trait, index) => (
+                        <li key={index} className="d-flex align-items-start mb-2">
+                          <span className="badge bg-primary me-2">
+                            <i className="bi bi-check-circle"></i>
+                          </span>
+                          <span className="text-white">{trait}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </Col>
               </Row>
             </Container>

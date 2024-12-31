@@ -1,9 +1,13 @@
 .dice-box-container {
   position: fixed;
   top: 50%;
-  width: 100%;
-  height: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   pointer-events: none;
+  border: 1px solid transparent;
+  z-index: 9999;
+  width: 70%;
+  height: 70%;
 }
 
 #dice-box {
@@ -13,11 +17,12 @@
 }
 
 #dice-canvas {
-  width: 400px;
-  height: 300px;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 .main-button {
-  background: linear-gradient(45deg, #0f6b4090, #02290ac2);
+  background: var(--button-primary);
   color: white;
   font-size: 1.2rem;
   font-weight: 600;
@@ -30,13 +35,14 @@
     transform 0.3s ease,
     box-shadow 0.3s ease,
     background 0.3s ease;
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   font-weight: 400 !important;
 }
 
 .main-button:hover {
   transform: scale(1.1);
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  background: var(--button-primary-hover);
 }
 .dice-buttons {
   position: fixed;
@@ -46,13 +52,11 @@
   padding: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: start;
 }
 
 .roll-dice-button {
-  font-family: 'Cinzel Decorative';
-  background: linear-gradient(45deg, #0f6b4090, #02290ac2);
-  color: white;
+  font-size: 50px;
+  font-family: 'Cinzel Decorative', sans-serif;
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease,
@@ -71,13 +75,6 @@
 
 .roll-dice-button:active {
   transform: scale(0.95);
-  background: #34495e;
-}
-
-.roll-dice-button:before {
-  content: '🎲';
-  margin-right: 8px;
-  font-size: 1.4rem;
 }
 
 .roll-results {
@@ -87,4 +84,81 @@
   align-items: start;
   display: flex;
   width: 100%;
+}
+
+.btn-button-clear {
+  background: var(--button-danger);
+  color: var(--button-danger-text);
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+.btn-button-clear:hover {
+  background: var(--button-danger-hover);
+  transform: scale(1.1);
+}
+
+.dice-result-modal .modal-content {
+  background: rgb(255, 255, 255);
+  color: black;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.dice-result-modal .modal-header {
+  border-bottom: none;
+  color: #f1b55d;
+}
+
+.dice-result-modal .modal-body {
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.dice-result-modal .modal-footer {
+  border-top: none;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn-clear-results {
+  background: var(--button-danger);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.5rem;
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+.btn-clear-results:hover {
+  background: var(--button-danger-hover);
+  transform: scale(1.05);
+}
+
+.roll-result-text {
+  font-size: 32px;
+  font-weight: 600;
+  font-family: 'Cinzel Decorative', sans-serif;
+}
+
+.btn-re-roll {
+  background: var(--button-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.5rem;
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+.btn-re-roll:hover {
+  background: var(--button-primary-hover);
+  transform: scale(1.05);
 }

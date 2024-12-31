@@ -20,7 +20,7 @@ export default function Home() {
 
   useEffect(() => {
     const diceVisibleCookie = Cookies.get('diceVisible');
-    setIsDiceVisible(diceVisibleCookie === 'false' ? false : true); // Default to true if not set
+    setIsDiceVisible(diceVisibleCookie !== 'false');
   }, []);
 
   const toggleDiceDisplay = () => {
@@ -48,15 +48,7 @@ export default function Home() {
         />
       </header>
 
-      <section
-        className="d-flex align-items-center justify-content-center text-center position-relative vh-100"
-        style={{
-          backgroundImage: `url('/assets/tavern.jpg')`,
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center',
-        }}
-      >
+      <section className="d-flex align-items-center justify-content-center text-center position-relative vh-100">
         <div className="position-absolute top-0 start-0 end-0 bottom-0 bg-black bg-opacity-50"></div>
         <Container className="position-relative z-10 text-white">
           <Row className="justify-content-center">

@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import DiceBox from '@3d-dice/dice-box';
-import { Container, Button, Spinner, Dropdown, DropdownButton, Row, Col } from 'react-bootstrap';
+import { Container, Button, Dropdown, DropdownButton, Modal } from 'react-bootstrap';
 import './DiceRoller.styles.scss';
 import data from '@/app/data/data.json';
+import { FaDiceD20 } from 'react-icons/fa';
 
 interface DiceCookieProps {
   isDiceVisible: boolean;
@@ -10,6 +11,7 @@ interface DiceCookieProps {
 const DiceRoller: React.FC<DiceCookieProps> = ({ isDiceVisible }) => {
   const diceBoxRef = useRef<DiceBox | null>(null);
   const [isDiceBoxReady, setIsDiceBoxReady] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [selectedDiceType, setSelectedDiceType] = useState('d20');
   const [selectedDiceCount, setSelectedDiceCount] = useState(2);
   const [rollResults, setRollResults] = useState<number[]>([]);
@@ -47,11 +49,10 @@ const DiceRoller: React.FC<DiceCookieProps> = ({ isDiceVisible }) => {
           shadowTransparency: 0.8,
           theme: 'default',
           themeColor: '#852e33',
-          scale: 10,
+          scale: 6,
           onRollComplete: (results) => {
-            if (isMounted) {
-              setRollResults(results.map((result) => result.value));
-            }
+            setRollResults(results.map((result) => result.value));
+            setShowModal(true);
           },
         });
 
@@ -78,6 +79,7 @@ const DiceRoller: React.FC<DiceCookieProps> = ({ isDiceVisible }) => {
   }, []);
 
   const rollDice = () => {
+    setShowModal(false);
     if (isDiceBoxReady && diceBoxRef.current) {
       const rollString = `${selectedDiceCount}${selectedDiceType}`;
       diceBoxRef.current.roll(rollString);
@@ -88,64 +90,75 @@ const DiceRoller: React.FC<DiceCookieProps> = ({ isDiceVisible }) => {
     if (isDiceBoxReady && diceBoxRef.current) {
       diceBoxRef.current.clear();
       setRollResults([]);
+      setShowModal(false);
     }
   };
 
   return (
     <Container fluid className={!isDiceVisible ? `d-none` : ''}>
       <div className="dice-box-container">
-        <div id="dice-box" className="w-100 h-100"></div>
+        <div id="dice-box"></div>
       </div>
       <div className="d-flex mb-4 dice-buttons align-items-center">
-        <Row className="align-items-center mb-2">
-          <Col xs="auto">
-            <DropdownButton
-              id="dice-type-dropdown"
-              title={`${selectedDiceType}`}
-              variant="outline-light"
-              className="dice-button mb-2"
-            >
-              {data.dices.map((dice) => (
-                <Dropdown.Item key={dice} onClick={() => setSelectedDiceType(dice)}>
-                  {dice}
-                </Dropdown.Item>
-              ))}
-            </DropdownButton>
-          </Col>
+        <div className="mb-2 flex">
+          <DropdownButton
+            id="dice-type-dropdown"
+            title={`${selectedDiceType}`}
+            variant="outline-light"
+            className="dice-button mb-2 me-2"
+          >
+            {data.dices.map((dice) => (
+              <Dropdown.Item key={dice} onClick={() => setSelectedDiceType(dice)}>
+                {dice}
+              </Dropdown.Item>
+            ))}
+          </DropdownButton>
 
-          <Col xs="auto">
-            <DropdownButton
-              id="dice-count-dropdown"
-              title={`${selectedDiceCount}`}
-              variant="outline-light"
-              className="dice-button mb-2"
-            >
-              {[...Array(10).keys()].map((count) => (
-                <Dropdown.Item key={count + 1} onClick={() => setSelectedDiceCount(count + 1)}>
-                  {count + 1}
-                </Dropdown.Item>
-              ))}
-            </DropdownButton>
-          </Col>
-        </Row>
+          <DropdownButton
+            id="dice-count-dropdown"
+            title={`${selectedDiceCount}`}
+            variant="outline-light"
+            className="dice-button mb-2"
+          >
+            {[...Array(10).keys()].map((count) => (
+              <Dropdown.Item key={count + 1} onClick={() => setSelectedDiceCount(count + 1)}>
+                {count + 1}
+              </Dropdown.Item>
+            ))}
+          </DropdownButton>
+        </div>
 
-        <Button
-          onClick={rollDice}
-          disabled={!isDiceBoxReady}
-          className="roll-dice-button"
-          variant="dark"
-        >
-          Roll Dice
-        </Button>
+        <button onClick={rollDice} disabled={!isDiceBoxReady} className="roll-dice-button">
+          <FaDiceD20 />
+        </button>
       </div>
-      <Row className="roll-results mt-3">
-        <Col xs={4} md={4} lg={4} className="text-center text-white rounded shadow">
-          <p className="fw-bold">Result: {rollResults.join(', ') || ''}</p>
-          <Button variant="danger mt-2" onClick={clearResults}>
+      <Modal
+        show={showModal}
+        onHide={() => {
+          clearResults();
+        }}
+        centered
+        backdrop="static"
+        dialogClassName="dice-result-modal"
+      >
+        <Modal.Body>
+          <p className="roll-result-text">You rolled</p>
+          {rollResults.length > 0 && <p className="fw-bold display-6">{rollResults.join(', ')}</p>}
+        </Modal.Body>
+        <Modal.Footer className="justify-content-center">
+          <Button
+            variant="primary"
+            className="btn-re-roll"
+            onClick={rollDice}
+            disabled={!isDiceBoxReady}
+          >
+            Re-roll
+          </Button>
+          <Button variant="danger" className="btn-clear-results" onClick={clearResults}>
             Clear
           </Button>
-        </Col>
-      </Row>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

@@ -2,7 +2,7 @@
 
 import { useNavigate } from '@/app/utils/navigation';
 import { useRouter } from 'next/navigation';
-import { Button, ButtonGroup, Container } from 'react-bootstrap';
+import { ButtonGroup, Container } from 'react-bootstrap';
 
 interface ReturnButtonsProps {
   fallbackUrl?: string;
@@ -34,17 +34,16 @@ const ReturnButtons: React.FC<ReturnButtonsProps> = ({
       style={{ zIndex: 3 }}
     >
       <ButtonGroup>
-        <Button
-          variant="secondary"
+        <button
           onClick={withDashboardButton ? handleBack : () => router.push('/')}
-          className="me-2 rounded pe-4"
+          className="return-cancel-button"
         >
           &#8592; {buttonText}
-        </Button>
+        </button>
         {withDashboardButton && (
-          <Button variant="primary" onClick={goToDashboard} className="rounded">
+          <button onClick={goToDashboard} className="return-primary-button ms-2">
             Dashboard
-          </Button>
+          </button>
         )}
       </ButtonGroup>
     </Container>

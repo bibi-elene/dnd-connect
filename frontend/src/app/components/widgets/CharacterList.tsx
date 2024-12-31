@@ -1,7 +1,7 @@
 import { Character } from '@/app/utils/types';
-import EditButton from './EditButton';
 import Loading from './Loading';
-import { ListGroup, Badge, Button } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
+import { FaPencilAlt } from 'react-icons/fa';
 
 interface CharacterListProps {
   characters: Character[];
@@ -28,14 +28,12 @@ const CharacterList: React.FC<CharacterListProps> = ({ characters, loading, erro
         >
           <div>
             <strong className="text-dark">{character.name}</strong>{' '}
-            <Badge bg="info" className="me-2">
-              {character.class}
-            </Badge>
+            <span className="me-2 custom-badge">{character.class}</span>
             <span>Level {character.level}</span>
           </div>
-          <Button variant="outline-primary" size="sm" onClick={() => onEdit(character.id)}>
-            Edit
-          </Button>
+          <button className="edit-button" onClick={() => onEdit(character.id)}>
+            <FaPencilAlt />
+          </button>
         </ListGroup.Item>
       ))}
     </ListGroup>

@@ -1,0 +1,14 @@
+@import '../../globals.css';
+
+.btn-primary {
+  background: var(--button-primary) !important;
+  border: none !important;
+  transition:
+    scale 0.3s,
+    background 0.3s;
+}
+
+.btn-primary:hover {
+  background: var(--button-primary-hover) !important;
+  border: none !important;
+}

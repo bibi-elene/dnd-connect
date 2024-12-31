@@ -26,10 +26,7 @@ const CharactersList = () => {
   }
 
   return (
-    <Container
-      fluid
-      className="relative min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 p-5 flex items-center justify-center"
-    >
+    <Container fluid className="relative min-h-screen p-5 flex items-center justify-center">
       <Container className="py-4">
         <Row className="justify-content-center">
           <Col md={12} lg={6}>
@@ -57,7 +54,7 @@ const CharactersList = () => {
                         className="d-flex align-items-center justify-content-between p-3 rounded shadow-sm mb-3 bg-light"
                       >
                         <Row className="align-items-center w-100">
-                          <Col xs={3} md={3}  className="d-flex justify-content-center">
+                          <Col xs={3} md={3} className="d-flex justify-content-center">
                             {character.image && (
                               <Image
                                 src={character.image}
@@ -71,9 +68,9 @@ const CharactersList = () => {
                           </Col>
                           <Col xs={6} md={6}>
                             <Card.Text className="fw-bold mb-1">{character.name}</Card.Text>
-                              <Badge bg="info" className="me-2">
-                                {character.class}
-                              </Badge>
+                            <Badge bg="info" className="me-2">
+                              {character.class}
+                            </Badge>
                             <Badge bg="success" className="me-2">
                               (Lvl: {character.level})
                             </Badge>

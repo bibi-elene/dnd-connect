@@ -1,4 +1,5 @@
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Form } from 'react-bootstrap';
+import './LandingPage.styles.scss';
 
 const ReviewForm = () => (
   <section
@@ -39,9 +40,9 @@ const ReviewForm = () => (
               <Form.Label className="text-white">Your Review</Form.Label>
               <Form.Control as="textarea" rows={4} placeholder="Write your review here..." />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <button type="submit" className="secondary-custom-button">
               Submit Review
-            </Button>
+            </button>
           </Form>
         </Col>
       </Row>

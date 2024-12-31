@@ -41,7 +41,6 @@ export async function POST(req: Request) {
     );
 
     return res;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     if (isDynamicServerError(error)) {
       throw error;

@@ -18,7 +18,7 @@ const JoinUsButton: React.FC<{ homeButtonText?: string | null }> = ({ homeButton
 
   return (
     <div className="p-10 flex justify-center w-100 justify-center">
-      <button type="button" onClick={handleClick} className="main-button p-10">
+      <button type="button" onClick={handleClick} className="main-button">
         {homeButtonText}
       </button>
     </div>

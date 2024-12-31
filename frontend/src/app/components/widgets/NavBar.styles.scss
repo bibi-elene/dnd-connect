@@ -1,7 +1,14 @@
+@import '../../globals.css';
+
 .navbar {
-  background: linear-gradient(to right, #3f1111, #741010c3);
+  background: var(--navbar-background);
 }
 
 .form-check-label {
   color: white !important;
+}
+
+.navbar-brand img {
+  max-height: 64px;
+  object-fit: contain;
 }

@@ -1,7 +1,7 @@
 import { User } from '@/app/utils/types';
-import EditButton from './EditButton';
 import Loading from './Loading';
-import { ListGroup, Button } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
+import { FaPencilAlt } from 'react-icons/fa';
 
 interface UserListProps {
   users: User[];
@@ -22,16 +22,13 @@ const UsersList: React.FC<UserListProps> = ({ users, loading, error, onEditUser 
   return (
     <ListGroup>
       {users.map((user) => (
-        <ListGroup.Item
-          key={user.id}
-          className="d-flex justify-content-between align-items-center"
-        >
+        <ListGroup.Item key={user.id} className="d-flex justify-content-between align-items-center">
           <div>
             <strong className="text-dark">{user.username}</strong>
           </div>
-          <Button variant="outline-primary" size="sm" onClick={() => onEditUser(user.id)}>
-            Edit
-          </Button>
+          <button className="edit-button" onClick={() => onEditUser(user.id)}>
+            <FaPencilAlt />
+          </button>
         </ListGroup.Item>
       ))}
     </ListGroup>

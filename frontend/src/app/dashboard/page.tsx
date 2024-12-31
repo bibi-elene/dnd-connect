@@ -33,16 +33,7 @@ const Dashboard = () => {
   const handleEditUser = (id: number) => goToUser(id);
 
   return (
-    <div
-      className="vh-100 justify-content-center align-content-center"
-      style={{
-        backgroundImage: `url('/assets/camp.jpg')`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        overflowY: 'auto',
-      }}
-    >
+    <div className="vh-100 justify-content-center align-content-center">
       <Container className="pt-4 mt-5 justify-content-center d-flex flex-column">
         <Row className="mt-1">
           <Col>

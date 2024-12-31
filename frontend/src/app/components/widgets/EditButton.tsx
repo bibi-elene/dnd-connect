@@ -1,15 +1,15 @@
-import { Button } from 'react-bootstrap';
+import { FaPencilAlt } from 'react-icons/fa';
 
 interface EditButtonProps {
   onClick: () => void;
   label?: string;
 }
 
-const EditButton: React.FC<EditButtonProps> = ({ onClick, label = 'Edit' }) => {
+const EditButton: React.FC<EditButtonProps> = () => {
   return (
-    <Button variant="outline-primary" size="sm" onClick={onClick}>
-      {label}
-    </Button>
+    <button className="edit-button" title="Edit">
+      <FaPencilAlt />
+    </button>
   );
 };
 

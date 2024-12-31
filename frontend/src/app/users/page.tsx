@@ -68,7 +68,7 @@ const UsersList = () => {
   }
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 p-5 flex items-center justify-center">
+    <div className="relative min-h-screen p-5 flex items-center justify-center">
       <ReturnButtons fallbackUrl="/dashboard" />
       <div className="w-full max-w-2xl bg-white p-6 rounded shadow-md">
         <h2 className="text-2xl mb-4 text-center text-black">All Users</h2>

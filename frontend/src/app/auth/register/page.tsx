@@ -27,7 +27,6 @@ const Register = () => {
       await register(data.username, data.password);
       setSuccessMessage('Registration successful! You can now log in.');
       setErrorMessage('');
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setErrorMessage(error.message || 'Registration failed. Username might be taken.');
       setSuccessMessage('');
@@ -35,7 +34,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen">
       <ReturnButtons withDashboardButton={false} buttonText="Home" />
       <form
         onSubmit={handleSubmit(onSubmit)}

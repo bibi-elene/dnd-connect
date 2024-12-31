@@ -6,12 +6,43 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary-light: #f4eeff;
-  --primary-medium: #dcd6f7;
-  --primary-dark: #a6b1e1;
-  --accent: #424874;
+  --primary-blue: #3a78c2;
+  --neutral-gray: #a9a9a2;
+  --accent-amber: #f1b55d;
+  --accent-amber-hover: #c5944a;
+  --highlight-teal: #4ba38b;
+
+  --background-primary: #1c2d41;
+  --background-secondary: #243a54;
+  --background-panel: #f4f4f0;
+  --navbar-background: #1a2a3c;
+  --navbar-text-icons: #e4e8ec;
+
+  --button-primary: #3a78c2;
+  --button-primary-hover: #2d619c;
+  --button-primary-text: #f4f4f0;
+
+  --button-secondary: #4ba38b;
+  --button-secondary-hover: #3a8270;
+  --button-secondary-text: #f4f4f0;
+
+  --button-danger: #e76d6d;
+  --button-danger-hover: #c55656;
+  --button-danger-text: #f4f4f0;
+
+  --button-neutral: #a9a9a2;
+  --button-neutral-hover: #8b8b85;
+  --button-neutral-text: #1c2d41;
+
+  --return-primary: #4ba38b;
+  --return-primary-hover: #3a8270;
+  --return-cancel: #a9a9a2;
+  --return-cancel-hover: #8b8b85;
+
+  --button-edit-bg: #4ba38b;
+  --button-edit-bg-hover: #3a8270;
+  --button-edit-text: #f4f4f0;
+  --button-edit-focus: #f1b55d;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,6 +59,188 @@ body {
   background: var(--background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-primary) !important;
+}
+.primary-custom-button {
+  background: var(--button-primary) !important;
+  color: var(--button-primary-text) !important;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.8rem 1.6rem;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+  font-family: 'Montserrat';
+}
+
+.primary-custom-button:hover {
+  background: var(--button-primary-hover) !important;
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.primary-custom-button:active {
+  transform: scale(0.95);
+  background: var(--button-primary-hover);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.secondary-custom-button {
+  background: var(--button-secondary) !important;
+  color: var(--button-secondary-text) !important;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.8rem 1.6rem;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+  font-family: 'Montserrat';
+}
+
+.secondary-custom-button:hover {
+  background: var(--button-secondary-hover) !important;
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.danger-custom-button {
+  background: var(--button-danger) !important;
+  color: var(--button-danger-text) !important;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.8rem 1.6rem;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+  font-family: 'Montserrat';
+}
+
+.danger-custom-button:hover {
+  background: var(--button-danger-hover) !important;
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.neutral-custom-button {
+  background: var(--button-neutral) !important;
+  color: var(--button-neutral-text) !important;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+  font-family: 'Montserrat';
+}
+
+.neutral-custom-button:hover {
+  background: var(--button-neutral-hover) !important;
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.return-primary-button {
+  background: var(--return-primary) !important;
+  color: var(--button-primary-text) !important;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.8rem 1.6rem;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+  font-family: 'Montserrat';
+}
+
+.return-primary-button:hover {
+  background: var(--return-primary-hover) !important;
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.return-cancel-button {
+  background: var(--return-cancel) !important;
+  color: var(--button-neutral-text) !important;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.8rem 1.6rem;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+  font-family: 'Montserrat';
+}
+
+.return-cancel-button:hover {
+  background: var(--return-cancel-hover) !important;
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+.edit-button {
+  background: var(--accent-amber);
+  color: var(--button-edit-text);
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+.edit-button:hover {
+  background: var(--accent-amber-hover);
+  transform: scale(1.1);
+}
+
+.edit-button:active {
+  transform: scale(0.95);
+}
+
+.edit-button:focus {
+  outline: 2px solid var(--button-edit-focus);
+}
+
+.custom-badge {
+  background-color: var(--button-primary) !important;
+  color: var(--button-primary-text);
+  padding: 0.3rem 0.5rem;
+  border-radius: 15px;
+  font-size: 0.7rem;
 }
 
 label {

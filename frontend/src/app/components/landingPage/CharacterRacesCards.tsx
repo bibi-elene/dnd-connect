@@ -7,7 +7,19 @@ interface CharacterRace {
   name: string;
   img: string;
   description: string;
+  traits: string[];
 }
+
+const traitIcons: Record<string, string> = {
+  Darkvision: 'bi bi-eye-fill',
+  'Keen Senses': 'bi bi-bullseye',
+  Lucky: 'bi bi-star-fill',
+  Brave: 'bi bi-shield-fill-check',
+  'Breath Weapon': 'bi bi-fire',
+  Resistance: 'bi bi-shield-shaded',
+  'Extra Skill': 'bi bi-lightbulb-fill',
+  'Flexible Stats': 'bi bi-sliders',
+};
 
 const CharacterRacesCards = () => {
   const [selectedRace, setSelectedRace] = useState<CharacterRace | null>(null);
@@ -80,10 +92,19 @@ const CharacterRacesCards = () => {
                 </Col>
                 <Col md={6}>
                   <h5 className="text-white mb-3">{selectedRace.description}</h5>
-                  <p className="text-white">
-                    <strong>Details:</strong> More lore and information about the{' '}
-                    {selectedRace.name}.
-                  </p>
+                  <div className="traits-container">
+                    <h6 className="text-warning mb-2">Traits:</h6>
+                    <ul className="list-unstyled">
+                      {selectedRace.traits.map((trait, index) => (
+                        <li key={index} className="d-flex align-items-start mb-2">
+                          <span className="badge bg-primary me-2">
+                            <i className={traitIcons[trait] || 'bi bi-check-circle'}></i>
+                          </span>
+                          <span className="text-white">{trait}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </Col>
               </Row>
             </Container>
