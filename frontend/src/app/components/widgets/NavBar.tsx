@@ -18,18 +18,21 @@ const CustomNavbar: React.FC<NavbarProps> = ({
   toggleDiceDisplay,
   isDiceVisible,
 }) => {
-  const { goToLogin, goToDashboard } = useNavigate();
+  const { goToLogin, goToAccountSettings } = useNavigate();
   return (
     <Navbar variant="dark" expand="lg" fixed="top" className="shadow">
       <Container>
         <div className="d-flex align-items-center">
-          <Image
-            width={80}
-            height={120}
-            src="/assets/D&D-2.png"
-            alt="D&D Connect Logo"
-            className="navbar-logo"
-          />
+          <a href="#">
+            <Image
+              width={80}
+              height={120}
+              src="/assets/D&D-2.png"
+              alt="D&D Connect Logo"
+              className="navbar-logo"
+              loading="lazy"
+            />
+          </a>
           <Navbar.Brand href="#" className="fs-5 fw-bold text-white">
             D&D Connect
           </Navbar.Brand>
@@ -63,7 +66,7 @@ const CustomNavbar: React.FC<NavbarProps> = ({
                   <DropDownArrowIcon />
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="dropdown-menu-end">
-                  <Dropdown.Item onClick={goToDashboard}>Account Settings</Dropdown.Item>
+                  <Dropdown.Item onClick={goToAccountSettings}>Account Settings</Dropdown.Item>
                   <Dropdown.Item onClick={logout}>Log Out</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>

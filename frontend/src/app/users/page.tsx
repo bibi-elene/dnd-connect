@@ -53,7 +53,7 @@ const UsersList = () => {
 
   if (!user || loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="flex items-center justify-center min-h-screen">
         <Loading message="Loading users..." size="lg" />
       </div>
     );
@@ -70,7 +70,7 @@ const UsersList = () => {
   return (
     <div className="relative min-h-screen p-5 flex items-center justify-center">
       <ReturnButtons fallbackUrl="/dashboard" />
-      <div className="w-full max-w-2xl bg-white p-6 rounded shadow-md">
+      <div className="w-full max-w-2xl bg-white p-6 mt-5 rounded shadow-md">
         <h2 className="text-2xl mb-4 text-center text-black">All Users</h2>
         {errorMessage && <p className="text-red-500 mb-2">{errorMessage}</p>}
         {users.length === 0 ? (
@@ -87,7 +87,7 @@ const UsersList = () => {
                   <p>Role: {user.role}</p>
                 </div>
 
-                <EditButton onClick={() => goToUser(user.id)} />
+                <EditButton onEdit={() => goToUser(user.id)} />
               </li>
             ))}
           </ul>

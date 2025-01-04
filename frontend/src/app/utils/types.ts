@@ -14,6 +14,8 @@ export interface User {
   id: number;
   username: string;
   role: string;
+  email?: string;
+  avatar?: string;
 }
 
 export interface CharacterFormInputs {

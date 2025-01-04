@@ -1,13 +1,13 @@
 import { FaPencilAlt } from 'react-icons/fa';
 
 interface EditButtonProps {
-  onClick: () => void;
+  onEdit: () => void;
   label?: string;
 }
 
-const EditButton: React.FC<EditButtonProps> = () => {
+const EditButton: React.FC<EditButtonProps> = ({ onEdit }) => {
   return (
-    <button className="edit-button" title="Edit">
+    <button className="edit-button" title="Edit" onClick={onEdit}>
       <FaPencilAlt />
     </button>
   );

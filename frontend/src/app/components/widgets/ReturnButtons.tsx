@@ -30,7 +30,7 @@ const ReturnButtons: React.FC<ReturnButtonsProps> = ({
   return (
     <Container
       fluid
-      className={`position-fixed top-0 start-0 p-3 d-flex ${className}`}
+      className={`position-absolute top-0 start-0 p-3 d-flex ${className}`}
       style={{ zIndex: 3 }}
     >
       <ButtonGroup>

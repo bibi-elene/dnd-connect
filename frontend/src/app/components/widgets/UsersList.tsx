@@ -1,16 +1,17 @@
 import { User } from '@/app/utils/types';
 import Loading from './Loading';
 import { ListGroup } from 'react-bootstrap';
-import { FaPencilAlt } from 'react-icons/fa';
+import { useNavigate } from '@/app/utils/navigation';
+import EditButton from './EditButton';
 
 interface UserListProps {
   users: User[];
   loading: boolean;
   error: string;
-  onEditUser: (id: number) => void;
 }
 
-const UsersList: React.FC<UserListProps> = ({ users, loading, error, onEditUser }) => {
+const UsersList: React.FC<UserListProps> = ({ users, loading, error }) => {
+  const { goToUser } = useNavigate();
   if (loading) {
     return <Loading message="Loading users..." size="sm" />;
   }
@@ -26,9 +27,7 @@ const UsersList: React.FC<UserListProps> = ({ users, loading, error, onEditUser 
           <div>
             <strong className="text-dark">{user.username}</strong>
           </div>
-          <button className="edit-button" onClick={() => onEditUser(user.id)}>
-            <FaPencilAlt />
-          </button>
+          <EditButton onEdit={() => goToUser(user.id)} />
         </ListGroup.Item>
       ))}
     </ListGroup>

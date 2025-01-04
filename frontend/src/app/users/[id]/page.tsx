@@ -84,16 +84,14 @@ const EditUser = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="flex items-center justify-center min-h-screen">
         <Loading message="Loading user details..." size="lg" />
       </div>
     );
   }
 
-  const isButtonDisabled = !isDirty;
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center">
       <ReturnButtons fallbackUrl="/users" />
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -133,9 +131,9 @@ const EditUser = () => {
         </div>
         <button
           type="submit"
-          disabled={isButtonDisabled}
+          disabled={!isDirty}
           className={`w-full py-2 rounded text-white ${
-            isButtonDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
+            !isDirty ? 'bg-gray-400 cursor-not-allowed' : 'primary-custom-button'
           }`}
         >
           Save Changes

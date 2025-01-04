@@ -23,17 +23,14 @@ const Dashboard = () => {
     error: charactersError,
   } = useFetchCharacters(user, 3);
   const { users, loading: usersLoading, error: usersError } = useFetchUsers(user, 3);
-  const { goToCharacters, goToCharacterCreation, goToCharacter, goToUser, goToUsers } =
-    useNavigate();
+  const { goToCharacters, goToCharacterCreation, goToUsers } = useNavigate();
 
   const handleViewAllCharacters = () => goToCharacters();
   const handleViewAllUsers = () => goToUsers();
   const handleCreateCharacter = () => goToCharacterCreation();
-  const handleEditCharacter = (id: number) => goToCharacter(id);
-  const handleEditUser = (id: number) => goToUser(id);
 
   return (
-    <div className="vh-100 justify-content-center align-content-center">
+    <div className="min-h-screen justify-content-center align-content-center">
       <Container className="pt-4 mt-5 justify-content-center d-flex flex-column">
         <Row className="mt-1">
           <Col>
@@ -62,12 +59,7 @@ const Dashboard = () => {
                   </Card.Header>
                   <Card.Body>
                     <UserActions onViewAll={handleViewAllUsers} />
-                    <UsersList
-                      users={users}
-                      loading={usersLoading}
-                      error={usersError}
-                      onEditUser={handleEditUser}
-                    />
+                    <UsersList users={users} loading={usersLoading} error={usersError} />
                   </Card.Body>
                 </Card>
               </Col>
@@ -82,7 +74,6 @@ const Dashboard = () => {
                       characters={characters}
                       loading={charactersLoading}
                       error={charactersError}
-                      onEdit={handleEditCharacter}
                     />
                   </Card.Body>
                 </Card>
@@ -117,7 +108,6 @@ const Dashboard = () => {
                       characters={characters}
                       loading={charactersLoading}
                       error={charactersError}
-                      onEdit={handleEditCharacter}
                     />
                   </Card.Body>
                 </Card>

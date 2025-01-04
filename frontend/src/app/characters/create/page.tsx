@@ -131,7 +131,7 @@ const CreateCharacter = () => {
                   <Form.Control.Feedback type="invalid">Name is required</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-2">
-                  <Form.Label>Class</Form.Label> <a href="/">Not sure? Check here </a>
+                  <Form.Label>Class</Form.Label> <a href="/" className='text-red'>Not sure? Check here </a>
                   <Form.Select
                     isInvalid={!!errors.class}
                     {...register('class', { required: true })}

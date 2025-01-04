@@ -25,7 +25,7 @@ export const useFetchCharacters = (user: User | null, limit?: number) => {
 
         setCharacters(response.data);
       } catch (err) {
-        setError('Oops! Looks like you need to create a champion. You have 0');
+        setError(`You don't have characters yet`);
         console.error('Error:', err);
       } finally {
         setLoading(false);

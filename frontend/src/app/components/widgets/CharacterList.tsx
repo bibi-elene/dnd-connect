@@ -1,16 +1,18 @@
 import { Character } from '@/app/utils/types';
 import Loading from './Loading';
 import { ListGroup } from 'react-bootstrap';
-import { FaPencilAlt } from 'react-icons/fa';
+import EditButton from './EditButton';
+import { useNavigate } from '@/app/utils/navigation';
 
 interface CharacterListProps {
   characters: Character[];
   loading: boolean;
   error: string;
-  onEdit: (id: number) => void;
 }
 
-const CharacterList: React.FC<CharacterListProps> = ({ characters, loading, error, onEdit }) => {
+const CharacterList: React.FC<CharacterListProps> = ({ characters, loading, error }) => {
+  const { goToCharacter } = useNavigate();
+
   if (loading) {
     return <Loading message="Loading characters..." size="sm" />;
   }
@@ -31,9 +33,7 @@ const CharacterList: React.FC<CharacterListProps> = ({ characters, loading, erro
             <span className="me-2 custom-badge">{character.class}</span>
             <span>Level {character.level}</span>
           </div>
-          <button className="edit-button" onClick={() => onEdit(character.id)}>
-            <FaPencilAlt />
-          </button>
+          <EditButton onEdit={() => goToCharacter(character.id)} />
         </ListGroup.Item>
       ))}
     </ListGroup>

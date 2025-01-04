@@ -8,4 +8,5 @@ export const routes = {
   user: (id: number) => `/users/${id}`,
   users: '/users',
   characterCreate: '/characters/create',
+  accountSettings: '/users/account-settings',
 };

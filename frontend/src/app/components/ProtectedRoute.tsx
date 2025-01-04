@@ -22,7 +22,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   if (loading || !user) {
     return (
       <div className="vh-100 d-flex align-items-center justify-content-center">
-        <Loading message="Fetching data..." size="lg" />
+        <Loading message="Please wait..." size="lg" />
       </div>
     );
   }

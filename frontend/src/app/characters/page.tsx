@@ -26,7 +26,7 @@ const CharactersList = () => {
   }
 
   return (
-    <Container fluid className="relative min-h-screen p-5 flex items-center justify-center">
+    <Container fluid className="relative min-h-screen p-5 mt-3 flex items-center justify-center align-items-center">
       <Container className="py-4">
         <Row className="justify-content-center">
           <Col md={12} lg={6}>
@@ -79,7 +79,7 @@ const CharactersList = () => {
                             </Badge>
                           </Col>
                           <Col xs={3} md={3} className="d-flex justify-content-end">
-                            <EditButton onClick={() => goToCharacter(character.id)} />
+                            <EditButton onEdit={() => goToCharacter(character.id)} />
                           </Col>
                         </Row>
                       </ListGroup.Item>
