@@ -1,10 +1,11 @@
 'use client';
 
-import { Navbar, Nav, Container, Dropdown, Form } from 'react-bootstrap';
+import { Navbar, Nav, Container, Form } from 'react-bootstrap';
 import { useNavigate } from '@/app/utils/navigation';
-import { DropDownArrowIcon } from '../icons/DropDownArrowIcon';
+import DropdownMenu from './DropDownMenu';
 import Image from 'next/image';
 import './NavBar.styles.scss';
+import { useState } from 'react';
 
 interface NavbarProps {
   user: { username: string } | null;
@@ -12,13 +13,18 @@ interface NavbarProps {
   toggleDiceDisplay: () => void;
   isDiceVisible: boolean;
 }
+
 const CustomNavbar: React.FC<NavbarProps> = ({
   user,
   logout,
   toggleDiceDisplay,
   isDiceVisible,
 }) => {
-  const { goToLogin, goToAccountSettings } = useNavigate();
+  const { goToLogin } = useNavigate();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+
   return (
     <Navbar variant="dark" expand="lg" fixed="top" className="shadow">
       <Container>
@@ -56,20 +62,13 @@ const CustomNavbar: React.FC<NavbarProps> = ({
 
           <Nav className="align-items-center flex-row justify-between">
             {user ? (
-              <Dropdown align="end">
-                <Dropdown.Toggle
-                  variant="outline-light"
-                  id="account-dropdown"
-                  className="d-flex align-items-center"
-                >
-                  {user.username}
-                  <DropDownArrowIcon />
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="dropdown-menu-end">
-                  <Dropdown.Item onClick={goToAccountSettings}>Account Settings</Dropdown.Item>
-                  <Dropdown.Item onClick={logout}>Log Out</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <DropdownMenu
+                isOpen={isDropdownOpen}
+                onLogout={logout}
+                username={user.username}
+                toggleDropdown={toggleDropdown}
+                setDropdownOpen={setIsDropdownOpen}
+              />
             ) : (
               <button className="primary-custom-button" onClick={goToLogin}>
                 Log In
