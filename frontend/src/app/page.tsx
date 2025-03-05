@@ -14,7 +14,6 @@ import Cookies from 'js-cookie';
 
 import { Sidebar, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/ui/app-sidebar';
-import { Menu } from 'lucide-react';
 
 export default function Home() {
   const { user, loading } = useContext(AuthContext);

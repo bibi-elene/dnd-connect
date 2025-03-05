@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext } from 'react';
-import { Calendar, Home, Inbox, Search, Settings, User2 } from 'lucide-react';
+import { Calendar, Home, Inbox, Search, Settings, User2, Users } from 'lucide-react';
 import { AuthContext } from '@/app/context/AuthContext';
 
 import {
@@ -31,6 +31,11 @@ const items = [
     title: 'Home',
     url: '#',
     icon: Home,
+  },
+  {
+    title: 'Dashboard',
+    url: '/dashboard',
+    icon: Users,
   },
   {
     title: 'Inbox',
