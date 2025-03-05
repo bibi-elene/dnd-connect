@@ -15,9 +15,7 @@ import { AuthModule } from './auth/auth.module';
       url: process.env.POSTGRES_URL,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true, // Set to false in production
-      ssl: {
-        rejectUnauthorized: false,
-      },
+      ssl: false,
     }),
     CharacterModule,
     UserModule,

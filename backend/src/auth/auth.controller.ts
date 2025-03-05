@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Post, Res, UnauthorizedException, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  ConflictException,
+  Controller,
+  Get,
+  InternalServerErrorException,
+  Post,
+  Res,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
@@ -53,7 +63,19 @@ export class AuthController {
   @Post('register')
   async register(@Body() body) {
     const { username, password } = body;
-    return this.userService.create(username, password, UserRole.USER);
+
+    const existingUser = await this.userService.findOne(username);
+    if (existingUser) {
+      throw new ConflictException('User already exists');
+    }
+
+    try {
+      const newUser = await this.userService.create(username, password, UserRole.USER);
+      return newUser;
+    } catch (error) {
+      console.error('Error during registration:', error);
+      throw new InternalServerErrorException('Registration failed. Please try again later.');
+    }
   }
 
   @UseGuards(JwtAuthGuard)

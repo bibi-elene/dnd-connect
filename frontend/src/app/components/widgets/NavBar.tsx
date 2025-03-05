@@ -3,7 +3,7 @@
 import { Navbar, Nav, Container, Form } from 'react-bootstrap';
 import { useNavigate } from '@/app/utils/navigation';
 import DropdownMenu from './DropDownMenu';
-import Image from 'next/image';
+// import Image from 'next/image';
 import './NavBar.styles.scss';
 import { useState } from 'react';
 
@@ -29,16 +29,7 @@ const CustomNavbar: React.FC<NavbarProps> = ({
     <Navbar variant="dark" expand="lg" fixed="top" className="shadow">
       <Container>
         <div className="d-flex align-items-center">
-          <a href="#">
-            <Image
-              width={80}
-              height={120}
-              src="/assets/D&D-2.png"
-              alt="D&D Connect Logo"
-              className="navbar-logo"
-              loading="lazy"
-            />
-          </a>
+          <a href="#"></a>
           <Navbar.Brand href="#" className="fs-5 fw-bold text-white">
             D&D Connect
           </Navbar.Brand>
@@ -55,9 +46,15 @@ const CustomNavbar: React.FC<NavbarProps> = ({
 
         <Navbar.Collapse id="navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#classes">Classes</Nav.Link>
-            <Nav.Link href="#races">Species</Nav.Link>
-            <Nav.Link href="#review">Contacts</Nav.Link>
+            <Nav.Link className="text-lg" href="#classes">
+              Classes
+            </Nav.Link>
+            <Nav.Link className="text-lg" href="#races">
+              Species
+            </Nav.Link>
+            <Nav.Link className="text-lg" href="#review">
+              Contacts
+            </Nav.Link>
           </Nav>
 
           <Nav className="align-items-center flex-row justify-between">

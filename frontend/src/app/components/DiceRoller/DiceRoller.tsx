@@ -1,13 +1,27 @@
+'use client';
+
 import { useEffect, useRef, useState } from 'react';
 import DiceBox from '@3d-dice/dice-box';
-import { Container, Button, Dropdown, DropdownButton, Modal } from 'react-bootstrap';
+import { Container, Button as RbButton, Dropdown, DropdownButton } from 'react-bootstrap';
 import './DiceRoller.styles.scss';
 import data from '@/app/data/data.json';
 import { FaDiceD20 } from 'react-icons/fa';
 
+// Import shadcn UI dialog components and button
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+
 interface DiceCookieProps {
   isDiceVisible: boolean;
 }
+
 const DiceRoller: React.FC<DiceCookieProps> = ({ isDiceVisible }) => {
   const diceBoxRef = useRef<DiceBox | null>(null);
   const [isDiceBoxReady, setIsDiceBoxReady] = useState(false);
@@ -22,10 +36,7 @@ const DiceRoller: React.FC<DiceCookieProps> = ({ isDiceVisible }) => {
     const setupDiceBox = async () => {
       try {
         const container = document.querySelector('#dice-box');
-        if (!container) {
-          return;
-        }
-
+        if (!container) return;
         container.innerHTML = '';
 
         const diceBox = new DiceBox({
@@ -95,7 +106,7 @@ const DiceRoller: React.FC<DiceCookieProps> = ({ isDiceVisible }) => {
   };
 
   return (
-    <Container fluid className={!isDiceVisible ? `d-none` : ''}>
+    <Container fluid className={!isDiceVisible ? 'd-none' : ''}>
       <div className="dice-box-container">
         <div id="dice-box"></div>
       </div>
@@ -103,7 +114,7 @@ const DiceRoller: React.FC<DiceCookieProps> = ({ isDiceVisible }) => {
         <div className="mb-2 flex">
           <DropdownButton
             id="dice-type-dropdown"
-            title={`${selectedDiceType}`}
+            title={selectedDiceType}
             variant="outline-light"
             className="dice-button mb-2 me-2"
           >
@@ -128,37 +139,43 @@ const DiceRoller: React.FC<DiceCookieProps> = ({ isDiceVisible }) => {
           </DropdownButton>
         </div>
 
-        <button onClick={rollDice} disabled={!isDiceBoxReady} className="roll-dice-button">
+        <RbButton onClick={rollDice} disabled={!isDiceBoxReady} className="roll-dice-button">
           <FaDiceD20 />
-        </button>
+        </RbButton>
       </div>
-      <Modal
-        show={showModal}
-        onHide={() => {
-          clearResults();
+
+      {/* Shadcn Dialog for Roll Results */}
+      <Dialog
+        open={showModal}
+        onOpenChange={(open) => {
+          if (!open) clearResults();
         }}
-        centered
-        backdrop="static"
-        dialogClassName="dice-result-modal"
       >
-        <Modal.Body>
-          <p className="roll-result-text">You rolled</p>
-          {rollResults.length > 0 && <p className="fw-bold display-6">{rollResults.join(', ')}</p>}
-        </Modal.Body>
-        <Modal.Footer className="justify-content-center">
-          <Button
-            variant="primary"
-            className="btn-re-roll"
-            onClick={rollDice}
-            disabled={!isDiceBoxReady}
-          >
-            Re-roll
-          </Button>
-          <Button variant="danger" className="btn-clear-results" onClick={clearResults}>
-            Clear
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        <DialogContent className="w-full max-w-md sm:max-w-lg p-6 sm:p-8 rounded-lg shadow-2xl bg-white">
+          <DialogHeader className="border-b pb-2">
+            <DialogTitle className="text-2xl font-bold">Roll Results</DialogTitle>
+            <DialogDescription className="text-gray-600">You rolled:</DialogDescription>
+          </DialogHeader>
+          {rollResults.length > 0 && (
+            <p className="text-3xl font-bold text-center my-6">{rollResults.join(', ')}</p>
+          )}
+          <DialogFooter className="flex flex-col sm:flex-row justify-center gap-4">
+            <Button
+              onClick={rollDice}
+              disabled={!isDiceBoxReady}
+              className="bg-black text-white hover:bg-gray-800 px-4 py-2 rounded w-full sm:w-auto"
+            >
+              Re-roll
+            </Button>
+            <Button
+              onClick={clearResults}
+              className="bg-white text-black border border-black hover:bg-gray-100 px-4 py-2 rounded w-full sm:w-auto"
+            >
+              Clear
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Container>
   );
 };

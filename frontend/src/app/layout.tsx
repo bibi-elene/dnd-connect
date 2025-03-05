@@ -52,9 +52,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <link rel="preload" as="image" href="/assets/tavern.jpg" />
       <body>
         <AuthProvider>
-          <div className="relative min-h-screen">
-            <div className="relative z-10">{children}</div>
-          </div>
+            <div className="relative min-h-screen">
+              <div className="relative z-10">{children}</div>
+            </div>
         </AuthProvider>
       </body>
     </html>

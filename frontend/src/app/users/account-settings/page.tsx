@@ -9,6 +9,7 @@ import ReturnButtons from '@/app/components/widgets/ReturnButtons';
 interface AccountSettingsFormInputs {
   username: string;
   email: string;
+  role: string; // Added user role field
 }
 
 const AccountSettings: React.FC = () => {
@@ -24,8 +25,10 @@ const AccountSettings: React.FC = () => {
 
   useEffect(() => {
     if (user) {
+      console.log(user);
       setValue('username', user.username);
       setValue('email', user.email || '');
+      setValue('role', user.role || ''); // Set the role from user data
     }
   }, [user, setValue]);
 
@@ -48,11 +51,8 @@ const AccountSettings: React.FC = () => {
   }
 
   return (
-    <Container
-      fluid
-      className="min-vh-100 d-flex align-items-center justify-content-center"
-    >
-      <ReturnButtons withDashboardButton={false} buttonText='Home'/>
+    <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center">
+      <ReturnButtons withDashboardButton={false} buttonText="Home" />
       <Row className="w-100">
         <Col md={{ span: 6, offset: 3 }}>
           <Card className="shadow p-4">
@@ -82,6 +82,15 @@ const AccountSettings: React.FC = () => {
                   {errors.email && (
                     <Form.Text className="text-danger">{errors.email.message}</Form.Text>
                   )}
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formRole">
+                  <Form.Label>Role</Form.Label>
+                  <Form.Control
+                    type="text"
+                    {...register('role')}
+                    placeholder={user?.role}
+                    disabled // Role is read-only
+                  />
                 </Form.Group>
                 <div className="d-flex">
                   <button
