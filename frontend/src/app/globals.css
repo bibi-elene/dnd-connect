@@ -13,7 +13,7 @@
   --highlight-teal: #4ba38b;
 
   --background-primary: #0c1015;
-  --background-secondary: black;
+  --background-secondary: #0c1015;
   --background-panel: #f4f4f0;
   --navbar-background: transparent;
   --navbar-text-icons: #e4e8ec;
@@ -346,9 +346,6 @@ select {
 
   a {
     @apply no-underline text-black !important;
-  }
-  a:hover {
-    @apply text-gray-300 !important;
   }
   :root {
     --sidebar-background: 0 0% 98%;

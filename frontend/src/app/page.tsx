@@ -26,11 +26,11 @@ export default function Home() {
     setIsDiceVisible(diceVisibleCookie !== 'false');
   }, []);
 
-  const toggleDiceDisplay = () => {
-    const newValue = !isDiceVisible;
-    setIsDiceVisible(newValue);
-    Cookies.set('diceVisible', newValue.toString(), { expires: 1 });
-  };
+  // const toggleDiceDisplay = () => {
+  //   const newValue = !isDiceVisible;
+  //   setIsDiceVisible(newValue);
+  //   Cookies.set('diceVisible', newValue.toString(), { expires: 1 });
+  // };
 
   if (loading) {
     return (
@@ -47,21 +47,12 @@ export default function Home() {
           <AppSidebar />
         </Sidebar>
 
-        {/* Trigger button (always visible) */}
-        <button
-          className="fixed top-4 left-4 z-50 p-2 bg-white rounded-md shadow-md"
-          aria-label="Toggle Menu"
-        >
-          <SidebarTrigger>
-            <Menu className="w-6 h-6 text-black" />
-          </SidebarTrigger>
-        </button>
+        <SidebarTrigger />
 
-        {/* Main content (no margin or shift) */}
         <div className="relative">
           <section className="d-flex align-items-center justify-content-center text-center position-relative vh-100">
-            <div className="position-absolute top-0 start-0 end-0 bottom-0 bg-black bg-opacity-50"></div>
-            <Container className="position-relative z-10 text-white">
+            <div className="position-absolute top-0 start-0 end-0 bottom-0 bg-[#0c1015]"></div>
+            <Container className="position-relative text-white">
               <Row className="justify-content-center">
                 <Col lg={8}>
                   <h1
