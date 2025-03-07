@@ -18,11 +18,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 
-interface DiceCookieProps {
-  isDiceVisible: boolean;
-}
-
-const DiceRoller: React.FC<DiceCookieProps> = ({ isDiceVisible }) => {
+const DiceRoller = () => {
   const diceBoxRef = useRef<DiceBox | null>(null);
   const [isDiceBoxReady, setIsDiceBoxReady] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -59,7 +55,7 @@ const DiceRoller: React.FC<DiceCookieProps> = ({ isDiceVisible }) => {
           enableShadows: true,
           shadowTransparency: 0.8,
           theme: 'default',
-          themeColor: '#852e33',
+          themeColor: '#3b82f6',
           scale: 6,
           onRollComplete: (results) => {
             setRollResults(results.map((result) => result.value));
@@ -106,7 +102,7 @@ const DiceRoller: React.FC<DiceCookieProps> = ({ isDiceVisible }) => {
   };
 
   return (
-    <Container fluid className={!isDiceVisible ? 'd-none' : ''}>
+    <Container fluid>
       <div className="dice-box-container">
         <div id="dice-box"></div>
       </div>
@@ -151,25 +147,31 @@ const DiceRoller: React.FC<DiceCookieProps> = ({ isDiceVisible }) => {
           if (!open) clearResults();
         }}
       >
-        <DialogContent className="w-full max-w-md sm:max-w-lg p-6 sm:p-8 rounded-lg shadow-2xl bg-white">
-          <DialogHeader className="border-b pb-2">
-            <DialogTitle className="text-2xl font-bold">Roll Results</DialogTitle>
-            <DialogDescription className="text-gray-600">You rolled:</DialogDescription>
+        <DialogContent className="w-full max-w-sm p-4 rounded-md shadow-lg bg-[#1a1f29] border border-[#3b82f6] text-white">
+          <DialogHeader className="pb-1">
+            <DialogTitle className="text-xl font-bold text-white">🎲 Roll Results</DialogTitle>
+            <DialogDescription className="text-sm text-gray-400">
+              Here's what you rolled:
+            </DialogDescription>
           </DialogHeader>
+
           {rollResults.length > 0 && (
-            <p className="text-3xl font-bold text-center my-6">{rollResults.join(', ')}</p>
+            <p className="text-2xl font-bold text-center my-4 text-blue-400">
+              {rollResults.join(', ')}
+            </p>
           )}
-          <DialogFooter className="flex flex-col sm:flex-row justify-center gap-4">
+
+          <DialogFooter className="flex justify-center gap-3">
             <Button
               onClick={rollDice}
               disabled={!isDiceBoxReady}
-              className="bg-black text-white hover:bg-gray-800 px-4 py-2 rounded w-full sm:w-auto"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md w-full sm:w-auto"
             >
               Re-roll
             </Button>
             <Button
               onClick={clearResults}
-              className="bg-white text-black border border-black hover:bg-gray-100 px-4 py-2 rounded w-full sm:w-auto"
+              className="bg-[#1a1f29] border border-blue-600 text-blue-400 hover:bg-[#273040] px-4 py-2 rounded-md w-full sm:w-auto"
             >
               Clear
             </Button>

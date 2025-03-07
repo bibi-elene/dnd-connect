@@ -1,29 +1,30 @@
 'use client';
 
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useMemo } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { AuthContext } from './context/AuthContext';
 import DiceRoller from './components/DiceRoller/DiceRoller';
 import JoinUsButton from './components/widgets/JoinButton';
 import Loading from './components/widgets/Loading';
 import './page.styles.scss';
-import CharacterClassesCards from './components/landingPage/CharacterClassesCards';
-import CharacterRacesCards from './components/landingPage/CharacterRacesCards';
+// import CharacterClassesCards from './components/landingPage/CharacterClassesCards';
+// import CharacterRacesCards from './components/landingPage/CharacterRacesCards';
 import ReviewForm from './components/landingPage/ReviewForm';
-import Cookies from 'js-cookie';
 
 import { Sidebar, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/ui/app-sidebar';
+import About from './components/landingPage/About';
+import Testimonials from './components/landingPage/Testimonials';
 
 export default function Home() {
   const { user, loading } = useContext(AuthContext);
   const homeButtonText = useMemo(() => (user ? '🚀 Explore' : '🚀 Sign Up'), [user]);
-  const [isDiceVisible, setIsDiceVisible] = useState(true);
+  // const [isDiceVisible, setIsDiceVisible] = useState(true);
 
-  useEffect(() => {
-    const diceVisibleCookie = Cookies.get('diceVisible');
-    setIsDiceVisible(diceVisibleCookie !== 'false');
-  }, []);
+  // useEffect(() => {
+  //   const diceVisibleCookie = Cookies.get('diceVisible');
+  //   setIsDiceVisible(diceVisibleCookie !== 'false');
+  // }, []);
 
   // const toggleDiceDisplay = () => {
   //   const newValue = !isDiceVisible;
@@ -40,14 +41,12 @@ export default function Home() {
   }
 
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={false}>
       <div className="relative">
         <Sidebar collapsible="offcanvas">
           <AppSidebar />
         </Sidebar>
-
         <SidebarTrigger />
-
         <div className="relative">
           <section className="d-flex align-items-center justify-content-center text-center position-relative vh-100">
             <div className="position-absolute top-0 start-0 end-0 bottom-0 bg-[#0c1015]"></div>
@@ -58,19 +57,22 @@ export default function Home() {
                     className="display-3 fw-bold mb-4"
                     style={{ fontFamily: 'Cinzel Decorative' }}
                   >
-                    Welcome to D&D Connect!
+                    Forge Your Next Great Adventure
                   </h1>
-                  <JoinUsButton homeButtonText={homeButtonText} />
-                  <DiceRoller isDiceVisible={isDiceVisible} />
-                  <p className="lead mb-4">
-                    Your gateway to exciting adventures and a vibrant D&D community
+                  <p className="font-italic">
+                    Manage your campaigns, track quests, and bring your party together—all in one
+                    place.
                   </p>
+                  <JoinUsButton homeButtonText={homeButtonText} />
+                  <DiceRoller />
                 </Col>
               </Row>
             </Container>
           </section>
-          <CharacterClassesCards />
-          <CharacterRacesCards />
+          <About />
+          <Testimonials />
+          {/* <CharacterClassesCards />
+          <CharacterRacesCards /> */}
           <ReviewForm />
         </div>
       </div>

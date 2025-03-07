@@ -11,6 +11,9 @@ export const metadata: Metadata = {
     icon: '/assets/D&D-2.png',
     apple: '/assets/D&D-2.png',
   },
+  alternates: {
+    canonical: 'https://dndconnect.xyz',
+  },
   openGraph: {
     title: 'D&D Connect',
     description: 'Join the ultimate D&D community!',
@@ -52,9 +55,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <link rel="preload" as="image" href="/assets/tavern.jpg" />
       <body>
         <AuthProvider>
-            <div className="relative min-h-screen">
-              <div className="relative z-10">{children}</div>
-            </div>
+          <div className="relative min-h-screen">
+            <div className="relative z-10">{children}</div>
+          </div>
         </AuthProvider>
       </body>
     </html>

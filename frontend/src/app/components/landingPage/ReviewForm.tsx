@@ -2,17 +2,8 @@ import { Container, Row, Col, Form } from 'react-bootstrap';
 import './LandingPage.styles.scss';
 
 const ReviewForm = () => (
-  <section
-    id="review"
-    className="py-5 position-relative"
-    style={{
-      backgroundImage: `url('/assets/camp1.jpg')`,
-      backgroundSize: 'cover',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center',
-    }}
-  >
-    <div className="position-absolute top-0 start-0 end-0 bottom-0 bg-black bg-opacity-50"></div>
+  <section id="review" className="py-20 bg-[#0f131a] text-white">
+    {/* <div className="position-absolute top-0 start-0 end-0 bottom-0 bg-black bg-opacity-50"></div> */}
     <Container className="position-relative text-white">
       <h2
         className="text-center display-4 fw-bold mb-5"
