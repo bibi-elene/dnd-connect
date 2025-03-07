@@ -93,7 +93,7 @@ export function AppSidebar() {
                     {user?.username || 'Guest'}
                   </span>
                   <span className="text-xs text-muted-foreground">
-                    {user?.email || 'elene@mail.com'}
+                    {user?.email || 'example@mail.com'}
                   </span>
                 </div>
               </Button>
