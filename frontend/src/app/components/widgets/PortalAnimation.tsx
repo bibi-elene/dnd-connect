@@ -2,8 +2,8 @@ import Spline from '@splinetool/react-spline';
 
 export default function PortalAnimation() {
   return (
-    <main className="">
-      <Spline scene="https://prod.spline.design/vCvarwNOfRGdj-xD/scene.splinecode" />
-    </main>
+    <div>
+      <Spline scene="https://prod.spline.design/wPI6ml3yrykGg1Dp/scene.splinecode" />
+    </div>
   );
 }

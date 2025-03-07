@@ -3,13 +3,13 @@ import PortalAnimation from '../widgets/PortalAnimation';
 
 const About = () => {
   return (
-    <section className="py-20 bg-[#0f131a] text-white">
+    <section className="text-white">
       <Container>
         <Row className="justify-content-center text-center">
         <PortalAnimation />
 
           <Col lg={8}>
-            <h2 className="text-4xl font-bold mb-6" style={{ fontFamily: 'Cinzel Decorative' }}>
+            <h2 className="text-4xl font-bold mb-6 font-montserrat">
               Your Party's New HQ
             </h2>
             <p className="text-lg text-gray-400 mb-12">
@@ -22,7 +22,7 @@ const About = () => {
 
         <Row className="text-center mt-12 flex flex-wrap">
           <Col md={3} className="mb-8 flex">
-            <div className="flex flex-col p-6 bg-[#1a1f29] rounded-lg shadow-md hover:shadow-lg transition w-full">
+            <div className="flex flex-col p-6 bg-transparent border-1 border-white rounded-lg shadow-md hover:shadow-lg transition w-full">
               <div className="text-4xl mb-4">🎲</div>
               <h3 className="text-xl font-semibold mb-2">Campaign Tracking</h3>
               <p className="text-gray-400 mt-auto">Keep your adventures accessible all times.</p>
@@ -38,7 +38,7 @@ const About = () => {
             </div>
           </Col>
           <Col md={3} className="mb-8 flex">
-            <div className="flex flex-col p-6 bg-[#1a1f29] rounded-lg shadow-md hover:shadow-lg transition w-full">
+            <div className="flex flex-col p-6 bg-transparent border-1 border-white rounded-lg shadow-md hover:shadow-lg transition w-full">
               <div className="text-4xl mb-4">🧙</div>
               <h3 className="text-xl font-semibold mb-2">Character Sheets & Tools</h3>
               <p className="text-gray-400 mt-auto">

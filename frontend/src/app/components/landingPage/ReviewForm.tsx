@@ -2,12 +2,25 @@ import { Container, Row, Col, Form } from 'react-bootstrap';
 import './LandingPage.styles.scss';
 
 const ReviewForm = () => (
-  <section id="review" className="py-20 bg-[#0f131a] text-white">
-    {/* <div className="position-absolute top-0 start-0 end-0 bottom-0 bg-black bg-opacity-50"></div> */}
-    <Container className="position-relative text-white">
+  <section
+    id="review"
+    className="relative py-20 text-white overflow-hidden"
+    style={{
+      backgroundImage: `url('/assets/topography.svg')`,
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+    }}
+  >
+    {/* Top gradient */}
+    <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-black/40 to-transparent pointer-events-none"></div>
+
+    {/* Bottom gradient */}
+    {/* <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black to-transparent pointer-events-none"></div> */}
+
+    <Container className="relative text-white">
       <h2
         className="text-center display-4 fw-bold mb-5"
-        style={{ fontFamily: 'Cinzel Decorative' }}
       >
         Leave a Review
       </h2>

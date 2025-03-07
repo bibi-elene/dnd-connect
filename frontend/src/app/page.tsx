@@ -48,14 +48,14 @@ export default function Home() {
         </Sidebar>
         <SidebarTrigger />
         <div className="relative">
-          <section className="d-flex align-items-center justify-content-center text-center position-relative vh-100">
-            <div className="position-absolute top-0 start-0 end-0 bottom-0 bg-[#0c1015]"></div>
+          <section className="d-flex align-items-center justify-content-center text-center mt-60">
+            {/* <div className="position-absolute top-0 start-0 end-0 bottom-0"></div> */}
             <Container className="position-relative text-white">
               <Row className="justify-content-center">
                 <Col lg={8}>
                   <h1
                     className="display-3 fw-bold mb-4"
-                    style={{ fontFamily: 'Cinzel Decorative' }}
+                    style={{ fontFamily: 'Montserrat' }}
                   >
                     Forge Your Next Great Adventure
                   </h1>

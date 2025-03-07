@@ -37,7 +37,6 @@ const CharacterClassesCards = () => {
       <Container className="position-relative text-white">
         <h2
           className="text-center display-4 fw-bold mb-5"
-          style={{ fontFamily: 'Cinzel Decorative' }}
         >
           Classes
         </h2>
