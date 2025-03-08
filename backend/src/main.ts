@@ -5,34 +5,27 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { IoAdapter } from '@nestjs/platform-socket.io';
 
 dotenv.config();
-
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     bufferLogs: true,
+    cors: {
+      origin: [
+        'http://localhost:3000',
+        'https://dndconnect.xyz/',
+        'https://dnd-connect.vercel.app/',
+        'https://www.dndconnect.xyz/',
+      ],
+      credentials: true,
+      methods: 'GET,PUT,PATCH,POST,DELETE,OPTIONS',
+      allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization',
+    },
   });
 
   app.use(cookieParser());
-
-  app.use((req, res, next) => {
-    const allowedOrigin =
-      process.env.NODE_ENV === 'local' ? 'http://localhost:3000' : 'https://dnd-connect.vercel.app';
-
-    res.header('Access-Control-Allow-Origin', allowedOrigin);
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,PATCH,POST,DELETE,OPTIONS');
-    res.header(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-    );
-    res.header('Access-Control-Allow-Credentials', 'true');
-
-    if (req.method === 'OPTIONS') {
-      return res.status(204).end();
-    }
-
-    next();
-  });
+  app.useWebSocketAdapter(new IoAdapter(app));
 
   app.useStaticAssets(join(__dirname, '..', 'public'), {
     prefix: '/docs/',
