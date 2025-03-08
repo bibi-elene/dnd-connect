@@ -17,7 +17,7 @@ const JoinUsButton: React.FC<{ homeButtonText?: string | null }> = ({ homeButton
   };
 
   return (
-    <div className="p-10 flex justify-center w-100 justify-center">
+    <div className="py-10 flex justify-start w-100">
       <button type="button" onClick={handleClick} className="main-button">
         {homeButtonText}
       </button>

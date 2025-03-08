@@ -1,0 +1,10 @@
+.arrow-icon {
+    opacity: 0;
+    transform: translateX(0.5rem) translateZ(0);
+    transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.button:hover .arrow-icon {
+    opacity: 1;
+    transform: translateX(0);
+}
