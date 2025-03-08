@@ -48,11 +48,7 @@ const CharacterRacesCards = () => {
     >
       <div className="position-absolute top-0 start-0 end-0 bottom-0 bg-black bg-opacity-75"></div>
       <Container className="position-relative text-white">
-        <h2
-          className="text-center display-4 fw-bold mb-5"
-        >
-          Species
-        </h2>
+        <h2 className="text-center display-4 fw-bold mb-5">Species</h2>
         <Row>
           {data.metadata.species.map((race, idx) => (
             <Col md={6} lg={3} key={idx} className="mb-4">

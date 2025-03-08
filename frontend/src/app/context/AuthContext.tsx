@@ -91,7 +91,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log(errorData)
+        console.log(errorData);
         throw new Error(errorData.message.message || 'Failed to register');
       }
     } catch (error) {

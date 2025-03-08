@@ -4,12 +4,7 @@ import { User } from '@/app/utils/types';
 import Loading from './Loading';
 import EditButton from './EditButton';
 import { useNavigate } from '@/app/utils/navigation';
-import {
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from '@/components/ui/table';
+import { TableBody, TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 
 interface UserListProps {

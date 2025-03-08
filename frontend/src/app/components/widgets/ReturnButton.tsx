@@ -58,8 +58,7 @@ const ReturnButton: React.FC<ReturnButtonProps> = ({
         <button
           onClick={goToDashboard}
           className="relative overflow-hidden px-4 py-2 text-sm font-bold text-white bg-transparent border-2 border-white/40 rounded-md transition-all duration-300 group hover:border-white"
-        >
-        </button>
+        ></button>
       )}
     </Container>
   );

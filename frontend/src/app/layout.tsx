@@ -53,12 +53,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${montserrat.variable}`}>
       <link rel="preload" as="image" href="/assets/tavern.jpg" />
-      <body className='bg-[#0c1015]'>
+      <body className="bg-[#0c1015]">
         <AuthProvider>
           <div className="relative min-h-screen">
             <div className="relative z-10">{children}</div>
             <DiceRoller />
-
           </div>
         </AuthProvider>
       </body>

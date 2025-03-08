@@ -5,11 +5,7 @@ const Testimonials = () => {
       <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
 
       <div className="max-w-6xl mx-auto px-6">
-        <h2
-          className="text-4xl font-bold text-center mb-12"
-        >
-          Tales from the Tavern
-        </h2>
+        <h2 className="text-4xl font-bold text-center mb-12">Tales from the Tavern</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Card 1 */}

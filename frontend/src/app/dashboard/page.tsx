@@ -30,8 +30,7 @@ const Dashboard = () => {
   const handleCreateCharacter = () => goToCharacterCreation();
 
   return (
-    <div
-      className="min-h-screen justify-content-center align-content-center bg-cover">
+    <div className="min-h-screen justify-content-center align-content-center bg-cover">
       <Container className="pt-4 mt-5 justify-content-center d-flex flex-column">
         <Row className="mt-1">
           <Col>

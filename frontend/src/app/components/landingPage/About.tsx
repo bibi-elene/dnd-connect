@@ -6,12 +6,10 @@ const About = () => {
     <section className="text-white">
       <Container>
         <Row className="justify-content-center text-center">
-        <PortalAnimation />
+          <PortalAnimation />
 
           <Col lg={8}>
-            <h2 className="text-4xl font-bold mb-6 font-montserrat">
-              Your Party's New HQ
-            </h2>
+            <h2 className="text-4xl font-bold mb-6 font-montserrat">Your Party's New HQ</h2>
             <p className="text-lg text-gray-400 mb-12">
               D&D Connect is your all-in-one toolkit to manage campaigns, track quests, and stay in
               sync with your party. Whether you're a Dungeon Master or an adventurer, we've got the

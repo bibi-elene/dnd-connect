@@ -14,9 +14,9 @@ async function bootstrap() {
     cors: {
       origin: [
         'http://localhost:3000',
-        'https://dndconnect.xyz/',
-        'https://dnd-connect.vercel.app/',
-        'https://www.dndconnect.xyz/',
+        'https://dndconnect.xyz',
+        'https://dnd-connect.vercel.app',
+        'https://www.dndconnect.xyz',
       ],
       credentials: true,
       methods: 'GET,PUT,PATCH,POST,DELETE,OPTIONS',

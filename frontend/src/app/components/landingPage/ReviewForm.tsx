@@ -19,11 +19,7 @@ const ReviewForm = () => (
     {/* <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black to-transparent pointer-events-none"></div> */}
 
     <Container className="relative text-white">
-      <h2
-        className="text-center display-4 fw-bold mb-5"
-      >
-        Leave a Review
-      </h2>
+      <h2 className="text-center display-4 fw-bold mb-5">Leave a Review</h2>
       <Row className="justify-content-center">
         <Col md={6} lg={6} sm={8}>
           <Form

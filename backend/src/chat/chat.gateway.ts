@@ -13,7 +13,12 @@ import { ChatService } from './chat.service';
 
 @WebSocketGateway({
   cors: {
-    origin: ['http://localhost:3000'],
+    origin: [
+      'http://localhost:3000',
+      'https://dndconnect.xyz',
+      'https://dnd-connect.vercel.app',
+      'https://www.dndconnect.xyz',
+    ],
     methods: ['GET', 'POST'],
     credentials: true,
   },
