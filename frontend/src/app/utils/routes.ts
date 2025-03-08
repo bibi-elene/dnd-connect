@@ -9,4 +9,6 @@ export const routes = {
   users: '/users',
   characterCreate: '/characters/create',
   accountSettings: '/users/account-settings',
+  characterClasses: '/info/dnd-classes',
+  characterRaces: '/info/dnd-races',
 };

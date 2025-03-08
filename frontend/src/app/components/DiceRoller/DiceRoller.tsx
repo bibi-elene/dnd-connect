@@ -111,7 +111,7 @@ const DiceRoller = () => {
           <DropdownButton
             id="dice-type-dropdown"
             title={selectedDiceType}
-            variant="outline-light"
+            variant="dark"
             className="dice-button mb-2 me-2"
           >
             {data.dices.map((dice) => (
@@ -124,7 +124,7 @@ const DiceRoller = () => {
           <DropdownButton
             id="dice-count-dropdown"
             title={`${selectedDiceCount}`}
-            variant="outline-light"
+            variant="dark"
             className="dice-button mb-2"
           >
             {[...Array(10).keys()].map((count) => (

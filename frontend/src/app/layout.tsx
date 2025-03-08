@@ -3,6 +3,7 @@ import './globals.css';
 import { AuthProvider } from './context/AuthContext';
 import type { Metadata } from 'next';
 import { Montserrat, Inter } from 'next/font/google';
+import DiceRoller from './components/DiceRoller/DiceRoller';
 
 export const metadata: Metadata = {
   title: 'D&D Connect',
@@ -56,6 +57,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthProvider>
           <div className="relative min-h-screen">
             <div className="relative z-10">{children}</div>
+            <DiceRoller />
+
           </div>
         </AuthProvider>
       </body>

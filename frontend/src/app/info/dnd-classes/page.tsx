@@ -7,6 +7,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/componen
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
+import ReturnButton from '@/app/components/widgets/ReturnButton';
 
 interface CharacterClass {
   name: string;
@@ -26,10 +27,12 @@ const CharacterClassesPage = () => {
 
   return (
     <div className="relative min-h-screen bg-black">
+      <ReturnButton />
+
       {/* Background with Dark Overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url('/assets/adventure.jpg')` }}
+        style={{ backgroundImage: `url('/assets/adventure2.jpg')` }}
       >
         <div className="absolute inset-0 bg-black/70"></div>
       </div>
@@ -79,19 +82,19 @@ const CharacterClassesPage = () => {
 
       {/* Sheet for Class Details */}
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-        <SheetContent className="bg-gray-900 text-white w-[85vw] sm:w-[450px]">
+        <SheetContent className="bg-gray-900 h-full text-white w-[85vw] sm:w-[450px] overflow-scroll">
           {selectedClass && (
             <>
               <SheetHeader>
-                <SheetTitle className="text-2xl">{selectedClass.name}</SheetTitle>
+                <SheetTitle className="text-2xl text-white">{selectedClass.name}</SheetTitle>
               </SheetHeader>
               <div className="mt-4 space-y-4">
                 <Image
                   src={selectedClass.img}
                   alt={selectedClass.name}
-                  width={400}
-                  height={200}
-                  className="w-full rounded-lg"
+                  width={100}
+                  height={100}
+                  className="w-full rounded-lg max-h-[400px]"
                 />
                 <p className="text-gray-300 text-sm">{selectedClass.description}</p>
                 <div>

@@ -48,7 +48,6 @@ export default function Home() {
                     place.
                   </p>
                   <FramerButton text="Start Adventure" />
-                  <DiceRoller />
                 </Col>
               </Row>
             </Container>

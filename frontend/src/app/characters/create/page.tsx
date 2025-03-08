@@ -10,6 +10,8 @@ import { useNavigate } from '@/app/utils/navigation';
 import { apiRoutes } from '@/app/api/apiRoutes';
 import data from '@/app/data/data.json';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
+import Link from 'next/link';
+import { routes } from '@/app/utils/routes';
 
 const CreateCharacter = () => {
   const {
@@ -132,10 +134,12 @@ const CreateCharacter = () => {
                   <Form.Control.Feedback type="invalid">Name is required</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-2">
-                  <Form.Label>Class</Form.Label>{' '}
-                  <a href="/" className="text-red">
-                    Not sure? Check here{' '}
-                  </a>
+                  <Form.Label>Class</Form.Label>
+                  <span className="text-xs ms-2">
+                    <Link href={routes.characterClasses} target="_blank" rel="noopener noreferrer">
+                      Class info
+                    </Link>
+                  </span>
                   <Form.Select
                     isInvalid={!!errors.class}
                     {...register('class', { required: true })}
@@ -151,6 +155,11 @@ const CreateCharacter = () => {
                 </Form.Group>
                 <Form.Group className="mb-2">
                   <Form.Label>Race</Form.Label>
+                  <span className="text-xs ms-2">
+                    <Link href={routes.characterRaces} target="_blank" rel="noopener noreferrer">
+                      Race info
+                    </Link>
+                  </span>
                   <Form.Select isInvalid={!!errors.race} {...register('race', { required: true })}>
                     <option value="">Select Race</option>
                     {data.species.map((option) => (

@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext } from 'react';
-import { Calendar, Home, Inbox, Search, Settings, User2, Users } from 'lucide-react';
+import { Home, Inbox, Search, Settings, User2, Users, Swords, Castle } from 'lucide-react';
 import { AuthContext } from '@/app/context/AuthContext';
 
 import {
@@ -21,10 +21,10 @@ import { Button } from '@/components/ui/button';
 import { routes } from '@/app/utils/routes';
 import Link from 'next/link';
 
-const items = [
+const application = [
   {
     title: 'Home',
-    url: '#',
+    url: routes.home,
     icon: Home,
   },
   {
@@ -38,11 +38,6 @@ const items = [
     icon: Inbox,
   },
   {
-    title: 'Calendar',
-    url: '#',
-    icon: Calendar,
-  },
-  {
     title: 'Search',
     url: '#',
     icon: Search,
@@ -51,6 +46,19 @@ const items = [
     title: 'Settings',
     url: routes.accountSettings,
     icon: Settings,
+  },
+];
+
+const info = [
+  {
+    title: 'Character Classes',
+    url: routes.characterClasses,
+    icon: Swords,
+  },
+  {
+    title: 'Character Races',
+    url: routes.characterRaces,
+    icon: Castle,
   },
 ];
 
@@ -64,7 +72,25 @@ export function AppSidebar() {
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {application.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <a href={item.url}>
+                      <item.icon className="w-5 h-5" />
+                      <span>{item.title}</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Info</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {info.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
