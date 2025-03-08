@@ -8,23 +8,24 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { IoAdapter } from '@nestjs/platform-socket.io';
 
 dotenv.config();
+
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     bufferLogs: true,
-    cors: {
-      origin: [
-        'http://localhost:3000',
-        'https://dndconnect.xyz',
-        'https://dnd-connect.vercel.app',
-        'https://www.dndconnect.xyz',
-      ],
-      credentials: true,
-      methods: 'GET,PUT,PATCH,POST,DELETE,OPTIONS',
-      allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization',
-    },
   });
 
-  app.use(cookieParser());
+  app.enableCors({
+    origin: [
+      'http://localhost:3000',
+      'https://dndconnect.xyz',
+      'https://dnd-connect.vercel.app',
+      'https://www.dndconnect.xyz',
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+  });
+
   app.useWebSocketAdapter(new IoAdapter(app));
 
   app.useStaticAssets(join(__dirname, '..', 'public'), {

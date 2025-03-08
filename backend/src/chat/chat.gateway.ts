@@ -19,9 +19,10 @@ import { ChatService } from './chat.service';
       'https://dnd-connect.vercel.app',
       'https://www.dndconnect.xyz',
     ],
-    methods: ['GET', 'POST'],
     credentials: true,
   },
+  transports: ['websocket'], // ✅ Force WebSocket instead of polling
+  path: '/socket.io/', // ✅ Ensure correct WebSocket path
 })
 export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server;
