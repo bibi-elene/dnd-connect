@@ -1,10 +1,9 @@
 'use client';
 
-import { useContext, useMemo } from 'react';
+import { useContext } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { AuthContext } from './context/AuthContext';
 import DiceRoller from './components/DiceRoller/DiceRoller';
-import JoinUsButton from './components/widgets/JoinButton';
 import Loading from './components/widgets/Loading';
 import './page.styles.scss';
 // import CharacterClassesCards from './components/landingPage/CharacterClassesCards';
@@ -19,19 +18,6 @@ import FramerButton from './components/widgets/FramerButton';
 
 export default function Home() {
   const { user, loading } = useContext(AuthContext);
-  const homeButtonText = useMemo(() => (user ? '🚀 Explore' : '🚀 Sign Up'), [user]);
-  // const [isDiceVisible, setIsDiceVisible] = useState(true);
-
-  // useEffect(() => {
-  //   const diceVisibleCookie = Cookies.get('diceVisible');
-  //   setIsDiceVisible(diceVisibleCookie !== 'false');
-  // }, []);
-
-  // const toggleDiceDisplay = () => {
-  //   const newValue = !isDiceVisible;
-  //   setIsDiceVisible(newValue);
-  //   Cookies.set('diceVisible', newValue.toString(), { expires: 1 });
-  // };
 
   if (loading) {
     return (

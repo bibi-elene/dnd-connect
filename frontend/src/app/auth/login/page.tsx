@@ -13,7 +13,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -49,20 +48,20 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen relative">
+    <div
+      className="flex items-center justify-center min-h-screen relative bg-cover"
+      style={{ backgroundImage: 'url(/assets/signup.png)' }}
+    >
       <Dialog open>
         <DialogContent
           className="max-w-sm p-6"
-          onInteractOutside={(e) => e.preventDefault()} // Block outside click
-          onEscapeKeyDown={(e) => e.preventDefault()} // Block ESC close
+          onInteractOutside={(e) => e.preventDefault()}
+          onEscapeKeyDown={(e) => e.preventDefault()}
         >
           <DialogHeader>
             <DialogTitle>Login</DialogTitle>
-            <DialogDescription>
-              Enter your credentials to access your account.
-            </DialogDescription>
           </DialogHeader>
-          
+
           {errorMessage && (
             <Alert variant="destructive">
               <ExclamationTriangleIcon className="h-4 w-4" />
@@ -80,9 +79,7 @@ const Login = () => {
                 {...register('username', { required: true })}
                 className="text-black"
               />
-              {errors.username && (
-                <p className="text-red-500 text-sm">Username is required</p>
-              )}
+              {errors.username && <p className="text-red-500 text-sm">Username is required</p>}
             </div>
             <div className="flex flex-col space-y-1">
               <Label htmlFor="password">Password</Label>
@@ -92,9 +89,7 @@ const Login = () => {
                 {...register('password', { required: true })}
                 className="text-black"
               />
-              {errors.password && (
-                <p className="text-red-500 text-sm">Password is required</p>
-              )}
+              {errors.password && <p className="text-red-500 text-sm">Password is required</p>}
             </div>
             <DialogFooter>
               <Button type="submit" className="w-full">

@@ -7,11 +7,12 @@ import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-b
 import Loading from '@/app/components/widgets/Loading';
 import { CharacterFormInputs } from '@/app/utils/types';
 import Image from 'next/image';
-import ReturnButtons from '@/app/components/widgets/ReturnButtons';
+import ReturnButton from '@/app/components/widgets/ReturnButton';
 import { useNavigate } from '@/app/utils/navigation';
 import { apiRoutes } from '@/app/api/apiRoutes';
 import data from '@/app/data/data.json';
 import './EditCharacter.styles.scss';
+import ProtectedRoute from '@/app/components/ProtectedRoute';
 
 const EditCharacter = () => {
   const { id } = useParams();
@@ -149,7 +150,7 @@ const EditCharacter = () => {
   return (
     <Container fluid className="min-vh-100 p-4 d-flex align-items-center">
       <Col xs="auto" className=" z-index-3">
-        <ReturnButtons fallbackUrl="/characters" />
+        <ReturnButton />
       </Col>
       <Row className="w-100 mt-5 pt-5 justify-content-center">
         <Col md={6} lg={4} sm={8} className="mt-2">
@@ -291,4 +292,10 @@ const EditCharacter = () => {
   );
 };
 
-export default EditCharacter;
+export default function EditCharacterPage() {
+  return (
+    <ProtectedRoute>
+      <EditCharacter />
+    </ProtectedRoute>
+  );
+}

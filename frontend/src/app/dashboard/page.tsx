@@ -9,7 +9,7 @@ import Header from '../components/widgets/Header';
 import CharacterList from '../components/widgets/CharacterList';
 import CharacterActions from '../components/widgets/CharacterActions';
 import { useNavigate } from '../utils/navigation';
-import ReturnButtons from '../components/widgets/ReturnButtons';
+import ReturnButton from '../components/widgets/ReturnButton';
 import { useFetchUsers } from '../hooks/useFetchUsers';
 import UsersList from '../components/widgets/UsersList';
 import UserActions from '../components/widgets/UserActions';
@@ -30,11 +30,12 @@ const Dashboard = () => {
   const handleCreateCharacter = () => goToCharacterCreation();
 
   return (
-    <div className="min-h-screen justify-content-center align-content-center">
+    <div
+      className="min-h-screen justify-content-center align-content-center bg-cover">
       <Container className="pt-4 mt-5 justify-content-center d-flex flex-column">
         <Row className="mt-1">
           <Col>
-            <ReturnButtons withDashboardButton={false} buttonText="Home" />
+            <ReturnButton />
           </Col>
         </Row>
         {user?.role === ROLES.ADMIN && (

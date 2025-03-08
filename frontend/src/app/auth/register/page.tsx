@@ -12,7 +12,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -44,14 +43,15 @@ const Register = () => {
       setErrorMessage('');
       reset(); // Clear form values after success
     } catch (error: any) {
-      setErrorMessage(
-        error.message || 'Registration failed. Username might be taken.'
-      );
+      setErrorMessage(error.message || 'Registration failed. Username might be taken.');
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div
+      className="flex items-center justify-center min-h-screen bg-cover"
+      style={{ backgroundImage: 'url(/assets/signup.png)' }}
+    >
       <Dialog open>
         <DialogContent
           className="max-w-sm p-6 space-y-4"
@@ -60,9 +60,6 @@ const Register = () => {
         >
           <DialogHeader>
             <DialogTitle>Register</DialogTitle>
-            <DialogDescription>
-              Create a new account by providing your credentials.
-            </DialogDescription>
           </DialogHeader>
 
           {errorMessage && (
@@ -97,9 +94,7 @@ const Register = () => {
                     {...registerUser('username', { required: true })}
                     className="text-black"
                   />
-                  {errors.username && (
-                    <p className="text-red-500 text-sm">Username is required</p>
-                  )}
+                  {errors.username && <p className="text-red-500 text-sm">Username is required</p>}
                 </div>
                 <div className="flex flex-col space-y-1">
                   <Label htmlFor="password">Password</Label>
@@ -109,9 +104,7 @@ const Register = () => {
                     {...registerUser('password', { required: true })}
                     className="text-black"
                   />
-                  {errors.password && (
-                    <p className="text-red-500 text-sm">Password is required</p>
-                  )}
+                  {errors.password && <p className="text-red-500 text-sm">Password is required</p>}
                 </div>
                 <DialogFooter>
                   <Button type="submit" className="w-full" disabled={isSubmitting}>

@@ -6,7 +6,7 @@ import ProtectedRoute from '../components/ProtectedRoute';
 import { ROLES } from '../utils/constants';
 import Loading from '../components/widgets/Loading';
 import EditButton from '../components/widgets/EditButton';
-import ReturnButtons from '../components/widgets/ReturnButtons';
+import ReturnButton from '../components/widgets/ReturnButton';
 import { useNavigate } from '../utils/navigation';
 import { apiRoutes } from '../api/apiRoutes';
 import { User } from '../utils/types';
@@ -69,7 +69,7 @@ const UsersList = () => {
 
   return (
     <div className="relative min-h-screen p-5 flex items-center justify-center">
-      <ReturnButtons fallbackUrl="/dashboard" />
+      <ReturnButton />
       <div className="w-full max-w-2xl bg-white p-6 mt-5 rounded shadow-md">
         <h2 className="text-2xl mb-4 text-center text-black">All Users</h2>
         {errorMessage && <p className="text-red-500 mb-2">{errorMessage}</p>}

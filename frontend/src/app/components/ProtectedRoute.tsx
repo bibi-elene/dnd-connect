@@ -27,7 +27,16 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     );
   }
 
-  return <>{children}</>;
+  return (
+    <div
+      className="relative bg-cover bg-center min-h-screen"
+      style={{ backgroundImage: 'url(/assets/signup.png)' }}
+    >
+      <div className="absolute inset-0 bg-black/60" />
+
+      <div className="relative z-10">{children}</div>
+    </div>
+  );
 };
 
 export default ProtectedRoute;

@@ -6,7 +6,7 @@ import { AuthContext } from '../context/AuthContext';
 import ProtectedRoute from '../components/ProtectedRoute';
 import Loading from '../components/widgets/Loading';
 import Image from 'next/image';
-import ReturnButtons from '../components/widgets/ReturnButtons';
+import ReturnButton from '../components/widgets/ReturnButton';
 import { useNavigate } from '../utils/navigation';
 import { useFetchCharacters } from '../hooks/useFetchCharacters';
 import EditButton from '../components/widgets/EditButton';
@@ -26,11 +26,14 @@ const CharactersList = () => {
   }
 
   return (
-    <Container fluid className="relative min-h-screen p-5 mt-3 flex items-center justify-center align-items-center">
+    <Container
+      fluid
+      className="relative min-h-screen p-5 mt-3 flex items-center justify-center align-items-center"
+    >
       <Container className="py-4">
         <Row className="justify-content-center">
           <Col md={12} lg={6}>
-            <ReturnButtons fallbackUrl="/dashboard" />
+            <ReturnButton />
             <Card className="shadow-lg h-100 rounded-lg mt-4">
               <Card.Body>
                 <Card.Title

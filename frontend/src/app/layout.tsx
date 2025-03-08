@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './globals.css';
 import { AuthProvider } from './context/AuthContext';
 import type { Metadata } from 'next';
-import { Montserrat, Cinzel_Decorative, Inter } from 'next/font/google';
+import { Montserrat, Inter } from 'next/font/google';
 
 export const metadata: Metadata = {
   title: 'D&D Connect',
@@ -46,12 +46,6 @@ const montserrat = Montserrat({
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
-});
-
-const cinzelDecorative = Cinzel_Decorative({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  variable: '--font-cinzel',
 });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

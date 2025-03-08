@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Loading from '@/app/components/widgets/Loading';
-import ReturnButtons from '@/app/components/widgets/ReturnButtons';
+import ReturnButton from '@/app/components/widgets/ReturnButton';
 import { apiRoutes } from '@/app/api/apiRoutes';
 import { useNavigate } from '@/app/utils/navigation';
 import data from '@/app/data/data.json';
@@ -92,7 +92,7 @@ const EditUser = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <ReturnButtons fallbackUrl="/users" />
+      <ReturnButton />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-6 rounded shadow-md w-full max-w-md"

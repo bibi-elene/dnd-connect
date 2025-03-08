@@ -4,7 +4,7 @@ import { Form, Container, Row, Col, Card, Alert } from 'react-bootstrap';
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '@/app/context/AuthContext';
-import ReturnButtons from '@/app/components/widgets/ReturnButtons';
+import ReturnButton from '@/app/components/widgets/ReturnButton';
 
 interface AccountSettingsFormInputs {
   username: string;
@@ -52,7 +52,7 @@ const AccountSettings: React.FC = () => {
 
   return (
     <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center">
-      <ReturnButtons withDashboardButton={false} buttonText="Home" />
+      <ReturnButton />
       <Row className="w-100">
         <Col md={{ span: 6, offset: 3 }}>
           <Card className="shadow p-4">

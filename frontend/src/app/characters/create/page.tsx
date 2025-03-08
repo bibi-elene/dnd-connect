@@ -5,10 +5,11 @@ import { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-bootstrap';
 import { CharacterFormInputs } from '@/app/utils/types';
 import Image from 'next/image';
-import ReturnButtons from '@/app/components/widgets/ReturnButtons';
+import ReturnButton from '@/app/components/widgets/ReturnButton';
 import { useNavigate } from '@/app/utils/navigation';
 import { apiRoutes } from '@/app/api/apiRoutes';
 import data from '@/app/data/data.json';
+import ProtectedRoute from '@/app/components/ProtectedRoute';
 
 const CreateCharacter = () => {
   const {
@@ -103,7 +104,7 @@ const CreateCharacter = () => {
   return (
     <Container fluid className="min-vh-100 p-4 d-flex align-items-center">
       <Col xs="auto" className="z-index-3">
-        <ReturnButtons fallbackUrl="/dashboard" />
+        <ReturnButton />
       </Col>
       <Row className="w-100 mt-5 pt-5 justify-content-center">
         <Col md={6} lg={4} sm={8} className="mt-2">
@@ -131,7 +132,10 @@ const CreateCharacter = () => {
                   <Form.Control.Feedback type="invalid">Name is required</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-2">
-                  <Form.Label>Class</Form.Label> <a href="/" className='text-red'>Not sure? Check here </a>
+                  <Form.Label>Class</Form.Label>{' '}
+                  <a href="/" className="text-red">
+                    Not sure? Check here{' '}
+                  </a>
                   <Form.Select
                     isInvalid={!!errors.class}
                     {...register('class', { required: true })}
@@ -245,4 +249,10 @@ const CreateCharacter = () => {
   );
 };
 
-export default CreateCharacter;
+export default function CreateCharacterPage() {
+  return (
+    <ProtectedRoute>
+      <CreateCharacter />
+    </ProtectedRoute>
+  );
+}
