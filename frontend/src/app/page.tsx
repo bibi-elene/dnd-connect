@@ -3,7 +3,6 @@
 import { useContext } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { AuthContext } from './context/AuthContext';
-import DiceRoller from './components/DiceRoller/DiceRoller';
 import Loading from './components/widgets/Loading';
 import './page.styles.scss';
 // import CharacterClassesCards from './components/landingPage/CharacterClassesCards';
