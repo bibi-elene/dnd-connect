@@ -1,8 +1,16 @@
+'use client';
+
 import { Character } from '@/app/utils/types';
 import Loading from './Loading';
-import { ListGroup } from 'react-bootstrap';
 import EditButton from './EditButton';
 import { useNavigate } from '@/app/utils/navigation';
+import {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
 
 interface CharacterListProps {
   characters: Character[];
@@ -18,25 +26,36 @@ const CharacterList: React.FC<CharacterListProps> = ({ characters, loading, erro
   }
 
   if (error) {
-    return <p className="text-danger">{error}</p>;
+    return <p className="text-red-500">{error}</p>;
   }
 
   return (
-    <ListGroup>
-      {characters.map((character) => (
-        <ListGroup.Item
-          key={character.id}
-          className="d-flex justify-content-between align-items-center"
-        >
-          <div>
-            <strong className="text-dark">{character.name}</strong>{' '}
-            <span className="me-2 custom-badge">{character.class}</span>
-            <span>Level {character.level}</span>
-          </div>
-          <EditButton onEdit={() => goToCharacter(character.id)} />
-        </ListGroup.Item>
-      ))}
-    </ListGroup>
+    <div className="rounded-md border bg-white shadow-sm">
+      <table className="w-full">
+        <thead className="bg-gray-100">
+          <tr>
+            <TableHead>Name</TableHead>
+            <TableHead>Class</TableHead>
+            <TableHead>Level</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
+          </tr>
+        </thead>
+        <TableBody>
+          {characters.map((char) => (
+            <TableRow key={char.id}>
+              <TableCell className="font-medium">{char.name}</TableCell>
+              <TableCell>
+                <Badge variant="outline">{char.class}</Badge>
+              </TableCell>
+              <TableCell>{char.level}</TableCell>
+              <TableCell className="text-right">
+                <EditButton onEdit={() => goToCharacter(char.id)} />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </table>
+    </div>
   );
 };
 

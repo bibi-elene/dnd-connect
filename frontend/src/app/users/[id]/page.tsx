@@ -8,6 +8,8 @@ import ReturnButton from '@/app/components/widgets/ReturnButton';
 import { apiRoutes } from '@/app/api/apiRoutes';
 import { useNavigate } from '@/app/utils/navigation';
 import data from '@/app/data/data.json';
+import { Button } from '@/components/ui/button';
+import ProtectedRoute from '@/app/components/ProtectedRoute';
 
 interface UserFormInputs {
   username: string;
@@ -129,15 +131,15 @@ const EditUser = () => {
           </select>
           {errors.role && <p className="text-red-500 text-sm">Role is required</p>}
         </div>
-        <button
+        <Button
           type="submit"
           disabled={!isDirty}
-          className={`w-full py-2 rounded text-white ${
-            !isDirty ? 'bg-gray-400 cursor-not-allowed' : 'primary-custom-button'
+          className={`w-full py-2 rounded text-white
           }`}
+          variant="default"
         >
           Save Changes
-        </button>
+        </Button>
       </form>
       {loadingEditSave && (
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
@@ -148,4 +150,10 @@ const EditUser = () => {
   );
 };
 
-export default EditUser;
+export default function EditUserPage() {
+  return (
+    <ProtectedRoute>
+      <EditUser />
+    </ProtectedRoute>
+  );
+}

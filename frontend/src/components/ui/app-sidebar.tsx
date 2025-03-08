@@ -15,12 +15,7 @@ import {
   SidebarMenuItem,
   SidebarFooter,
 } from '@/components/ui/sidebar';
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 import { Button } from '@/components/ui/button';
 import { routes } from '@/app/utils/routes';
@@ -34,7 +29,7 @@ const items = [
   },
   {
     title: 'Dashboard',
-    url: '/dashboard',
+    url: routes.dashboard,
     icon: Users,
   },
   {
@@ -54,7 +49,7 @@ const items = [
   },
   {
     title: 'Settings',
-    url: '#',
+    url: routes.accountSettings,
     icon: Settings,
   },
 ];
@@ -98,20 +93,6 @@ export function AppSidebar() {
                 </div>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent side="top" className="w-full">
-              {user ? (
-                <>
-                  <DropdownMenuItem asChild>
-                    <Link href={routes.accountSettings}>Account Settings</Link>
-                  </DropdownMenuItem>
-                  {/* <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem> */}
-                </>
-              ) : (
-                <DropdownMenuItem asChild>
-                  <Link href={routes.login}>Login</Link>
-                </DropdownMenuItem>
-              )}
-            </DropdownMenuContent>
           </DropdownMenu>
           {user ? (
             <Button variant="destructive" size="default" className="w-full mt-2" onClick={logout}>

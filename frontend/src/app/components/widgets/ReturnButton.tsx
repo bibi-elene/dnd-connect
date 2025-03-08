@@ -31,7 +31,7 @@ const ReturnButton: React.FC<ReturnButtonProps> = ({
     <Container
       fluid
       className={`position-absolute top-0 start-0 p-3 d-flex gap-2 ${className}`}
-      style={{ zIndex: 3 }}
+      style={{ zIndex: 999 }}
     >
       <button
         onClick={handleBack}

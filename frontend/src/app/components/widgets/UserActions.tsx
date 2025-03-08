@@ -1,4 +1,4 @@
-import { ButtonGroup } from 'react-bootstrap';
+import { Button } from '@/components/ui/button';
 
 interface UserActionProps {
   onViewAll: () => void;
@@ -6,16 +6,16 @@ interface UserActionProps {
 }
 
 const UserActions: React.FC<UserActionProps> = ({ onViewAll, onCreate }) => (
-  <ButtonGroup className="mb-5">
-    <button className="primary-custom-button" onClick={onViewAll}>
+  <div className="flex gap-2 mb-5">
+    <Button variant="outline" onClick={onViewAll}>
       View All Users
-    </button>
+    </Button>
     {onCreate && (
-      <button className="secondary-custom-button" onClick={onViewAll}>
+      <Button variant="default" onClick={onViewAll}>
         Create New User
-      </button>
+      </Button>
     )}
-  </ButtonGroup>
+  </div>
 );
 
 export default UserActions;
