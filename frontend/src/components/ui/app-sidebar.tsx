@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext } from 'react';
-import { Home, Inbox, Search, Settings, User2, Users, Swords, Castle } from 'lucide-react';
+import { Home, Search, Settings, User2, Users, Swords, Castle, MessageCircle } from 'lucide-react';
 import { AuthContext } from '@/app/context/AuthContext';
 
 import {
@@ -33,9 +33,9 @@ const application = [
     icon: Users,
   },
   {
-    title: 'Inbox',
-    url: '#',
-    icon: Inbox,
+    title: 'Chat',
+    url: routes.chat,
+    icon: MessageCircle,
   },
   {
     title: 'Search',

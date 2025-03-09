@@ -4,6 +4,8 @@ import { AuthProvider } from './context/AuthContext';
 import type { Metadata } from 'next';
 import { Montserrat, Inter } from 'next/font/google';
 import DiceRoller from './components/DiceRoller/DiceRoller';
+import { SidebarProvider, Sidebar, SidebarTrigger } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/ui/app-sidebar';
 
 export const metadata: Metadata = {
   title: 'D&D Connect',
@@ -55,10 +57,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <link rel="preload" as="image" href="/assets/tavern.jpg" />
       <body className="bg-[#0c1015]">
         <AuthProvider>
-          <div className="relative min-h-screen">
-            <div className="relative z-10">{children}</div>
-            <DiceRoller />
-          </div>
+          <SidebarProvider defaultOpen={false}>
+            <div className="relative flex min-h-screen">
+              <Sidebar collapsible="offcanvas">
+                <AppSidebar />
+              </Sidebar>
+              <SidebarTrigger />
+              <div className="relative z-10 flex-1">{children}</div>
+            </div>
+          </SidebarProvider>
+
+          <DiceRoller />
         </AuthProvider>
       </body>
     </html>
