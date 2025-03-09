@@ -13,10 +13,10 @@ import { ChatModule } from './chat/chat.module';
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      url: process.env.POSTGRES_URL,
+      url: process.env.DATABASE_URL,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true, // Set to false in production
-      ssl: false,
+      synchronize: true,
+      ssl: process.env.DATABASE_URL?.includes('railway.app') ? { rejectUnauthorized: false } : false,
     }),
     CharacterModule,
     UserModule,
