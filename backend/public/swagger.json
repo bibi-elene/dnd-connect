@@ -11,9 +11,7 @@
             "description": "List of characters."
           }
         },
-        "tags": [
-          "characters"
-        ]
+        "tags": ["characters"]
       },
       "post": {
         "operationId": "CharacterController_create",
@@ -34,9 +32,7 @@
             "description": "Character created."
           }
         },
-        "tags": [
-          "characters"
-        ]
+        "tags": ["characters"]
       }
     },
     "/characters/me": {
@@ -49,9 +45,7 @@
             "description": "List of characters for the current user."
           }
         },
-        "tags": [
-          "characters"
-        ]
+        "tags": ["characters"]
       }
     },
     "/characters/{id}": {
@@ -76,9 +70,7 @@
             "description": "Character not found."
           }
         },
-        "tags": [
-          "characters"
-        ]
+        "tags": ["characters"]
       },
       "put": {
         "operationId": "CharacterController_update",
@@ -108,9 +100,7 @@
             "description": "Character updated."
           }
         },
-        "tags": [
-          "characters"
-        ]
+        "tags": ["characters"]
       },
       "delete": {
         "operationId": "CharacterController_remove",
@@ -130,9 +120,7 @@
             "description": "Character deleted."
           }
         },
-        "tags": [
-          "characters"
-        ]
+        "tags": ["characters"]
       }
     },
     "/auth/login": {
@@ -211,14 +199,7 @@
             "description": "The background of the character"
           }
         },
-        "required": [
-          "id",
-          "name",
-          "class",
-          "level",
-          "race",
-          "background"
-        ]
+        "required": ["id", "name", "class", "level", "race", "background"]
       }
     }
   }

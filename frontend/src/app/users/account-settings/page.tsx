@@ -13,7 +13,6 @@ import ProtectedRoute from '@/app/components/ProtectedRoute';
 interface AccountSettingsFormInputs {
   username: string;
   email: string;
-  role: string;
 }
 
 const AccountSettings: React.FC = () => {
@@ -26,22 +25,49 @@ const AccountSettings: React.FC = () => {
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const { user, loading } = useContext(AuthContext);
+  const { user, loading, setUser } = useContext(AuthContext);
 
   useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const res = await fetch('/api/me', { credentials: 'include' });
+        if (!res.ok) throw new Error('Failed to fetch user profile');
+        const data = await res.json();
+        setValue('username', data.username);
+        setValue('email', data.email || '');
+      } catch (error) {
+        console.error(error);
+        setErrorMessage('Error fetching user data.');
+      }
+    };
+
     if (user) {
-      setValue('username', user.username);
-      setValue('email', user.email || '');
-      setValue('role', user.role || '');
+      fetchUserProfile();
     }
   }, [user, setValue]);
 
   const onSubmit = async (data: AccountSettingsFormInputs) => {
     try {
+      const res = await fetch('/api/me', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: data.username,
+          email: data.email,
+        }),
+      });
+      console.log(res, 'my res')
+
+      if (!res.ok) throw new Error('Failed to update account settings');
+
+      const updatedUser = await res.json();
+      setUser(updatedUser); // Update AuthContext user state
       setSuccessMessage('Account details updated successfully!');
       setErrorMessage('');
-      console.log('Submitted Data:', data);
     } catch (error) {
+      console.error(error);
       setErrorMessage('Failed to update account settings. Please try again.');
     }
   };
@@ -96,9 +122,8 @@ const AccountSettings: React.FC = () => {
               <Input
                 id="role"
                 type="text"
-                {...register('role')}
+                value={user?.role || 'User'}
                 disabled
-                placeholder={user?.role}
                 className="text-black"
               />
             </div>

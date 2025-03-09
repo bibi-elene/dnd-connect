@@ -80,10 +80,13 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  getMe(@ReqDecorator() req) {
+  async getMe(@ReqDecorator() req) {
     if (!req.user) {
       throw new UnauthorizedException('User not found in request.');
     }
-    return req.user;
+
+    const fullUser = await this.userService.findUserById(req.user.id);
+
+    return fullUser;
   }
 }

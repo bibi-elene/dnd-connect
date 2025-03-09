@@ -7,6 +7,7 @@ import { apiRoutes } from '../api/apiRoutes';
 
 interface AuthContextType {
   user: User | null;
+  setUser: (user: User | null) => void;
   loading: boolean;
   login: (username: string, password: string) => Promise<void>;
   register: (username: string, password: string) => Promise<void>;
@@ -15,6 +16,7 @@ interface AuthContextType {
 
 export const AuthContext = createContext<AuthContextType>({
   user: null,
+  setUser: () => {},
   loading: true,
   login: async () => {},
   register: async () => {},
@@ -30,7 +32,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const fetchUser = async () => {
       try {
         const response = await fetch(apiRoutes.auth.me);
-
         if (response.ok) {
           const userData = await response.json();
           setUser(userData);
@@ -91,7 +92,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log(errorData);
         throw new Error(errorData.message.message || 'Failed to register');
       }
     } catch (error) {
@@ -99,6 +99,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       throw error;
     }
   };
+
   const logout = async () => {
     try {
       const response = await fetch(apiRoutes.auth.logout, {
@@ -120,6 +121,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const contextValue = useMemo(
     () => ({
       user,
+      setUser,
       loading,
       login,
       register,

@@ -20,6 +20,9 @@ export class User {
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
   role: UserRole;
 
+  @Column({ unique: true, nullable: true })
+  email?: string;
+
   @OneToMany(() => Character, (character) => character.user, { cascade: true })
   characters: Character[];
 }

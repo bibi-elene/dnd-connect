@@ -14,4 +14,7 @@ export const apiRoutes = {
     all: '/api/users',
     user: (id: number) => `/api/users/${id}`,
   },
+  user: {
+    me: '/api/me',
+  },
 };

@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User, UserRole } from './user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { UpdateUserDto } from './update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -47,11 +48,12 @@ export class UserService {
     return users;
   }
 
-  async updateUser(id: number, username: string, role: UserRole): Promise<User> {
+  async updateUser(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.userRepository.findOneBy({ id });
     if (!user) throw new NotFoundException('User not found');
-    user.username = username;
-    user.role = role;
+
+    Object.assign(user, updateUserDto);
+
     return this.userRepository.save(user);
   }
 }
