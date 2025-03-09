@@ -8,7 +8,11 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card } from '@/components/ui/card';
 import API_BASE_URL from '@/config';
 
-const socket = io(API_BASE_URL || 'http://localhost:3001');
+const socket = io(API_BASE_URL || 'http://localhost:3001', {
+  transports: ['websocket'],
+  path: '/socket.io/',
+  withCredentials: true,
+});
 
 const Chat = ({ username }: { username: string }) => {
   const [message, setMessage] = useState('');
