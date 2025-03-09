@@ -261,7 +261,7 @@ const EditCharacter = () => {
                 <Button
                   type="submit"
                   disabled={isButtonDisabled}
-                  className="w-100 save-edit"
+                  className="w-100 save-edit z-20 relative"
                   variant={isButtonDisabled ? 'secondary' : 'primary'}
                 >
                   {loadingEditSave ? <Spinner animation="border" size="sm" /> : 'Save Changes'}

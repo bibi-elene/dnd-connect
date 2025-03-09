@@ -105,7 +105,7 @@ const CreateCharacter = () => {
 
   return (
     <Container fluid className="min-vh-100 p-4 d-flex align-items-center">
-      <Col xs="auto" className="z-index-3">
+      <Col xs="auto" className="z-12">
         <ReturnButton />
       </Col>
       <Row className="w-100 mt-5 pt-5 justify-content-center">
@@ -227,7 +227,7 @@ const CreateCharacter = () => {
                 <Button
                   type="submit"
                   disabled={!allFieldsValid || loading}
-                  className="w-100"
+                  className="w-100 relative z-30"
                   variant={!allFieldsValid || loading ? 'secondary' : 'primary'}
                 >
                   {loading ? <Spinner animation="border" size="sm" /> : 'Create Character'}
