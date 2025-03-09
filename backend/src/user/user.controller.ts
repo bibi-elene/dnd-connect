@@ -29,13 +29,11 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Get('me')
   async getMe(@Request() req) {
-    console.log('starting point');
     if (!req.user) {
       throw new UnauthorizedException('User not found in request.');
     }
 
     const fullUser = await this.userService.findUserById(req.user.id);
-    console.log(fullUser, 'full user');
 
     return fullUser;
   }

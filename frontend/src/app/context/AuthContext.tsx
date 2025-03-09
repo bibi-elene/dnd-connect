@@ -32,7 +32,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const fetchUser = async () => {
       try {
         const response = await fetch(apiRoutes.users.me);
-        console.log(response, 'my response')
         if (response.ok) {
           const userData = await response.json();
           setUser(userData);

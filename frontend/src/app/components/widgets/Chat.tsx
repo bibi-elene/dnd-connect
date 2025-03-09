@@ -23,12 +23,10 @@ const Chat = ({ username }: { username: string }) => {
     socket.emit('joinChat', username);
 
     socket.on('chatHistory', (history) => {
-      console.log('Chat history:', history);
       setMessages(history);
     });
 
     socket.on('message', (data) => {
-      console.log('New message:', data);
       setMessages((prev) => [...prev, data]);
     });
 

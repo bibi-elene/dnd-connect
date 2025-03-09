@@ -59,7 +59,6 @@ const AccountSettings: React.FC = () => {
           email: data.email,
         }),
       });
-      console.log(res, 'my res')
 
       if (!res.ok) throw new Error('Failed to update account settings');
 

@@ -7,8 +7,6 @@ import { NextResponse } from 'next/server';
 import { endpoints } from '../../endpoints';
 
 export async function GET(req: Request) {
-  console.log('starttt !@#!#@!#!'); // Debugging start
-
   const cookieHeader = req.headers.get('cookie');
 
   try {
@@ -20,10 +18,6 @@ export async function GET(req: Request) {
     const cookies = parse(cookieHeader);
     const accessToken = cookies['access_token'];
 
-    // Log API route before making the request
-    console.log('🔍 Fetching user profile from:', `${API_BASE_URL}${endpoints.users.me}`);
-    console.log('🔍 endpoints.users.me:', endpoints.users.me);
-
     const response = await axios.get(`${API_BASE_URL}${endpoints.users.me}`, {
       headers: {
         'Content-Type': 'application/json',
@@ -32,13 +26,11 @@ export async function GET(req: Request) {
       withCredentials: true,
     });
 
-    console.log('✅ User data retrieved:', response.data);
     return NextResponse.json(response.data, { status: response.status });
   } catch (error: any) {
     if (isDynamicServerError(error)) {
       throw error;
     }
-    console.error('❌ Error proxying api/users/me:', error?.message || error);
     return NextResponse.json(
       { message: error.response?.data || 'Error forwarding request' },
       { status: error.response?.status || 500 }
@@ -63,9 +55,6 @@ export async function PATCH(req: Request) {
     if (payload.username) allowedUpdates.username = payload.username;
     if (payload.email) allowedUpdates.email = payload.email;
 
-    console.log('🔍 Sending PATCH request to:', `${API_BASE_URL}${endpoints.users.me}`);
-    console.log('🔍 Payload:', allowedUpdates);
-
     const response = await axios.patch(`${API_BASE_URL}${endpoints.users.me}`, allowedUpdates, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -73,7 +62,6 @@ export async function PATCH(req: Request) {
       },
     });
 
-    console.log('✅ User profile updated:', response.data);
     return NextResponse.json(response.data, { status: response.status });
   } catch (error: any) {
     if (isDynamicServerError(error)) {
