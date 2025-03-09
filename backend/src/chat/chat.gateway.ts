@@ -21,8 +21,7 @@ import { ChatService } from './chat.service';
     ],
     credentials: true,
   },
-  transports: ['websocket'], // ✅ Force WebSocket instead of polling
-  path: '/socket.io/', // ✅ Ensure correct WebSocket path
+  path: '/socket.io/',
 })
 export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server;
@@ -31,7 +30,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   constructor(private chatService: ChatService) {}
 
   afterInit(server: Server) {
-    this.server = server;
+    console.log('WebSocket server initialized');
   }
 
   async handleConnection(client: Socket) {
@@ -39,6 +38,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   }
 
   handleDisconnect(client: Socket) {
+    console.log(`Client disconnected: ${client.id}`);
     this.users.delete(client.id);
     this.server.emit('userList', Array.from(this.users.values()));
   }
@@ -59,6 +59,8 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     @MessageBody() messageData: { username: string; message: string },
     @ConnectedSocket() client: Socket,
   ) {
+    console.log('Message received:', messageData);
+
     // Save message to database
     const savedMessage = await this.chatService.saveMessage(
       messageData.username,

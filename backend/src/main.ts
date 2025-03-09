@@ -26,6 +26,7 @@ async function bootstrap() {
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
   });
 
+  app.use(cookieParser());
   app.useWebSocketAdapter(new IoAdapter(app));
 
   app.useStaticAssets(join(__dirname, '..', 'public'), {
