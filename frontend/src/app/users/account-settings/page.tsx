@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import ReturnButton from '@/app/components/widgets/ReturnButton';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
+import { apiRoutes } from '@/app/api/apiRoutes';
 
 interface AccountSettingsFormInputs {
   username: string;
@@ -30,7 +31,7 @@ const AccountSettings: React.FC = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const res = await fetch('/api/me', { credentials: 'include' });
+        const res = await fetch(apiRoutes.users.me, { credentials: 'include' });
         if (!res.ok) throw new Error('Failed to fetch user profile');
         const data = await res.json();
         setValue('username', data.username);
@@ -48,7 +49,7 @@ const AccountSettings: React.FC = () => {
 
   const onSubmit = async (data: AccountSettingsFormInputs) => {
     try {
-      const res = await fetch('/api/me', {
+      const res = await fetch(apiRoutes.users.me, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

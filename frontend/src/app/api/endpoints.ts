@@ -3,7 +3,6 @@ export const endpoints = {
     login: '/auth/login',
     logout: '/auth/logout',
     register: '/auth/register',
-    me: '/auth/me',
   },
   characters: {
     all: '/characters',

@@ -31,7 +31,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch(apiRoutes.auth.me);
+        const response = await fetch(apiRoutes.users.me);
+        console.log(response, 'my response')
         if (response.ok) {
           const userData = await response.json();
           setUser(userData);
@@ -67,7 +68,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         );
       }
 
-      const userResponse = await fetch(apiRoutes.auth.me);
+      const userResponse = await fetch(apiRoutes.users.me);
 
       if (userResponse.ok) {
         const userData = await userResponse.json();

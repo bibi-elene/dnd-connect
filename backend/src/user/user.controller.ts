@@ -8,6 +8,7 @@ import {
   Query,
   UseGuards,
   Request,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
@@ -25,16 +26,29 @@ export class UserController {
     return this.userService.findAllUsers(limit);
   }
 
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<User> {
-    return this.userService.findUserById(id);
+  @UseGuards(JwtAuthGuard)
+  @Get('me')
+  async getMe(@Request() req) {
+    console.log('starting point');
+    if (!req.user) {
+      throw new UnauthorizedException('User not found in request.');
+    }
+
+    const fullUser = await this.userService.findUserById(req.user.id);
+    console.log(fullUser, 'full user');
+
+    return fullUser;
   }
 
-  // ✅ Add this to allow users to update their own profile
   @UseGuards(JwtAuthGuard)
   @Patch('me')
   async updateProfile(@Request() req, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.updateUser(req.user.id, updateUserDto);
+  }
+
+  @Get(':id')
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<User> {
+    return this.userService.findUserById(id);
   }
 
   @Patch(':id')

@@ -3,7 +3,6 @@ export const apiRoutes = {
     login: '/api/auth/login',
     logout: '/api/auth/logout',
     register: '/api/auth/register',
-    me: '/api/auth/me',
   },
   characters: {
     all: '/api/characters',
@@ -13,8 +12,6 @@ export const apiRoutes = {
   users: {
     all: '/api/users',
     user: (id: number) => `/api/users/${id}`,
-  },
-  user: {
-    me: '/api/me',
+    me: '/api/users/me',
   },
 };

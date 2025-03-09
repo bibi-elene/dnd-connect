@@ -107,7 +107,7 @@ const EditUser = () => {
           <input
             type="text"
             {...register('username', { required: true })}
-            className={`w-full px-3 py-2 border ${
+            className={`w-full text-black px-3 py-2 border ${
               errors.username ? 'border-red-500' : 'border-gray-300'
             } rounded`}
           />
@@ -118,7 +118,7 @@ const EditUser = () => {
           <select
             {...register('role', { required: true })}
             value={role}
-            className={`w-full px-3 py-2 border ${
+            className={`w-full px-3 py-2 border text-black ${
               errors.role ? 'border-red-500' : 'border-gray-300'
             } rounded`}
           >

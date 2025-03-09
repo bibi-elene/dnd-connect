@@ -18,7 +18,7 @@ export async function GET(req: Request) {
 
     const accessToken = cookies['access_token'];
 
-    const response = await axios.get(`${API_BASE_URL}${endpoints.auth.me}`, {
+    const response = await axios.get(`${API_BASE_URL}${endpoints.users.me}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
@@ -31,7 +31,7 @@ export async function GET(req: Request) {
     if (isDynamicServerError(error)) {
       throw error;
     }
-    console.error('Error proxying /auth/me:', error?.message || error);
+    console.error('Error proxying api/auth/me:', error?.message || error);
     return NextResponse.json(
       { message: error.response?.data || 'Error forwarding request' },
       { status: error.response?.status || 500 }

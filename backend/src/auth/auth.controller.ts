@@ -77,16 +77,4 @@ export class AuthController {
       throw new InternalServerErrorException('Registration failed. Please try again later.');
     }
   }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('me')
-  async getMe(@ReqDecorator() req) {
-    if (!req.user) {
-      throw new UnauthorizedException('User not found in request.');
-    }
-
-    const fullUser = await this.userService.findUserById(req.user.id);
-
-    return fullUser;
-  }
 }
