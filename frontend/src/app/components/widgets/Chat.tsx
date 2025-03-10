@@ -56,13 +56,12 @@ const Chat = ({ username }: { username: string }) => {
           </div>
         ))}
       </ScrollArea>
-      <div className="flex gap-2 text-black">
+      <div className="flex gap-2">
         <Input
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type message..."
           onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-          className="text-black"
         />
         <Button onClick={sendMessage}>Send</Button>
       </div>

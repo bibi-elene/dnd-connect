@@ -92,7 +92,6 @@ const Register = () => {
                     id="username"
                     type="text"
                     {...registerUser('username', { required: true })}
-                    className="text-black"
                   />
                   {errors.username && <p className="text-red-500 text-sm">Username is required</p>}
                 </div>
@@ -102,7 +101,6 @@ const Register = () => {
                     id="password"
                     type="password"
                     {...registerUser('password', { required: true })}
-                    className="text-black"
                   />
                   {errors.password && <p className="text-red-500 text-sm">Password is required</p>}
                 </div>

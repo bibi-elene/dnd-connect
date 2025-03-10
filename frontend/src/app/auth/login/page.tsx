@@ -73,22 +73,12 @@ const Login = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="flex flex-col space-y-1">
               <Label htmlFor="username">Username</Label>
-              <Input
-                id="username"
-                type="text"
-                {...register('username', { required: true })}
-                className="text-black"
-              />
+              <Input id="username" type="text" {...register('username', { required: true })} />
               {errors.username && <p className="text-red-500 text-sm">Username is required</p>}
             </div>
             <div className="flex flex-col space-y-1">
               <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                {...register('password', { required: true })}
-                className="text-black"
-              />
+              <Input id="password" type="password" {...register('password', { required: true })} />
               {errors.password && <p className="text-red-500 text-sm">Password is required</p>}
             </div>
             <DialogFooter>

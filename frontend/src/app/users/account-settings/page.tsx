@@ -2,40 +2,67 @@
 
 import { useEffect, useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from '@/components/ui/form';
+
 import { AuthContext } from '@/app/context/AuthContext';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import ReturnButton from '@/app/components/widgets/ReturnButton';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
 import { apiRoutes } from '@/app/api/apiRoutes';
 
-interface AccountSettingsFormInputs {
-  username: string;
-  email: string;
-}
+const accountSettingsSchema = z.object({
+  username: z.string().min(1, 'Username is required'),
+  email: z.string().email('Please enter a valid email address'),
+  bio: z.string().optional(),
+});
+
+type AccountSettingsFormInputs = z.infer<typeof accountSettingsSchema>;
 
 const AccountSettings: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors, isDirty },
-  } = useForm<AccountSettingsFormInputs>();
+  const { user, loading, setUser } = useContext(AuthContext);
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const { user, loading, setUser } = useContext(AuthContext);
+
+  const form = useForm<AccountSettingsFormInputs>({
+    resolver: zodResolver(accountSettingsSchema),
+    defaultValues: {
+      username: '',
+      email: '',
+      bio: '',
+    },
+  });
+
+  const { handleSubmit, formState, reset } = form;
+  const { errors, isDirty } = formState;
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const res = await fetch(apiRoutes.users.me, { credentials: 'include' });
-        if (!res.ok) throw new Error('Failed to fetch user profile');
+        if (!res.ok) {
+          throw new Error('Failed to fetch user profile');
+        }
         const data = await res.json();
-        setValue('username', data.username);
-        setValue('email', data.email || '');
+
+        // 3. Use form.reset to set all fields at once
+        reset({
+          username: data.username || '',
+          email: data.email || '',
+          bio: data.bio || '',
+        });
       } catch (error) {
         console.error(error);
         setErrorMessage('Error fetching user data.');
@@ -45,7 +72,7 @@ const AccountSettings: React.FC = () => {
     if (user) {
       fetchUserProfile();
     }
-  }, [user, setValue]);
+  }, [user, reset]);
 
   const onSubmit = async (data: AccountSettingsFormInputs) => {
     try {
@@ -57,10 +84,13 @@ const AccountSettings: React.FC = () => {
         body: JSON.stringify({
           username: data.username,
           email: data.email,
+          bio: data.bio,
         }),
       });
 
-      if (!res.ok) throw new Error('Failed to update account settings');
+      if (!res.ok) {
+        throw new Error('Failed to update account settings');
+      }
 
       const updatedUser = await res.json();
       setUser(updatedUser); // Update AuthContext user state
@@ -81,7 +111,7 @@ const AccountSettings: React.FC = () => {
   }
 
   return (
-    <div className="flex h-screen items-center justify-center">
+    <div className="flex h-screen items-center justify-center bg-white">
       <ReturnButton />
       <Card className="w-full max-w-md p-6 shadow-md rounded-lg">
         <CardHeader>
@@ -92,48 +122,62 @@ const AccountSettings: React.FC = () => {
           {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
           {successMessage && <p className="text-green-500 text-center">{successMessage}</p>}
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
-              <Input
-                id="username"
-                type="text"
-                {...register('username', { required: 'Username is required' })}
-                placeholder="Enter your username"
-                className="text-black"
+          <Form {...form}>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your username" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {errors.username && <p className="text-red-500 text-sm">{errors.username.message}</p>}
-            </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                {...register('email', { required: 'Email is required' })}
-                placeholder="Enter your email"
-                className="text-black"
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
-            </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="role">Role</Label>
-              <Input
-                id="role"
-                type="text"
-                value={user?.role || 'User'}
-                disabled
-                className="text-black"
+              <FormField
+                control={form.control}
+                name="bio"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Bio</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Write something about yourself..." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
 
-            <CardFooter className="flex justify-end">
-              <Button type="submit" disabled={!isDirty}>
-                Save Changes
-              </Button>
-            </CardFooter>
-          </form>
+              <div className="space-y-1.5">
+                <FormLabel>Role</FormLabel>
+                <Input type="text" value={user?.role || 'User'} disabled />
+              </div>
+
+              <CardFooter className="flex justify-end py-2 px-0">
+                <Button variant="dark" type="submit" disabled={!isDirty}>
+                  Save Changes
+                </Button>
+              </CardFooter>
+            </form>
+          </Form>
         </CardContent>
       </Card>
     </div>
