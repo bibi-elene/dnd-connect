@@ -1,0 +1,12 @@
+{
+  "**/frontend/**/*.{js,jsx,ts,tsx}": [
+    "npx prettier --write",
+    "cd frontend && npm run lint"
+  ],
+  "**/backend/**/*.{js,jsx,ts,tsx}": [
+    "npx prettier --write",
+    "cd backend && npm run lint"
+  ],
+  "**/frontend/**/*.{json,css,scss,md}": ["npx prettier --write"],
+  "**/backend/**/*.{json,css,scss,md}": ["npx prettier --write"]
+}

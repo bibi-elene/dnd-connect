@@ -16,7 +16,9 @@ import { ChatModule } from './chat/chat.module';
       url: process.env.DATABASE_URL,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
-      ssl: process.env.DATABASE_URL?.includes('railway.app') ? { rejectUnauthorized: false } : false,
+      ssl: process.env.DATABASE_URL?.includes('railway.app')
+        ? { rejectUnauthorized: false }
+        : false,
     }),
     CharacterModule,
     UserModule,

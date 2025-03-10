@@ -1,0 +1,30 @@
+{
+  "name": "dnd-connect",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"cd frontend && npm run dev\" \"cd backend && npm run start:dev\"",
+    "lint": "npm run lint:frontend && npm run lint:backend",
+    "lint:frontend": "cd frontend && npm run lint",
+    "lint:backend": "cd backend && npm run lint",
+    "format": "npm run format:frontend && npm run format:backend",
+    "format:frontend": "cd frontend && npm run format",
+    "format:backend": "cd backend && npm run format",
+    "prepare": "husky install",
+    "precommit": "lint-staged",
+    "test": "echo \"No tests defined\" && exit 0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "npx prettier --write"
+    ],
+    "**/*.{json,css,scss,md}": [
+      "npx prettier --write"
+    ]
+  }
+}

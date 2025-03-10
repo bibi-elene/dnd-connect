@@ -39298,16 +39298,14 @@
                 Pe.createElement('span', { className: 'brace-close' }, '}'),
               ),
               pe.size
-                ? pe
-                    .entrySeq()
-                    .map(([o, s]) =>
-                      Pe.createElement(xe, {
-                        key: `${o}-${s}`,
-                        propKey: o,
-                        propVal: s,
-                        propClass: 'property',
-                      }),
-                    )
+                ? pe.entrySeq().map(([o, s]) =>
+                    Pe.createElement(xe, {
+                      key: `${o}-${s}`,
+                      propKey: o,
+                      propVal: s,
+                      propClass: 'property',
+                    }),
+                  )
                 : null,
             );
           }
@@ -39458,16 +39456,14 @@
                       )
                     : null,
                   C && z.size
-                    ? z
-                        .entrySeq()
-                        .map(([o, s]) =>
-                          Pe.createElement(ce, {
-                            key: `${o}-${s}`,
-                            propKey: o,
-                            propVal: s,
-                            propClass: Uo,
-                          }),
-                        )
+                    ? z.entrySeq().map(([o, s]) =>
+                        Pe.createElement(ce, {
+                          key: `${o}-${s}`,
+                          propKey: o,
+                          propVal: s,
+                          propClass: Uo,
+                        }),
+                      )
                     : null,
                   U ? Pe.createElement(ie, { source: U }) : null,
                   Z &&
@@ -58789,20 +58785,18 @@
                     Pe.createElement(
                       'div',
                       { className: 'modal-ux-content' },
-                      x
-                        .valueSeq()
-                        .map((x, j) =>
-                          Pe.createElement(C, {
-                            key: j,
-                            AST: w,
-                            definitions: x,
-                            getComponent: i,
-                            errSelectors: u,
-                            authSelectors: o,
-                            authActions: s,
-                            specSelectors: _,
-                          }),
-                        ),
+                      x.valueSeq().map((x, j) =>
+                        Pe.createElement(C, {
+                          key: j,
+                          AST: w,
+                          definitions: x,
+                          getComponent: i,
+                          errSelectors: u,
+                          authSelectors: o,
+                          authActions: s,
+                          specSelectors: _,
+                        }),
+                      ),
                     ),
                   ),
                 ),
