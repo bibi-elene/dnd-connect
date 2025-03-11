@@ -67,7 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </SidebarProvider>
 
-          <DiceRoller />
+          {/* <DiceRoller /> */}
         </AuthProvider>
       </body>
     </html>

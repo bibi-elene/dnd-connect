@@ -25,7 +25,7 @@ export interface CharacterFormInputs {
   race: string;
   background: string;
   skills: string;
-  image?: File;
+  image?: File | null;
 }
 
 export interface LoadingProps {

@@ -27,7 +27,7 @@ export async function GET(req: Request) {
       params: { limit },
       withCredentials: true,
     });
-
+    console.log(response.data, 'res data from backend');
     return NextResponse.json(response.data, { status: response.status });
   } catch (error: any) {
     console.error('Error fetching characters:', error?.message || error);

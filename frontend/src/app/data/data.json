@@ -331,7 +331,7 @@
           "Extra Skill: Gain proficiency in one extra skill.",
           "Flexible Stats: Distribute ability score bonuses as you like."
         ],
-        "img": "/assets/human.jpg"
+        "img": "/assets/error.png"
       },
       {
         "name": "Elf",

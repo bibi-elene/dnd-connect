@@ -1,71 +1,35 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-bootstrap';
-import { CharacterFormInputs } from '@/app/utils/types';
-import Image from 'next/image';
-import ReturnButton from '@/app/components/widgets/ReturnButton';
-import { useNavigate } from '@/app/utils/navigation';
+import { FormProvider, useForm } from 'react-hook-form';
+import StepWizard from 'react-step-wizard';
+import { Container, Card } from 'react-bootstrap';
+import RaceStep from '@/app/components/character-creation/RaceStep';
+import ClassStep from '@/app/components/character-creation/ClassStep';
+import BackgroundStep from '@/app/components/character-creation/BackgroundStep';
+import AbilityScoresStep from '@/app/components/character-creation/AbilityScoresStep';
+import SkillsStep from '@/app/components/character-creation/SkillsStep';
+import NameAndAvatarStep from '@/app/components/character-creation/NameAndAvatarStep';
 import { apiRoutes } from '@/app/api/apiRoutes';
-import data from '@/app/data/data.json';
-import ProtectedRoute from '@/app/components/ProtectedRoute';
-import Link from 'next/link';
-import { routes } from '@/app/utils/routes';
+import { useNavigate } from '@/app/utils/navigation';
+import { CharacterFormInputs } from '@/app/utils/types';
 
-const CreateCharacter = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<CharacterFormInputs>();
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [fileError, setFileError] = useState<string | null>(null);
+const CreateCharacterWizard = () => {
+  const methods = useForm({
+    defaultValues: {
+      race: '',
+      class: '',
+      background: '',
+      skills: '',
+      level: 1,
+      name: '',
+      image: null,
+    },
+  });
+
   const [loading, setLoading] = useState(false);
-
-  const { goToDashboard } = useNavigate();
-
-  const selectedClass = watch('class');
-  const selectedRace = watch('race');
-  const name = watch('name');
-  const background = watch('background');
-  const skills = watch('skills');
-  const level = watch('level');
-
-  const allFieldsValid =
-    name && selectedClass && selectedRace && background && skills && level && !fileError;
-
-  const defaultImagePath =
-    (data.metadata.avatars as Record<string, Record<string, string>>)[selectedClass]?.[
-      selectedRace
-    ] || '/assets/default_character.jpeg';
-
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] || null;
-    setFileError(null);
-
-    const maxFileSize = 2 * 1024 * 1024; // 2MB
-    setUploadedImage(file);
-
-    if (file && file.size > maxFileSize) {
-      setFileError('File size should not exceed 2MB.');
-      return;
-    }
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setPreviewImage(null);
-    }
-  };
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const onSubmit = async (data: CharacterFormInputs) => {
     setLoading(true);
@@ -76,14 +40,6 @@ const CreateCharacter = () => {
         formData.append(key, value);
       });
 
-      if (uploadedImage) {
-        formData.append('image', uploadedImage);
-      } else {
-        const response = await fetch(defaultImagePath);
-        const blob = await response.blob();
-        formData.append('image', blob, 'default_character_image.jpeg');
-      }
-
       const apiResponse = await fetch(apiRoutes.characters.all, {
         method: 'POST',
         body: formData,
@@ -92,9 +48,8 @@ const CreateCharacter = () => {
       if (!apiResponse.ok) {
         throw new Error('Failed to create character');
       }
-
+      console.log(apiResponse, 'api response');
       setSuccessMessage('Character created successfully!');
-      goToDashboard();
     } catch (error) {
       setErrorMessage('Failed to create character.');
       console.error(error);
@@ -104,164 +59,29 @@ const CreateCharacter = () => {
   };
 
   return (
-    <Container fluid className="min-vh-100 p-4 d-flex align-items-center">
-      <Col xs="auto" className="z-12">
-        <ReturnButton />
-      </Col>
-      <Row className="w-100 mt-5 pt-5 justify-content-center">
-        <Col md={6} lg={4} sm={8} className="mt-2">
-          <Card className="shadow-lg">
-            <Card.Body>
-              <Card.Title className="text-center mb-2">Create Character</Card.Title>
-              {errorMessage && (
-                <Alert variant="danger" className="text-center">
-                  {errorMessage}
-                </Alert>
-              )}
-              {successMessage && (
-                <Alert variant="success" className="text-center">
-                  {successMessage}
-                </Alert>
-              )}
-              <Form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-                <Form.Group className="mb-2">
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    isInvalid={!!errors.name}
-                    {...register('name', { required: true })}
-                  />
-                  <Form.Control.Feedback type="invalid">Name is required</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-2">
-                  <Form.Label>Class</Form.Label>
-                  <span className="text-xs ms-2">
-                    <Link href={routes.characterClasses} target="_blank" rel="noopener noreferrer">
-                      Class info
-                    </Link>
-                  </span>
-                  <Form.Select
-                    isInvalid={!!errors.class}
-                    {...register('class', { required: true })}
-                  >
-                    <option value="">Select Class</option>
-                    {data.classes.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </Form.Select>
-                  <Form.Control.Feedback type="invalid">Class is required</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-2">
-                  <Form.Label>Race</Form.Label>
-                  <span className="text-xs ms-2">
-                    <Link href={routes.characterRaces} target="_blank" rel="noopener noreferrer">
-                      Race info
-                    </Link>
-                  </span>
-                  <Form.Select isInvalid={!!errors.race} {...register('race', { required: true })}>
-                    <option value="">Select Race</option>
-                    {data.species.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </Form.Select>
-                  <Form.Control.Feedback type="invalid">Race is required</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-2">
-                  <Form.Label>Background</Form.Label>
-                  <Form.Select
-                    isInvalid={!!errors.background}
-                    {...register('background', { required: true })}
-                  >
-                    <option value="">Select Background</option>
-                    {data.characterBackgrounds.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </Form.Select>
-                  <Form.Control.Feedback type="invalid">
-                    Background is required
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-2">
-                  <Form.Label>Skills</Form.Label>
-                  <Form.Select
-                    isInvalid={!!errors.skills}
-                    {...register('skills', { required: true })}
-                  >
-                    <option value="">Select Skills</option>
-                    {data.characterSkills.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </Form.Select>
-                  <Form.Control.Feedback type="invalid">Skills are required</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-2">
-                  <Form.Label>Level</Form.Label>
-                  <Form.Control
-                    type="number"
-                    isInvalid={!!errors.level}
-                    {...register('level', { required: true, min: 1 })}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    Level is required and must be at least 1
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-2">
-                  <Form.Label>Upload Avatar</Form.Label>
-                  <Form.Control
-                    type="file"
-                    name="image"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    isInvalid={!!fileError}
-                  />
-                  {fileError && <div className="text-danger">{fileError}</div>}
-                </Form.Group>
-                <Button
-                  type="submit"
-                  disabled={!allFieldsValid || loading}
-                  className="w-100 relative z-30"
-                  variant={!allFieldsValid || loading ? 'secondary' : 'primary'}
-                >
-                  {loading ? <Spinner animation="border" size="sm" /> : 'Create Character'}
-                </Button>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-        {previewImage || defaultImagePath ? (
-          <Col md={6} lg={4} sm={8} className="text-center mt-2">
-            <Card>
-              <Card.Body className="d-flex flex-column">
-                <Card.Title>Character Preview</Card.Title>
-                <Image
-                  src={previewImage || defaultImagePath}
-                  alt="Preview"
-                  width={300}
-                  height={400}
-                  className="align-self-center"
-                  loading="lazy"
-                />
-              </Card.Body>
-            </Card>
-          </Col>
-        ) : null}
-      </Row>
-    </Container>
+    <FormProvider {...methods}>
+      <Container fluid className="d-flex flex-column justify-content-center bg-white p-0 h-100">
+        <Card className="mx-auto my-10 w-100 h-100" style={{ maxWidth: '900px', padding: '30px' }}>
+          <h1 className="text-center">D&amp;D Character Creation</h1>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <StepWizard initialStep={1} className="overflow-hidden">
+              <RaceStep nextStep={() => {}} />
+              <ClassStep nextStep={() => {}} previousStep={() => {}} />
+              <BackgroundStep nextStep={() => {}} previousStep={() => {}} />
+              <AbilityScoresStep nextStep={() => {}} previousStep={() => {}} />
+              <SkillsStep nextStep={() => {}} previousStep={() => {}} />
+              <NameAndAvatarStep previousStep={() => {}} />
+            </StepWizard>
+          </form>
+          {loading && <div className="mt-3 text-center">Loading...</div>}
+          {errorMessage && <div className="mt-3 text-center text-red-500">{errorMessage}</div>}
+          {successMessage && (
+            <div className="mt-3 text-center text-green-500">{successMessage}</div>
+          )}
+        </Card>
+      </Container>
+    </FormProvider>
   );
 };
 
-export default function CreateCharacterPage() {
-  return (
-    <ProtectedRoute>
-      <CreateCharacter />
-    </ProtectedRoute>
-  );
-}
+export default CreateCharacterWizard;
