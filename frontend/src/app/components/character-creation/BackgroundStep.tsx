@@ -1,61 +1,60 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, animate } from 'framer-motion';
 import { useFormContext } from 'react-hook-form';
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
+import { useEffect, useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import data from '@/app/data/data.json';
+import { ChevronLeft, ChevronRight, HelpCircle } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
+import data from '@/app/data/metadata/backgrounds.json';
+import { useIsMobile } from '@/hooks/use-mobile';
+
+const IconMap = LucideIcons as unknown as Record<
+  string,
+  (props: { className?: string }) => JSX.Element
+>;
 
 interface BackgroundStepProps {
   nextStep: () => void;
   previousStep: () => void;
 }
 
-const backgrounds: Array<{ name: string; description: string; img: string }> = [
-  {
-    name: 'Noble',
-    description: 'You come from a wealthy and influential family with a storied past.',
-    img: '/assets/adventure.jpg',
-  },
-  {
-    name: 'Acolyte',
-    description:
-      'You spent your childhood in service of a temple, learning the ways of the divine.',
-    img: '/assets/adventure.jpg',
-  },
-  {
-    name: 'Folk-Hero',
-    description: 'A commoner who rose to local fame by standing up against injustice.',
-    img: '/assets/adventure.jpg',
-  },
-  {
-    name: 'Thief',
-    description:
-      'Skilled in stealth and subterfuge, you learned the art of the heist at an early age.',
-    img: '/assets/adventure.jpg',
-  },
-];
-
 const BackgroundStep: React.FC<BackgroundStepProps> = ({ nextStep, previousStep }) => {
   const { setValue, watch } = useFormContext();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const selectedBackground = watch('background');
+  const backgrounds = data.backgrounds;
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
 
-  // Detailed backgrounds data
+  useEffect(() => {
+    if (!selectedBackground && backgrounds.length > 0) {
+      setValue('background', backgrounds[0].name);
+    }
+  }, [setValue, selectedBackground, backgrounds]);
 
   const handleSelect = (bgName: string, index: number) => {
     setValue('background', bgName);
     setSelectedIndex(index);
   };
 
-  useEffect(() => {
-    if (!selectedBackground) {
-      setValue('background', backgrounds[0].name);
-    }
-  }, [setValue, selectedBackground, backgrounds]);
+  const isMobile = useIsMobile();
+  // Set a fixed width for each carousel item and visible area
+  const itemWidth = 80; // px width
+  const visibleItems = isMobile ? 3 : 8;
+  const carouselWidth = visibleItems * itemWidth;
+  const maxOffset = -(backgrounds.length * itemWidth - carouselWidth);
 
-  const currentBackground = backgrounds[selectedIndex];
+  // Scroll 4 items left/right
+  const handleArrowLeft = () => {
+    const newX = Math.min(x.get() + itemWidth * 4, 0);
+    animate(x, newX, { type: 'spring', stiffness: 300, damping: 30 });
+  };
+
+  const handleArrowRight = () => {
+    const newX = Math.max(x.get() - itemWidth * 4, maxOffset);
+    animate(x, newX, { type: 'spring', stiffness: 300, damping: 30 });
+  };
 
   return (
     <motion.div
@@ -72,40 +71,67 @@ const BackgroundStep: React.FC<BackgroundStepProps> = ({ nextStep, previousStep 
       <div className="flex flex-col items-center space-y-6">
         {/* Main Preview */}
         <div className="flex flex-col items-center">
-          <div className="relative w-48 h-48 rounded-full overflow-hidden shadow-lg">
-            <Image
-              src={currentBackground.img}
-              alt={currentBackground.name}
-              layout="fill"
-              className="object-cover"
-            />
+          <div className="relative w-48 h-48 rounded-full bg-gray-200 flex items-center justify-center shadow-lg">
+            {(() => {
+              const bg = backgrounds[selectedIndex];
+              const IconComponent = bg?.icon && IconMap[bg.icon] ? IconMap[bg.icon] : HelpCircle;
+              return <IconComponent className="w-24 h-24 text-blue-500" />;
+            })()}
           </div>
           <div className="mt-4 text-center">
-            <h3 className="text-xl font-semibold">{currentBackground.name}</h3>
-            <p className="text-sm text-gray-600">{currentBackground.description}</p>
+            <h3 className="text-xl font-semibold">{backgrounds[selectedIndex].name}</h3>
+            <p className="text-sm text-gray-600">{backgrounds[selectedIndex].description}</p>
           </div>
         </div>
 
-        {/* Icons Grid */}
-        <div className="grid grid-cols-4 gap-4">
-          {backgrounds.map((bg, index) => (
-            <div
-              key={bg.name}
-              className="flex flex-col items-center cursor-pointer"
-              onClick={() => handleSelect(bg.name, index)}
+        {/* Draggable Carousel with Arrows */}
+        <div className="w-full flex justify-center relative">
+          <button
+            onClick={handleArrowLeft}
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <div className="overflow-hidden py-1" style={{ width: carouselWidth }}>
+            <motion.div
+              ref={carouselRef}
+              drag="x"
+              dragConstraints={{ left: maxOffset, right: 0 }}
+              style={{ x, display: 'flex' }}
+              className="space-x-4"
             >
-              <div
-                className={`relative w-16 h-16 rounded-full overflow-hidden transition-all ${
-                  index === selectedIndex
-                    ? 'border-4 border-blue-500'
-                    : 'border-2 border-transparent'
-                }`}
-              >
-                <Image src={bg.img} alt={bg.name} layout="fill" className="object-cover" />
-              </div>
-              <span className="mt-1 text-xs text-gray-700">{bg.name}</span>
-            </div>
-          ))}
+              {backgrounds.map((bg, index) => {
+                const IconComponent = bg?.icon && IconMap[bg.icon] ? IconMap[bg.icon] : HelpCircle;
+                return (
+                  <motion.div
+                    key={bg.name}
+                    onClick={() => handleSelect(bg.name, index)}
+                    className="flex flex-col items-center cursor-pointer"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    style={{ minWidth: itemWidth }}
+                  >
+                    <div
+                      className={`relative w-16 h-16 rounded-full flex items-center justify-center transition-all bg-gray-100 ${
+                        index === selectedIndex
+                          ? 'border-4 border-blue-500'
+                          : 'border-2 border-transparent'
+                      }`}
+                    >
+                      <IconComponent className="w-8 h-8 text-blue-500" />
+                    </div>
+                    <span className="mt-1 text-xs text-gray-700">{bg.name}</span>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </div>
+          <button
+            onClick={handleArrowRight}
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
         </div>
       </div>
 

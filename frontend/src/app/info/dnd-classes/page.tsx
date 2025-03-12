@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import data from '@/app/data/data.json';
+import data from '@/app/data/metadata/classes.json';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -49,7 +49,7 @@ const CharacterClassesPage = () => {
 
         {/* Character Class Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-10 max-w-6xl">
-          {data.metadata.classes.map((cls, idx) => (
+          {data.classes.map((cls, idx) => (
             <Card
               key={idx}
               className="bg-gray-900/50 border border-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"

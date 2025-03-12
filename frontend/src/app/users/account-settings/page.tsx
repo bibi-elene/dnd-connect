@@ -41,7 +41,6 @@ const AccountSettings: React.FC = () => {
     defaultValues: {
       username: '',
       email: '',
-      bio: '',
     },
   });
 
@@ -57,11 +56,9 @@ const AccountSettings: React.FC = () => {
         }
         const data = await res.json();
 
-        // 3. Use form.reset to set all fields at once
         reset({
           username: data.username || '',
           email: data.email || '',
-          bio: data.bio || '',
         });
       } catch (error) {
         console.error(error);
@@ -146,20 +143,6 @@ const AccountSettings: React.FC = () => {
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter your email" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="bio"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Bio</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Write something about yourself..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

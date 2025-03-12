@@ -1,0 +1,109 @@
+{
+  "classes": [
+    {
+      "name": "Fighter",
+      "description": "A master of martial combat, skilled with weapons and armor. Fighters excel in physical confrontations and are versatile warriors, able to wield a variety of weapons and armors.",
+      "traits": [
+        "Second Wind: Regain health in battle.",
+        "Action Surge: Take an extra action during combat."
+      ],
+      "img": "/assets/fighter.jpg"
+    },
+    {
+      "name": "Cleric",
+      "description": "A priestly champion wielding divine magic. Clerics act as intermediaries between the mortal world and the gods, often serving a specific deity.",
+      "traits": [
+        "Channel Divinity: Turn undead or empower spells.",
+        "Divine Domain: Choose a domain like Life, War, or Trickery."
+      ],
+      "img": "/assets/cleric.jpg"
+    },
+    {
+      "name": "Paladin",
+      "description": "A holy warrior bound to a sacred oath. Paladins combine martial prowess with divine power, often serving as protectors of justice and virtue.",
+      "traits": [
+        "Lay on Hands: Heal others by touch.",
+        "Divine Smite: Deal radiant damage to enemies."
+      ],
+      "img": "/assets/paladin.jpg"
+    },
+    {
+      "name": "Barbarian",
+      "description": "A fierce warrior who can enter a battle rage. Barbarians are primal combatants with extraordinary resilience and strength.",
+      "traits": [
+        "Rage: Increase damage and resistance during combat.",
+        "Unarmored Defense: Use Constitution for better armor."
+      ],
+      "img": "/assets/barbarian.jpg"
+    },
+    {
+      "name": "Warlock",
+      "description": "A wielder of magic derived from a pact with an otherworldly being. Warlocks have unique abilities granted by their patrons.",
+      "traits": [
+        "Eldritch Invocations: Customize your magical powers.",
+        "Pact Boon: Gain abilities like a summoned weapon or familiar."
+      ],
+      "img": "/assets/warlock.jpg"
+    },
+    {
+      "name": "Ranger",
+      "description": "A skilled hunter and tracker, adept in the wilderness. Rangers are excellent at ranged combat and survival.",
+      "traits": [
+        "Favored Enemy: Gain bonuses against specific creatures.",
+        "Natural Explorer: Excel in chosen terrains."
+      ],
+      "img": "/assets/ranger.jpg"
+    },
+    {
+      "name": "Wizard",
+      "description": "A scholarly magic-user capable of manipulating reality. Wizards are the ultimate spellcasters, with access to a vast array of spells.",
+      "traits": [
+        "Arcane Recovery: Regain spell slots during a rest.",
+        "Spellbook: Learn and prepare more spells than other classes."
+      ],
+      "img": "/assets/wizard.jpg"
+    },
+    {
+      "name": "Sorcerer",
+      "description": "A spellcaster who draws magic from innate ability. Sorcerers have a natural talent for spellcasting, often due to magical lineage.",
+      "traits": [
+        "Metamagic: Modify spells to suit your needs.",
+        "Sorcerer Points: Fuel unique magical effects."
+      ],
+      "img": "/assets/sorcerer.jpg"
+    },
+    {
+      "name": "Monk",
+      "description": "A master of martial arts and spiritual discipline. Monks are quick and deadly, relying on unarmed strikes and inner energy.",
+      "traits": [
+        "Ki Points: Perform extraordinary actions in combat.",
+        "Unarmored Movement: Increase speed without armor."
+      ],
+      "img": "/assets/monk.jpg"
+    },
+    {
+      "name": "Rogue",
+      "description": "A scoundrel who uses stealth and trickery. Rogues excel at precision strikes and avoiding harm.",
+      "traits": [
+        "Sneak Attack: Deal extra damage with finesse weapons.",
+        "Evasion: Avoid area-of-effect damage."
+      ],
+      "img": "/assets/rogue.jpg"
+    },
+    {
+      "name": "Druid",
+      "description": "A protector of nature, capable of shapeshifting. Druids wield nature-based magic and can transform into animals.",
+      "traits": ["Wild Shape: Transform into beasts.", "Spellcasting: Use nature-based spells."],
+      "img": "/assets/druid.jpg"
+    },
+    {
+      "name": "Bard",
+      "description": "A performer who weaves magic through music and storytelling. Bards are versatile spellcasters with abilities to inspire and charm.",
+      "traits": [
+        "Bardic Inspiration: Boost allies' abilities.",
+        "Jack of All Trades: Add bonuses to non-proficient skills."
+      ],
+      "img": "/assets/bard.jpg"
+    }
+  ]
+}

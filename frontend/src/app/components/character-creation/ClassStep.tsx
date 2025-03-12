@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import data from '@/app/data/data.json';
+import data from '@/app/data/metadata/classes.json';
 import Image from 'next/image';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
@@ -20,7 +20,7 @@ const ClassStep: React.FC<ClassStepProps> = ({ nextStep, previousStep }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const selectedClass = watch('class');
 
-  const classesList = data.metadata.classes;
+  const classesList = data.classes;
   const currentClass = classesList[currentIndex];
 
   const handleSelect = (className: string) => {

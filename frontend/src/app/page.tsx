@@ -9,6 +9,7 @@ import About from './components/landingPage/About';
 import Testimonials from './components/landingPage/Testimonials';
 import FramerButton from './components/widgets/FramerButton';
 import './page.styles.scss';
+import DiceRoller from './components/DiceRoller/DiceRoller';
 
 export default function Home() {
   const { loading } = useContext(AuthContext);
@@ -24,6 +25,7 @@ export default function Home() {
   return (
     <section className="relative">
       <div>
+        <DiceRoller />
         <div className="flex items-center min-h-[85vh] relative">
           <Container className="position-relative text-white">
             <Row className="justify-content-center">

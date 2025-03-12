@@ -1,0 +1,85 @@
+{
+  "species": [
+    {
+      "name": "Human",
+      "description": "Versatile and ambitious. Humans adapt to a variety of roles and excel in any field they choose.",
+      "traits": [
+        "Extra Skill: Gain proficiency in one extra skill.",
+        "Flexible Stats: Distribute ability score bonuses as you like."
+      ],
+      "img": "/assets/error.png"
+    },
+    {
+      "name": "Elf",
+      "description": "Graceful and wise. Elves are known for their keen senses, longevity, and connection to magic.",
+      "traits": [
+        "Darkvision: See in dim light and darkness.",
+        "Keen Senses: Proficiency in the Perception skill."
+      ],
+      "img": "/assets/elf.jpg"
+    },
+    {
+      "name": "Dwarf",
+      "description": "Stout and sturdy. Dwarves are skilled craftsmen and fierce warriors.",
+      "traits": [
+        "Dwarven Resilience: Resistance to poison.",
+        "Stonecunning: Gain bonuses on stone-related knowledge."
+      ],
+      "img": "/assets/dwarf.jpg"
+    },
+    {
+      "name": "Halfling",
+      "description": "Small, nimble, and resourceful. Halflings are known for their luck and bravery.",
+      "traits": [
+        "Lucky: Re-roll 1s on attack rolls, ability checks, and saving throws.",
+        "Brave: Advantage on saving throws against fear."
+      ],
+      "img": "/assets/halfling.jpg"
+    },
+    {
+      "name": "Dragonborn",
+      "description": "Born of dragons, proud and strong. Dragonborn are known for their draconic ancestry and breath weapon.",
+      "traits": [
+        "Breath Weapon: Exhale destructive energy.",
+        "Damage Resistance: Resistance to specific damage types based on ancestry."
+      ],
+      "img": "/assets/dragonborn.jpg"
+    },
+    {
+      "name": "Tiefling",
+      "description": "Fiendish ancestry with a touch of infernal power. Tieflings possess innate magical abilities and a resistance to fire.",
+      "traits": [
+        "Infernal Legacy: Gain innate spellcasting abilities.",
+        "Fire Resistance: Resist fire damage."
+      ],
+      "img": "/assets/tiefling.jpg"
+    },
+    {
+      "name": "Half-Orc",
+      "description": "Strong and resilient, with a savage grace. Half-orcs excel in combat and are driven by a fierce determination.",
+      "traits": [
+        "Relentless Endurance: Avoid death once per long rest.",
+        "Savage Attacks: Deal extra damage on critical hits."
+      ],
+      "img": "/assets/halforc.jpg"
+    },
+    {
+      "name": "Gnome",
+      "description": "Inventive and curious. Gnomes are skilled tinkerers and spellcasters.",
+      "traits": [
+        "Gnome Cunning: Advantage on saving throws against magic.",
+        "Artificer's Lore: Bonus to history checks on magical items."
+      ],
+      "img": "/assets/gnome.jpg"
+    },
+    {
+      "name": "Half-Elf",
+      "description": "A blend of human ambition and elven grace. Half-elves are charismatic and adaptable.",
+      "traits": [
+        "Fey Ancestry: Resistance to charm and immunity to magical sleep.",
+        "Versatile Stats: Distribute bonuses to ability scores."
+      ],
+      "img": "/assets/halfelf.jpg"
+    }
+  ]
+}

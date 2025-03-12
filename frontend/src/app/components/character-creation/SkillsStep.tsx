@@ -2,32 +2,14 @@
 
 import { motion } from 'framer-motion';
 import { useFormContext } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import data from '@/app/data/metadata/skills.json';
 
 interface SkillsStepProps {
   nextStep: () => void;
   previousStep: () => void;
 }
-
-const skillsData = [
-  {
-    name: 'History',
-    description: 'Your knowledge of historical events is vast.',
-  },
-  {
-    name: 'Athletics',
-    description: 'You excel in physical endeavors.',
-  },
-  {
-    name: 'Survival',
-    description: 'You are adept at enduring harsh environments.',
-  },
-  {
-    name: 'Performance',
-    description: 'You have a talent for captivating an audience.',
-  },
-];
 
 const SkillsStep: React.FC<SkillsStepProps> = ({ nextStep, previousStep }) => {
   const { setValue, watch } = useFormContext();
@@ -39,17 +21,15 @@ const SkillsStep: React.FC<SkillsStepProps> = ({ nextStep, previousStep }) => {
     let updatedIndexes = [...selectedIndexes];
 
     if (updatedSkills.includes(skillName)) {
-      // If already selected, remove it
       updatedSkills = updatedSkills.filter((s) => s !== skillName);
       updatedIndexes = updatedIndexes.filter((i) => i !== index);
     } else {
       if (updatedSkills.length < 2) {
-        // Only allow adding if less than 2 skills are selected
         updatedSkills.push(skillName);
         updatedIndexes.push(index);
       }
     }
-    console.log(selectedSkills, 'skilllls');
+
     setValue('skills', updatedSkills);
     setSelectedIndexes(updatedIndexes);
   };
@@ -68,8 +48,8 @@ const SkillsStep: React.FC<SkillsStepProps> = ({ nextStep, previousStep }) => {
       </p>
 
       {/* Skills Grid */}
-      <div className="grid grid-cols-4 gap-4">
-        {skillsData.map((skill, index) => (
+      <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
+        {data.skills.map((skill, index) => (
           <div
             key={skill.name}
             className="flex flex-col items-center cursor-pointer"
@@ -93,7 +73,6 @@ const SkillsStep: React.FC<SkillsStepProps> = ({ nextStep, previousStep }) => {
         ))}
       </div>
 
-      {/* Navigation Buttons */}
       <div className="mt-6 flex justify-between">
         <Button type="button" onClick={previousStep}>
           Back

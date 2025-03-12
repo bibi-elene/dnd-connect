@@ -14,6 +14,7 @@ import { useFetchUsers } from '../hooks/useFetchUsers';
 import UsersList from '../components/widgets/UsersList';
 import UserActions from '../components/widgets/UserActions';
 import { Container, Row, Col, Card } from 'react-bootstrap';
+import DiceRoller from '../components/DiceRoller/DiceRoller';
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
@@ -31,6 +32,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen justify-content-center align-content-center bg-cover">
+      <DiceRoller />
       <Container className="pt-4 mt-5 justify-content-center d-flex flex-column">
         <Row className="mt-1">
           <Col>

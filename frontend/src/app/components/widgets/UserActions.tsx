@@ -1,21 +1,62 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Loader2 } from 'lucide-react';
+import { MIN_LOADING_TIME } from '@/app/utils/constants';
 
 interface UserActionProps {
-  onViewAll: () => void;
-  onCreate?: () => void;
+  onViewAll: () => Promise<void> | void; // Supports async functions
+  onCreate?: () => Promise<void> | void;
 }
 
-const UserActions: React.FC<UserActionProps> = ({ onViewAll, onCreate }) => (
-  <div className="flex gap-2 mb-5">
-    <Button variant="outline" onClick={onViewAll}>
-      View All Users
-    </Button>
-    {onCreate && (
-      <Button variant="default" onClick={onViewAll}>
-        Create New User
+const UserActions: React.FC<UserActionProps> = ({ onViewAll, onCreate }) => {
+  const [loading, setLoading] = useState<{ viewAll: boolean; create: boolean }>({
+    viewAll: false,
+    create: false,
+  });
+
+  const handleClick = async (
+    action: 'viewAll' | 'create',
+    callback?: () => Promise<void> | void
+  ) => {
+    if (!callback) return;
+    setLoading((prev) => ({ ...prev, [action]: true }));
+
+    const startTime = Date.now();
+
+    try {
+      await callback();
+    } finally {
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = MIN_LOADING_TIME - elapsedTime;
+
+      setTimeout(
+        () => setLoading((prev) => ({ ...prev, [action]: false })),
+        remainingTime > 0 ? remainingTime : 0
+      );
+    }
+  };
+
+  return (
+    <div className="flex gap-2 mb-5">
+      <Button
+        variant="outline"
+        onClick={() => handleClick('viewAll', onViewAll)}
+        disabled={loading.viewAll}
+      >
+        {loading.viewAll ? <Loader2 className="w-4 h-4 animate-spin" /> : 'View All Users'}
       </Button>
-    )}
-  </div>
-);
+
+      {onCreate && (
+        <Button
+          variant="default"
+          onClick={() => handleClick('create', onCreate)}
+          disabled={loading.create}
+        >
+          {loading.create ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Create New User'}
+        </Button>
+      )}
+    </div>
+  );
+};
 
 export default UserActions;

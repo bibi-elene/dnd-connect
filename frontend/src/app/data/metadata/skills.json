@@ -1,0 +1,76 @@
+{
+  "skills": [
+    {
+      "name": "Acrobatics",
+      "description": "Your agility allows you to perform flips, rolls, and maintain balance in tricky situations."
+    },
+    {
+      "name": "Animal Handling",
+      "description": "You have a natural ability to understand and calm animals, aiding in training or taming them."
+    },
+    {
+      "name": "Arcana",
+      "description": "Your knowledge of magic, spells, and arcane lore allows you to understand mystical forces."
+    },
+    {
+      "name": "Athletics",
+      "description": "You excel in physical endeavors such as climbing, swimming, and jumping."
+    },
+    {
+      "name": "Deception",
+      "description": "You are skilled at convincing others of falsehoods, whether through lying or misdirection."
+    },
+    {
+      "name": "History",
+      "description": "Your knowledge of historical events, ancient kingdoms, and important figures is vast."
+    },
+    {
+      "name": "Insight",
+      "description": "You can read people and situations, detecting lies or discerning hidden motives."
+    },
+    {
+      "name": "Intimidation",
+      "description": "Your forceful presence allows you to coerce or frighten others into compliance."
+    },
+    {
+      "name": "Investigation",
+      "description": "You excel at finding clues, analyzing evidence, and piecing together mysteries."
+    },
+    {
+      "name": "Medicine",
+      "description": "You understand anatomy and medical practices, helping you diagnose and treat injuries or illnesses."
+    },
+    {
+      "name": "Nature",
+      "description": "You have knowledge of the natural world, including plants, animals, and ecosystems."
+    },
+    {
+      "name": "Perception",
+      "description": "Your keen senses allow you to notice hidden details, sounds, or movements others might miss."
+    },
+    {
+      "name": "Performance",
+      "description": "You have a talent for captivating an audience through music, acting, or storytelling."
+    },
+    {
+      "name": "Persuasion",
+      "description": "You excel at influencing others with charm, diplomacy, or reasoned arguments."
+    },
+    {
+      "name": "Religion",
+      "description": "Your understanding of deities, religious traditions, and spiritual practices is deep."
+    },
+    {
+      "name": "Sleight of Hand",
+      "description": "You are skilled in subtle hand movements, such as picking pockets or performing magic tricks."
+    },
+    {
+      "name": "Stealth",
+      "description": "You are adept at remaining unseen and moving silently in order to avoid detection."
+    },
+    {
+      "name": "Survival",
+      "description": "You are skilled at tracking, foraging, and enduring harsh wilderness conditions."
+    }
+  ]
+}

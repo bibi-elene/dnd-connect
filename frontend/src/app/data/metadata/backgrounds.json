@@ -1,0 +1,69 @@
+{
+  "backgrounds": [
+    {
+      "name": "Acolyte",
+      "description": "You spent your life in service to a temple, learning the ways of the divine.",
+      "icon": "Church"
+    },
+    {
+      "name": "Charlatan",
+      "description": "You are a master of deception, using your skills to manipulate others for your benefit.",
+      "icon": "ScanFace"
+    },
+    {
+      "name": "Criminal",
+      "description": "You have a history of breaking the law and thriving in the underworld of crime.",
+      "icon": "ForkKnife"
+    },
+    {
+      "name": "Entertainer",
+      "description": "You have delighted audiences with your performances, bringing joy to those who watch.",
+      "icon": "Music"
+    },
+    {
+      "name": "Folk Hero",
+      "description": "A commoner who stood against tyranny and became a local legend.",
+      "icon": "Shield"
+    },
+    {
+      "name": "Guild Artisan",
+      "description": "You are a member of a prestigious craft guild, skilled in your chosen trade.",
+      "icon": "Hammer"
+    },
+    {
+      "name": "Hermit",
+      "description": "You lived in seclusion for years, discovering profound truths and self-awareness.",
+      "icon": "Mountain"
+    },
+    {
+      "name": "Noble",
+      "description": "You were born into a family of power and influence, accustomed to privilege.",
+      "icon": "Crown"
+    },
+    {
+      "name": "Outlander",
+      "description": "You grew up in the wild, far from civilization, and are at home in nature.",
+      "icon": "TreePine"
+    },
+    {
+      "name": "Sage",
+      "description": "You are deeply knowledgeable, having spent years studying and researching.",
+      "icon": "BookOpen"
+    },
+    {
+      "name": "Sailor",
+      "description": "You spent much of your life on ships, navigating the vast and dangerous seas.",
+      "icon": "Anchor"
+    },
+    {
+      "name": "Soldier",
+      "description": "You served in an army, learning discipline, strategy, and the art of war.",
+      "icon": "Sword"
+    },
+    {
+      "name": "Urchin",
+      "description": "You grew up on the streets, relying on cunning and resourcefulness to survive.",
+      "icon": "Hand"
+    }
+  ]
+}

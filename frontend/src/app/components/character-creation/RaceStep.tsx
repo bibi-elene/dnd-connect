@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import data from '@/app/data/data.json';
+import data from '@/app/data/metadata/species.json';
 import Image from 'next/image';
 
 interface RaceStepProps {
@@ -19,7 +19,7 @@ const RaceStep: React.FC<RaceStepProps> = ({ nextStep }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const selectedRace = watch('race');
 
-  const speciesList = Object.values(data.metadata.species);
+  const speciesList = Object.values(data.species);
   const currentRace = speciesList[currentIndex];
 
   const handleSelect = (raceName: string) => {
@@ -75,7 +75,7 @@ const RaceStep: React.FC<RaceStepProps> = ({ nextStep }) => {
             className="w-[200px] md:w-[340px] h-[320px] md:h-[380px] bg-white shadow-md border border-gray-200 flex flex-col overflow-hidden cursor-pointer"
             onClick={() => setIsModalOpen(true)}
           >
-            <div className="w-full h-3/4 flex items-center justify-center">
+            <div className="w-full h-3/4 bg-black flex items-center justify-center">
               <Image
                 src={currentRace.img}
                 alt={currentRace.name}
@@ -100,7 +100,7 @@ const RaceStep: React.FC<RaceStepProps> = ({ nextStep }) => {
         </div>
 
         <div className="w-full md:w-1/3">
-          <div className="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
+          <div className="grid grid-cols-3 gap-3 md:gap-4">
             {speciesList.map((race, index) => (
               <div
                 key={race.name}
@@ -110,7 +110,7 @@ const RaceStep: React.FC<RaceStepProps> = ({ nextStep }) => {
                 <Image
                   src={race.img}
                   alt={race.name}
-                  className={`w-12 md:w-14 h-12 md:h-14 rounded-full object-contain transition-all ${index === currentIndex ? 'border-4 border-blue-500' : 'border-2 border-transparent'}`}
+                  className={`w-12 md:w-14 h-12 md:h-14 bg-black rounded-full object-contain transition-all ${index === currentIndex ? 'border-4 border-blue-500' : 'border-2 border-transparent'}`}
                   width={100}
                   height={100}
                 />

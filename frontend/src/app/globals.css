@@ -28,8 +28,8 @@
   --button-secondary-hover: #0d6dfdc9;
   --button-secondary-text: #f4f4f0;
 
-  --button-danger: #e76d6d;
-  --button-danger-hover: #c55656;
+  --button-danger: #ef4444;
+  --button-danger-hover: rgb(215, 85, 85);
   --button-danger-text: #f4f4f0;
 
   --button-neutral: #a9a9a2;

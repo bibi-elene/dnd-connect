@@ -3,7 +3,6 @@ import './globals.css';
 import { AuthProvider } from './context/AuthContext';
 import type { Metadata } from 'next';
 import { Montserrat, Inter } from 'next/font/google';
-import DiceRoller from './components/DiceRoller/DiceRoller';
 import { SidebarProvider, Sidebar, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/ui/app-sidebar';
 
@@ -66,8 +65,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div className="relative z-10 flex-1">{children}</div>
             </div>
           </SidebarProvider>
-
-          {/* <DiceRoller /> */}
         </AuthProvider>
       </body>
     </html>
