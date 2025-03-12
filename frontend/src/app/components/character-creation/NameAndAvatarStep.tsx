@@ -6,8 +6,6 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import AvatarUpload from './UploadAvatar';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { useRouter } from 'next/navigation';
 
 interface NameAndAvatarStepProps {
   previousStep: () => void;
@@ -21,8 +19,6 @@ const NameAndAvatarStep: React.FC<NameAndAvatarStepProps> = ({ previousStep }) =
     formState: { errors, isSubmitted },
   } = useFormContext();
   const [preview, setPreview] = useState<string | null>(null);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const router = useRouter();
 
   const handleUpload = (file: File | null, previewData: string | null) => {
     setValue('image', file);
@@ -84,27 +80,8 @@ const NameAndAvatarStep: React.FC<NameAndAvatarStepProps> = ({ previousStep }) =
           Back
         </Button>
         {/* On Submit, show success pop-up */}
-        <Button type="submit" onClick={() => setIsSuccess(true)}>
-          Create Character
-        </Button>
+        <Button type="submit">Create Character</Button>
       </div>
-
-      {/* Success Modal */}
-      <Dialog open={isSuccess} onOpenChange={setIsSuccess}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-bold">Character Created!</DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col items-center gap-4">
-            <p className="text-sm text-gray-700 text-center">
-              Your character has been successfully created.
-            </p>
-            <Button className="w-full" onClick={() => router.push('/dashboard')}>
-              Return to Dashboard
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
     </motion.div>
   );
 };

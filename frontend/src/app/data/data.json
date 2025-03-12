@@ -9,10 +9,7 @@
     "Tiefling",
     "Half-Orc",
     "Gnome",
-    "Half-Elf",
-    "Aasimar",
-    "Genasi",
-    "Firbolg"
+    "Half-Elf"
   ],
   "classes": [
     "Fighter",
@@ -42,10 +39,7 @@
         "Tiefling": "/assets/fighter.jpg",
         "Half-Orc": "/assets/fighter.jpg",
         "Gnome": "/assets/fighter.jpg",
-        "Half-Elf": "/assets/fighter.jpg",
-        "Aasimar": "/assets/fighter.jpg",
-        "Genasi": "/assets/fighter.jpg",
-        "Firbolg": "/assets/fighter.jpg"
+        "Half-Elf": "/assets/fighter.jpg"
       },
       "Mage": {
         "Human": "/assets/mage.jpg",
@@ -56,10 +50,7 @@
         "Tiefling": "/assets/mage.jpg",
         "Half-Orc": "/assets/mage.jpg",
         "Gnome": "/assets/mage.jpg",
-        "Half-Elf": "/assets/mage.jpg",
-        "Aasimar": "/assets/mage.jpg",
-        "Genasi": "/assets/mage.jpg",
-        "Firbolg": "/assets/mage.jpg"
+        "Half-Elf": "/assets/mage.jpg"
       },
       "Rogue": {
         "Human": "/assets/rogue.jpg",
@@ -70,10 +61,7 @@
         "Tiefling": "/assets/rogue.jpg",
         "Half-Orc": "/assets/rogue.jpg",
         "Gnome": "/assets/rogue.jpg",
-        "Half-Elf": "/assets/rogue.jpg",
-        "Aasimar": "/assets/rogue.jpg",
-        "Genasi": "/assets/rogue.jpg",
-        "Firbolg": "/assets/rogue.jpg"
+        "Half-Elf": "/assets/rogue.jpg"
       },
       "Cleric": {
         "Human": "/assets/cleric.jpg",
@@ -84,10 +72,7 @@
         "Tiefling": "/assets/cleric.jpg",
         "Half-Orc": "/assets/cleric.jpg",
         "Gnome": "/assets/cleric.jpg",
-        "Half-Elf": "/assets/cleric.jpg",
-        "Aasimar": "/assets/cleric.jpg",
-        "Genasi": "/assets/cleric.jpg",
-        "Firbolg": "/assets/cleric.jpg"
+        "Half-Elf": "/assets/cleric.jpg"
       },
       "Paladin": {
         "Human": "/assets/paladin.jpg",
@@ -98,10 +83,7 @@
         "Tiefling": "/assets/paladin.jpg",
         "Half-Orc": "/assets/paladin.jpg",
         "Gnome": "/assets/paladin.jpg",
-        "Half-Elf": "/assets/paladin.jpg",
-        "Aasimar": "/assets/paladin.jpg",
-        "Genasi": "/assets/paladin.jpg",
-        "Firbolg": "/assets/paladin.jpg"
+        "Half-Elf": "/assets/paladin.jpg"
       },
       "Barbarian": {
         "Human": "/assets/barbarian.jpg",
@@ -112,10 +94,7 @@
         "Tiefling": "/assets/barbarian.jpg",
         "Half-Orc": "/assets/barbarian.jpg",
         "Gnome": "/assets/barbarian.jpg",
-        "Half-Elf": "/assets/barbarian.jpg",
-        "Aasimar": "/assets/barbarian.jpg",
-        "Genasi": "/assets/barbarian.jpg",
-        "Firbolg": "/assets/barbarian.jpg"
+        "Half-Elf": "/assets/barbarian.jpg"
       },
       "Warlock": {
         "Human": "/assets/warlock.jpg",
@@ -126,10 +105,7 @@
         "Tiefling": "/assets/warlock.jpg",
         "Half-Orc": "/assets/warlock.jpg",
         "Gnome": "/assets/warlock.jpg",
-        "Half-Elf": "/assets/warlock.jpg",
-        "Aasimar": "/assets/warlock.jpg",
-        "Genasi": "/assets/warlock.jpg",
-        "Firbolg": "/assets/warlock.jpg"
+        "Half-Elf": "/assets/warlock.jpg"
       },
       "Ranger": {
         "Human": "/assets/ranger.jpg",
@@ -140,10 +116,7 @@
         "Tiefling": "/assets/ranger.jpg",
         "Half-Orc": "/assets/ranger.jpg",
         "Gnome": "/assets/ranger.jpg",
-        "Half-Elf": "/assets/ranger.jpg",
-        "Aasimar": "/assets/ranger.jpg",
-        "Genasi": "/assets/ranger.jpg",
-        "Firbolg": "/assets/ranger.jpg"
+        "Half-Elf": "/assets/ranger.jpg"
       },
       "Wizard": {
         "Human": "/assets/wizard.jpg",
@@ -154,10 +127,7 @@
         "Tiefling": "/assets/wizard.jpg",
         "Half-Orc": "/assets/wizard.jpg",
         "Gnome": "/assets/wizard.jpg",
-        "Half-Elf": "/assets/wizard.jpg",
-        "Aasimar": "/assets/wizard.jpg",
-        "Genasi": "/assets/wizard.jpg",
-        "Firbolg": "/assets/wizard.jpg"
+        "Half-Elf": "/assets/wizard.jpg"
       },
       "Sorcerer": {
         "Human": "/assets/sorcerer.jpg",
@@ -168,10 +138,7 @@
         "Tiefling": "/assets/sorcerer.jpg",
         "Half-Orc": "/assets/sorcerer.jpg",
         "Gnome": "/assets/sorcerer.jpg",
-        "Half-Elf": "/assets/sorcerer.jpg",
-        "Aasimar": "/assets/sorcerer.jpg",
-        "Genasi": "/assets/sorcerer.jpg",
-        "Firbolg": "/assets/sorcerer.jpg"
+        "Half-Elf": "/assets/sorcerer.jpg"
       },
       "Monk": {
         "Human": "/assets/monk.jpg",
@@ -182,10 +149,7 @@
         "Tiefling": "/assets/monk.jpg",
         "Half-Orc": "/assets/monk.jpg",
         "Gnome": "/assets/monk.jpg",
-        "Half-Elf": "/assets/monk.jpg",
-        "Aasimar": "/assets/monk.jpg",
-        "Genasi": "/assets/monk.jpg",
-        "Firbolg": "/assets/monk.jpg"
+        "Half-Elf": "/assets/monk.jpg"
       },
       "Druid": {
         "Human": "/assets/druid.jpg",
@@ -196,10 +160,7 @@
         "Tiefling": "/assets/druid.jpg",
         "Half-Orc": "/assets/druid.jpg",
         "Gnome": "/assets/druid.jpg",
-        "Half-Elf": "/assets/druid.jpg",
-        "Aasimar": "/assets/druid.jpg",
-        "Genasi": "/assets/druid.jpg",
-        "Firbolg": "/assets/druid.jpg"
+        "Half-Elf": "/assets/druid.jpg"
       },
       "Bard": {
         "Human": "/assets/bard.jpg",
@@ -210,10 +171,7 @@
         "Tiefling": "/assets/bard.jpg",
         "Half-Orc": "/assets/bard.jpg",
         "Gnome": "/assets/bard.jpg",
-        "Half-Elf": "/assets/bard.jpg",
-        "Aasimar": "/assets/bard.jpg",
-        "Genasi": "/assets/bard.jpg",
-        "Firbolg": "/assets/bard.jpg"
+        "Half-Elf": "/assets/bard.jpg"
       }
     },
     "classes": [
@@ -404,33 +362,6 @@
           "Versatile Stats: Distribute bonuses to ability scores."
         ],
         "img": "/assets/halfelf.jpg"
-      },
-      {
-        "name": "Aasimar",
-        "description": "Celestial beings with a divine purpose. Aasimar are guided by a higher calling.",
-        "traits": [
-          "Healing Hands: Heal others with a touch.",
-          "Celestial Resistance: Resistance to necrotic and radiant damage."
-        ],
-        "img": "/assets/aasimar.jpg"
-      },
-      {
-        "name": "Genasi",
-        "description": "Mortals touched by elemental planes. Genasi embody the power of earth, air, fire, or water.",
-        "traits": [
-          "Elemental Affinity: Resistance to elemental damage.",
-          "Innate Magic: Gain abilities tied to your elemental heritage."
-        ],
-        "img": "/assets/genasi.jpg"
-      },
-      {
-        "name": "Firbolg",
-        "description": "Gentle giants with a strong connection to nature. Firbolgs are peaceful protectors of the wilderness.",
-        "traits": [
-          "Hidden Step: Turn invisible for a brief time.",
-          "Speech of Beast and Leaf: Communicate with animals and plants."
-        ],
-        "img": "/assets/firbolg.jpg"
       }
     ]
   }

@@ -7,6 +7,8 @@ export interface Character {
   level: number;
   race: string;
   background: string;
+  skills: string;
+  abilityScores: Record<string, number>;
   image?: string;
 }
 
@@ -24,7 +26,8 @@ export interface CharacterFormInputs {
   level: number;
   race: string;
   background: string;
-  skills: string;
+  skills: string[];
+  abilityScores: Record<string, number>;
   image?: File | null;
 }
 

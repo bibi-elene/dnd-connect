@@ -28,7 +28,7 @@ const AbilityScoresStep: React.FC<AbilityScoresStepProps> = ({ nextStep, previou
 
   const rollAll = () => {
     abilities.forEach((ability) => {
-      const key = ability.toLowerCase();
+      const key = `abilityScores.${ability.toLowerCase()}`;
       setValue(key, rollAbilityScore());
     });
   };
@@ -60,7 +60,7 @@ const AbilityScoresStep: React.FC<AbilityScoresStepProps> = ({ nextStep, previou
               type="number"
               min="1"
               max="30"
-              {...register(name.toLowerCase(), { valueAsNumber: true })}
+              {...register(`abilityScores.${name.toLowerCase()}`, { valueAsNumber: true })}
               className="w-16 border rounded px-2 py-1 text-center"
             />
           </div>

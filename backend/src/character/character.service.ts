@@ -27,6 +27,7 @@ export class CharacterService {
       race: character.race,
       background: character.background,
       skills: character.skills,
+      abilityScores: character.abilityScores,
       image:
         character.image && Buffer.isBuffer(character.image)
           ? `data:image/jpeg;base64,${character.image.toString('base64')}`
@@ -53,6 +54,7 @@ export class CharacterService {
       race: character.race,
       background: character.background,
       skills: character.skills,
+      abilityScores: character.abilityScores,
       image:
         character.image && Buffer.isBuffer(character.image)
           ? `data:image/jpeg;base64,${character.image.toString('base64')}`
@@ -65,10 +67,13 @@ export class CharacterService {
     user: User,
     image: Express.Multer.File,
   ): Promise<Character> {
-    const { ...characterDetails } = characterData;
+    const { skills, ...characterDetails } = characterData;
 
     const character = this.characterRepository.create({
       ...characterDetails,
+      skills: Array.isArray(skills)
+        ? skills
+        : (skills as unknown as string)?.split(',').map((s) => s.trim()) || [],
       user,
     });
 
@@ -98,6 +103,7 @@ export class CharacterService {
       race: character.race,
       background: character.background,
       skills: character.skills,
+      abilityScores: character.abilityScores,
       image:
         character.image && Buffer.isBuffer(character.image)
           ? `data:image/jpeg;base64,${character.image.toString('base64')}`
@@ -152,6 +158,7 @@ export class CharacterService {
       race: savedCharacter.race,
       background: savedCharacter.background,
       skills: savedCharacter.skills,
+      abilityScores: character.abilityScores,
       image:
         savedCharacter.image && Buffer.isBuffer(savedCharacter.image)
           ? `data:image/jpeg;base64,${savedCharacter.image.toString('base64')}`

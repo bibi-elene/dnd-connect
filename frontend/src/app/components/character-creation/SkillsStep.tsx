@@ -31,21 +31,28 @@ const skillsData = [
 
 const SkillsStep: React.FC<SkillsStepProps> = ({ nextStep, previousStep }) => {
   const { setValue, watch } = useFormContext();
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const selectedSkill = watch('skills');
+  const selectedSkills: string[] = watch('skills') || [];
+  const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
 
   const handleSelect = (skillName: string, index: number) => {
-    setValue('skills', skillName);
-    setSelectedIndex(index);
-  };
+    let updatedSkills = [...selectedSkills];
+    let updatedIndexes = [...selectedIndexes];
 
-  useEffect(() => {
-    if (!selectedSkill) {
-      setValue('skills', skillsData[0].name);
+    if (updatedSkills.includes(skillName)) {
+      // If already selected, remove it
+      updatedSkills = updatedSkills.filter((s) => s !== skillName);
+      updatedIndexes = updatedIndexes.filter((i) => i !== index);
+    } else {
+      if (updatedSkills.length < 2) {
+        // Only allow adding if less than 2 skills are selected
+        updatedSkills.push(skillName);
+        updatedIndexes.push(index);
+      }
     }
-  }, [setValue, selectedSkill, skillsData]);
-
-  const currentSkill = skillsData[selectedIndex];
+    console.log(selectedSkills, 'skilllls');
+    setValue('skills', updatedSkills);
+    setSelectedIndexes(updatedIndexes);
+  };
 
   return (
     <motion.div
@@ -54,21 +61,11 @@ const SkillsStep: React.FC<SkillsStepProps> = ({ nextStep, previousStep }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <h2 className="mb-4 text-center text-2xl font-bold">Step 6: Choose Your Skill</h2>
+      <h2 className="mb-4 text-center text-2xl font-bold">Step 6: Choose Your Skills</h2>
       <p className="mb-6 text-center text-gray-600">
-        Select a skill that best represents your character's expertise.
+        Select <span className="font-bold">two</span> skills that best represent your character's
+        expertise.
       </p>
-
-      {/* Main Preview */}
-      <div className="flex flex-col items-center mb-6">
-        <div className="relative w-32 h-32 rounded-full bg-gray-100 flex items-center justify-center shadow-md">
-          <span className="text-4xl font-bold text-gray-700">{currentSkill.name.charAt(0)}</span>
-        </div>
-        <div className="mt-4 text-center">
-          <h3 className="text-xl font-semibold">{currentSkill.name}</h3>
-          <p className="text-sm text-gray-600">{currentSkill.description}</p>
-        </div>
-      </div>
 
       {/* Skills Grid */}
       <div className="grid grid-cols-4 gap-4">
@@ -80,7 +77,13 @@ const SkillsStep: React.FC<SkillsStepProps> = ({ nextStep, previousStep }) => {
           >
             <div
               className={`relative w-16 h-16 rounded-full flex items-center justify-center transition-all bg-gray-100 ${
-                index === selectedIndex ? 'border-4 border-blue-500' : 'border-2 border-transparent'
+                selectedIndexes.includes(index)
+                  ? 'border-4 border-blue-500'
+                  : 'border-2 border-transparent'
+              } ${
+                selectedSkills.length >= 2 && !selectedIndexes.includes(index)
+                  ? 'opacity-50 cursor-not-allowed'
+                  : 'cursor-pointer'
               }`}
             >
               <span className="text-xl font-bold text-gray-700">{skill.name.charAt(0)}</span>
@@ -95,7 +98,7 @@ const SkillsStep: React.FC<SkillsStepProps> = ({ nextStep, previousStep }) => {
         <Button type="button" onClick={previousStep}>
           Back
         </Button>
-        <Button type="button" onClick={nextStep} disabled={!selectedSkill}>
+        <Button type="button" onClick={nextStep} disabled={selectedSkills.length !== 2}>
           Next
         </Button>
       </div>
