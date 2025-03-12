@@ -5,15 +5,6 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import Link from 'next/link';
 import { routes } from '@/app/utils/routes';
-
-// shadcn UI components
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -52,74 +43,68 @@ const Register = () => {
       className="flex items-center justify-center min-h-screen bg-cover"
       style={{ backgroundImage: 'url(/assets/signup.png)' }}
     >
-      <Dialog open>
-        <DialogContent
-          className="max-w-sm p-6 space-y-4"
-          onInteractOutside={(e) => e.preventDefault()} // Prevent closing on outside click
-          onEscapeKeyDown={(e) => e.preventDefault()} // Prevent closing on ESC key
-        >
-          <DialogHeader>
-            <DialogTitle>Register</DialogTitle>
-          </DialogHeader>
+      <div className="bg-white p-6 max-w-sm w-full rounded shadow-md space-y-4">
+        <h2 className="text-xl font-bold text-center">Register</h2>
 
-          {errorMessage && (
-            <Alert variant="destructive">
-              <ExclamationTriangleIcon className="h-4 w-4" />
+        {errorMessage && (
+          <Alert variant="destructive" className="mb-4">
+            <ExclamationTriangleIcon className="h-4 w-4" />
+            <div>
               <AlertTitle>Error</AlertTitle>
               <AlertDescription>{errorMessage}</AlertDescription>
-            </Alert>
-          )}
+            </div>
+          </Alert>
+        )}
 
-          {showSuccess ? (
-            <Alert>
-              <CheckIcon className="h-4 w-4" />
+        {showSuccess ? (
+          <Alert className="mb-4">
+            <CheckIcon className="h-4 w-4" />
+            <div>
               <AlertTitle>Registration Successful!</AlertTitle>
               <AlertDescription>
                 Your account has been created. Click below to proceed to login.
               </AlertDescription>
-              <div className="mt-4">
-                <Link href={routes.login}>
-                  <Button className="w-full">Proceed to Login</Button>
-                </Link>
+            </div>
+            <div className="mt-4">
+              <Link href={routes.login}>
+                <Button className="w-full">Proceed to Login</Button>
+              </Link>
+            </div>
+          </Alert>
+        ) : (
+          <>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div className="flex flex-col space-y-1">
+                <Label htmlFor="username">Username</Label>
+                <Input
+                  id="username"
+                  type="text"
+                  {...registerUser('username', { required: true })}
+                />
+                {errors.username && <p className="text-red-500 text-sm">Username is required</p>}
               </div>
-            </Alert>
-          ) : (
-            <>
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                <div className="flex flex-col space-y-1">
-                  <Label htmlFor="username">Username</Label>
-                  <Input
-                    id="username"
-                    type="text"
-                    {...registerUser('username', { required: true })}
-                  />
-                  {errors.username && <p className="text-red-500 text-sm">Username is required</p>}
-                </div>
-                <div className="flex flex-col space-y-1">
-                  <Label htmlFor="password">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    {...registerUser('password', { required: true })}
-                  />
-                  {errors.password && <p className="text-red-500 text-sm">Password is required</p>}
-                </div>
-                <DialogFooter>
-                  <Button type="submit" className="w-full" disabled={isSubmitting}>
-                    {isSubmitting ? 'Registering...' : 'Register'}
-                  </Button>
-                </DialogFooter>
-              </form>
-              <p className="mt-4 text-center">
-                Already have an account?
-                <Link href={routes.login} className="text-blue-500 ml-2">
-                  Login
-                </Link>
-              </p>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
+              <div className="flex flex-col space-y-1">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  {...registerUser('password', { required: true })}
+                />
+                {errors.password && <p className="text-red-500 text-sm">Password is required</p>}
+              </div>
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
+                {isSubmitting ? 'Registering...' : 'Register'}
+              </Button>
+            </form>
+            <p className="text-center">
+              Already have an account?
+              <Link href={routes.login} className="text-blue-500 ml-2">
+                Login
+              </Link>
+            </p>
+          </>
+        )}
+      </div>
     </div>
   );
 };

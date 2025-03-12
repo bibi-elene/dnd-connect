@@ -19,7 +19,7 @@ import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu
 
 import { Button } from '@/components/ui/button';
 import { routes } from '@/app/utils/routes';
-import Link from 'next/link';
+import { useNavigate } from '@/app/utils/navigation';
 
 const application = [
   {
@@ -64,6 +64,7 @@ const info = [
 
 export function AppSidebar() {
   const { user, logout } = useContext(AuthContext);
+  const { goToLogin } = useNavigate();
 
   return (
     <Sidebar>
@@ -121,15 +122,17 @@ export function AppSidebar() {
             </DropdownMenuTrigger>
           </DropdownMenu>
           {user ? (
-            <Button variant="destructive" size="default" className="w-full mt-2" onClick={logout}>
-              Logout
-            </Button>
+            <SidebarMenuButton asChild onClick={logout}>
+              <a className="w-full justify-center danger-custom-button" href={routes.home}>
+                Logout
+              </a>
+            </SidebarMenuButton>
           ) : (
-            <Link href={routes.login} className="w-full mt-2">
-              <Button variant="default" size="default" className="w-full">
+            <SidebarMenuButton asChild>
+              <a href={routes.login} className="w-full justify-center secondary-custom-button">
                 Login
-              </Button>
-            </Link>
+              </a>
+            </SidebarMenuButton>
           )}
         </SidebarFooter>
       </SidebarContent>

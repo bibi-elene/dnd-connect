@@ -157,11 +157,11 @@ body {
 .secondary-custom-button {
   background: var(--button-secondary) !important;
   color: var(--button-secondary-text) !important;
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  padding: 0.8rem 1.6rem;
+  padding: 0.8rem 1.6rem !important;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition:
@@ -180,11 +180,11 @@ body {
 .danger-custom-button {
   background: var(--button-danger) !important;
   color: var(--button-danger-text) !important;
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: 600;
   padding: 0.8rem 1.6rem;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition:
