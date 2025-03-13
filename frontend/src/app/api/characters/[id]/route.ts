@@ -32,6 +32,10 @@ export async function GET(req: Request) {
         },
       }
     );
+    const characterData = response.data;
+    if (typeof characterData.abilityScores === 'string') {
+      characterData.abilityScores = JSON.parse(characterData.abilityScores);
+    }
 
     return NextResponse.json(response.data, { status: response.status });
   } catch (error: any) {
@@ -79,6 +83,9 @@ export async function PATCH(req: Request) {
         },
       }
     );
+    const characterData = response.data;
+
+    characterData.abilityScores = JSON.stringify(characterData.abilityScores);
 
     return NextResponse.json(response.data, { status: response.status });
   } catch (error: any) {

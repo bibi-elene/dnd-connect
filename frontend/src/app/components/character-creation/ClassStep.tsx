@@ -80,9 +80,9 @@ const ClassStep: React.FC<ClassStepProps> = ({ nextStep, previousStep }) => {
               <Image
                 src={currentClass.img}
                 alt={currentClass.name}
-                className="w-full h-full object-contain rounded-md"
-                width={100}
-                height={100}
+                className="w-full h-full object-cover"
+                width={200}
+                height={200}
               />
             </div>
             <div className="p-4 text-center">
@@ -111,7 +111,7 @@ const ClassStep: React.FC<ClassStepProps> = ({ nextStep, previousStep }) => {
                 <Image
                   src={cls.img}
                   alt={cls.name}
-                  className={`w-12 md:w-14 h-12 md:h-14 rounded-full object-contain transition-all ${
+                  className={`w-12 md:w-14 h-12 md:h-14 rounded-full object-cover transition-all ${
                     index === currentIndex
                       ? 'border-4 border-blue-500'
                       : 'border-2 border-transparent'

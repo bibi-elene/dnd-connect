@@ -7,12 +7,12 @@ import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-b
 import Loading from '@/app/components/widgets/Loading';
 import { CharacterFormInputs } from '@/app/utils/types';
 import Image from 'next/image';
-import ReturnButton from '@/app/components/widgets/ReturnButton';
 import { useNavigate } from '@/app/utils/navigation';
 import { apiRoutes } from '@/app/api/apiRoutes';
 import data from '@/app/data/data.json';
 import './EditCharacter.styles.scss';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
+import { MAX_SKILLS_ALLOWED } from '@/app/utils/constants';
 
 const EditCharacter = () => {
   const { id } = useParams();
@@ -21,6 +21,8 @@ const EditCharacter = () => {
     register,
     handleSubmit,
     setValue,
+    watch,
+    trigger,
     formState: { errors, isDirty },
   } = useForm<CharacterFormInputs>();
 
@@ -42,12 +44,11 @@ const EditCharacter = () => {
           credentials: 'include',
         });
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch character details');
-        }
+        if (!response.ok) throw new Error('Failed to fetch character details');
 
-        const data = await response.json();
-        Object.entries(data).forEach(([key, value]) => {
+        const characterData = await response.json();
+
+        Object.entries(characterData).forEach(([key, value]) => {
           if (key === 'image' && value) {
             const base64String = (value as string).split(',')[1];
             const byteCharacters = atob(base64String);
@@ -55,13 +56,15 @@ const EditCharacter = () => {
             const byteArray = new Uint8Array(byteNumbers);
             const blob = new Blob([byteArray], { type: 'image/jpeg' });
 
-            const file = new File([blob], 'character-image.jpg', {
-              type: 'image/jpeg',
-            });
+            const file = new File([blob], 'character-image.jpg', { type: 'image/jpeg' });
             setUploadedImage(file);
             setOriginalUploadedImage(file);
             const imageUrl = URL.createObjectURL(blob);
             setPreviewImage(imageUrl);
+          } else if (key === 'skills' && Array.isArray(value)) {
+            setValue('skills', value);
+          } else if (key === 'abilityScores') {
+            setValue('abilityScores', value as Record<string, number>);
           } else {
             setValue(key as keyof CharacterFormInputs, value as string);
           }
@@ -73,26 +76,21 @@ const EditCharacter = () => {
         setLoading(false);
       }
     };
-
     fetchCharacter();
   }, [id, setValue]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
     setFileError(null);
-
     const maxFileSize = 2 * 1024 * 1024; // 2MB
     setUploadedImage(file);
     if (file && file.size > maxFileSize) {
       setFileError('File size should not exceed 2MB.');
       return;
     }
-
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result as string);
-      };
+      reader.onloadend = () => setPreviewImage(reader.result as string);
       reader.readAsDataURL(file);
     } else {
       if (originalUploadedImage) {
@@ -109,8 +107,20 @@ const EditCharacter = () => {
     setLoadingEditSave(true);
     const formData = new FormData();
 
+    if (typeof data.skills === 'string') {
+      data.skills = (data.skills as string).split(',').map((s: any) => s.trim());
+    }
+
     Object.entries(data).forEach(([key, value]) => {
-      if (key !== 'id') formData.append(key, value);
+      if (key !== 'id') {
+        if (key === 'abilityScores' && typeof value === 'object') {
+          formData.append(key, JSON.stringify(value));
+        } else if (Array.isArray(value)) {
+          formData.append(key, `{${value.join(',')}}`);
+        } else {
+          formData.append(key, value as string);
+        }
+      }
     });
 
     if (uploadedImage) {
@@ -123,9 +133,7 @@ const EditCharacter = () => {
         body: formData,
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to update character');
-      }
+      if (!response.ok) throw new Error('Failed to update character');
 
       setSuccessMessage('Character updated successfully!');
       goToCharacters();
@@ -145,15 +153,13 @@ const EditCharacter = () => {
     );
   }
 
+  // Disable save if no changes or file error
   const isButtonDisabled = !!fileError || (!isDirty && uploadedImage === originalUploadedImage);
 
   return (
-    <Container fluid className="min-vh-100 p-4 d-flex align-items-center">
-      <Col xs="auto" className=" z-index-3">
-        <ReturnButton />
-      </Col>
-      <Row className="w-100 mt-5 pt-5 justify-content-center">
-        <Col md={6} lg={4} sm={8} className="mt-2">
+    <Container fluid className="min-vh-100 p-2 d-flex align-items-center">
+      <Row className="w-100 justify-content-center">
+        <Col xs={12} md={6} lg={5}>
           <Card className="shadow-lg">
             <Card.Body>
               <Card.Title className="text-center mb-2">Edit Character</Card.Title>
@@ -168,100 +174,178 @@ const EditCharacter = () => {
                 </Alert>
               )}
               <Form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-                <Form.Group className="mb-2">
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    isInvalid={!!errors.name}
-                    {...register('name', { required: true })}
-                  />
-                  <Form.Control.Feedback type="invalid">Name is required</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-2">
-                  <Form.Label>Class</Form.Label>
-                  <Form.Select
-                    isInvalid={!!errors.class}
-                    {...register('class', { required: true })}
-                  >
-                    <option value="">Select Class</option>
-                    {data.classes.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </Form.Select>
-                  <Form.Control.Feedback type="invalid">Class is required</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-2">
-                  <Form.Label>Race</Form.Label>
-                  <Form.Select isInvalid={!!errors.race} {...register('race', { required: true })}>
-                    <option value="">Select Race</option>
-                    {data.species.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </Form.Select>
-                  <Form.Control.Feedback type="invalid">Race is required</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-2">
-                  <Form.Label>Background</Form.Label>
-                  <Form.Select
-                    isInvalid={!!errors.background}
-                    {...register('background', { required: true })}
-                  >
-                    <option value="">Select Background</option>
-                    {data.characterBackgrounds.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </Form.Select>
-                  <Form.Control.Feedback type="invalid">
-                    Background is required
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-2">
-                  <Form.Label>Skills</Form.Label>
-                  <Form.Select
-                    isInvalid={!!errors.skills}
-                    {...register('skills', { required: true })}
-                  >
-                    <option value="">Select Skills</option>
-                    {data.characterSkills.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </Form.Select>
-                  <Form.Control.Feedback type="invalid">Skills are required</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-2">
-                  <Form.Label>Level</Form.Label>
-                  <Form.Control
-                    type="number"
-                    isInvalid={!!errors.level}
-                    {...register('level', { required: true, min: 1 })}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    Level is required and must be at least 1
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-2">
-                  <Form.Label>Upload Avatar</Form.Label>
-                  <Form.Control
-                    type="file"
-                    name="image"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    isInvalid={!!fileError}
-                  />
-                  {fileError && <div className="text-danger">{fileError}</div>}
-                </Form.Group>
+                <Row>
+                  <Col xs={12} sm={6}>
+                    <Form.Group className="mb-1">
+                      <Form.Label>Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        isInvalid={!!errors.name}
+                        {...register('name', { required: true })}
+                      />
+                      <Form.Control.Feedback type="invalid">Name is required</Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                  <Col xs={12} sm={6}>
+                    <Form.Group className="mb-1">
+                      <Form.Label>Class</Form.Label>
+                      <Form.Select
+                        isInvalid={!!errors.class}
+                        {...register('class', { required: true })}
+                      >
+                        <option value="">Select Class</option>
+                        {data.classes.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </Form.Select>
+                      <Form.Control.Feedback type="invalid">
+                        Class is required
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12} sm={6}>
+                    <Form.Group className="mb-1">
+                      <Form.Label>Race</Form.Label>
+                      <Form.Select
+                        isInvalid={!!errors.race}
+                        {...register('race', { required: true })}
+                      >
+                        <option value="">Select Race</option>
+                        {data.species.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </Form.Select>
+                      <Form.Control.Feedback type="invalid">Race is required</Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                  <Col xs={12} sm={6}>
+                    <Form.Group className="mb-1">
+                      <Form.Label>Background</Form.Label>
+                      <Form.Select
+                        isInvalid={!!errors.background}
+                        {...register('background', { required: true })}
+                      >
+                        <option value="">Select Background</option>
+                        {data.characterBackgrounds.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </Form.Select>
+                      <Form.Control.Feedback type="invalid">
+                        Background is required
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12}>
+                    <Form.Group className="mb-1">
+                      <Form.Label>Skills (Select up to 2)</Form.Label>
+                      <div className="d-flex flex-wrap gap-2">
+                        {data.characterSkills.map((skill) => (
+                          <Form.Check
+                            key={skill}
+                            type="checkbox"
+                            label={skill}
+                            value={skill}
+                            checked={watch('skills')?.includes(skill)}
+                            onChange={(e) => {
+                              let selectedSkills = watch('skills') || [];
+
+                              if (e.target.checked) {
+                                if (selectedSkills.length < MAX_SKILLS_ALLOWED) {
+                                  selectedSkills = [...selectedSkills, skill];
+                                }
+                              } else {
+                                selectedSkills = selectedSkills.filter((s) => s !== skill);
+                              }
+
+                              setValue('skills', selectedSkills, { shouldDirty: true });
+                              trigger('skills');
+                            }}
+                          />
+                        ))}
+                      </div>
+                      {errors.skills && <div className="text-danger">Select exactly 2 skills.</div>}
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12}>
+                    <Form.Group className="mb-1">
+                      <Form.Label>Ability Scores</Form.Label>
+                      <Row>
+                        {Object.keys(data.defaultAbilityScores).map((ability) => (
+                          <Col key={ability} xs={6}>
+                            <Form.Label className="mb-0">{ability}</Form.Label>
+                            <Form.Control
+                              type="number"
+                              min="1"
+                              max="30"
+                              defaultValue={
+                                watch(`abilityScores.${ability}`) ||
+                                data.defaultAbilityScores[
+                                  ability as keyof typeof data.defaultAbilityScores
+                                ]
+                              }
+                              isInvalid={
+                                !!errors.abilityScores?.[
+                                  ability as keyof typeof errors.abilityScores
+                                ]
+                              }
+                              {...register(`abilityScores.${ability}`, {
+                                required: false,
+                                min: 1,
+                                max: 30,
+                              })}
+                            />
+                          </Col>
+                        ))}
+                      </Row>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12}>
+                    <Form.Group className="mb-1">
+                      <Form.Label>Level</Form.Label>
+                      <Form.Control
+                        type="number"
+                        isInvalid={!!errors.level}
+                        {...register('level', { required: true, min: 1 })}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Level is required and must be at least 1
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12}>
+                    <Form.Group className="mb-1">
+                      <Form.Label>Upload Avatar</Form.Label>
+                      <Form.Control
+                        type="file"
+                        name="image"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        isInvalid={!!fileError}
+                      />
+                      {fileError && <div className="text-danger">{fileError}</div>}
+                    </Form.Group>
+                  </Col>
+                </Row>
                 <Button
                   type="submit"
                   disabled={isButtonDisabled}
-                  className="w-100 save-edit z-20 relative"
+                  className="w-100 save-edit mt-2"
                   variant={isButtonDisabled ? 'secondary' : 'primary'}
                 >
                   {loadingEditSave ? <Spinner animation="border" size="sm" /> : 'Save Changes'}
@@ -271,9 +355,9 @@ const EditCharacter = () => {
           </Card>
         </Col>
         {previewImage && (
-          <Col md={6} lg={4} sm={8} className="text-center mt-2">
-            <Card>
-              <Card.Body className="d-flex flex-column">
+          <Col xs={12} md={6} lg={4} className="mt-2">
+            <Card className="shadow-lg">
+              <Card.Body className="d-flex flex-column align-items-center">
                 <Card.Title>Character Preview</Card.Title>
                 <Image
                   src={previewImage}

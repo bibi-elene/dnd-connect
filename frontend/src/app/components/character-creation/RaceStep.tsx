@@ -45,7 +45,6 @@ const RaceStep: React.FC<RaceStepProps> = ({ nextStep }) => {
     if (!selectedRace) {
       setValue('race', speciesList[0].name);
     }
-    console.log(selectedRace);
   }, [setValue, selectedRace, speciesList]);
 
   return (
@@ -75,13 +74,13 @@ const RaceStep: React.FC<RaceStepProps> = ({ nextStep }) => {
             className="w-[200px] md:w-[340px] h-[320px] md:h-[380px] bg-white shadow-md border border-gray-200 flex flex-col overflow-hidden cursor-pointer"
             onClick={() => setIsModalOpen(true)}
           >
-            <div className="w-full h-3/4 bg-black flex items-center justify-center">
+            <div className="w-full h-3/4 flex items-center justify-center">
               <Image
                 src={currentRace.img}
                 alt={currentRace.name}
-                className="w-full h-full object-contain rounded-md"
-                width={100}
-                height={100}
+                className="w-full h-full object-cover"
+                width={200}
+                height={200}
               />
             </div>
             <div className="p-4 text-center">
@@ -110,7 +109,7 @@ const RaceStep: React.FC<RaceStepProps> = ({ nextStep }) => {
                 <Image
                   src={race.img}
                   alt={race.name}
-                  className={`w-12 md:w-14 h-12 md:h-14 bg-black rounded-full object-contain transition-all ${index === currentIndex ? 'border-4 border-blue-500' : 'border-2 border-transparent'}`}
+                  className={`w-12 md:w-14 h-12 md:h-14 bg-black rounded-full object-cover transition-all ${index === currentIndex ? 'border-4 border-blue-500' : 'border-2 border-transparent'}`}
                   width={100}
                   height={100}
                 />

@@ -3,7 +3,7 @@
     {
       "name": "Acolyte",
       "description": "You spent your life in service to a temple, learning the ways of the divine.",
-      "icon": "Church"
+      "icon": "HelpingHand"
     },
     {
       "name": "Charlatan",
@@ -13,17 +13,17 @@
     {
       "name": "Criminal",
       "description": "You have a history of breaking the law and thriving in the underworld of crime.",
-      "icon": "ForkKnife"
+      "icon": "Skull"
     },
     {
       "name": "Entertainer",
       "description": "You have delighted audiences with your performances, bringing joy to those who watch.",
-      "icon": "Music"
+      "icon": "VenetianMask"
     },
     {
       "name": "Folk Hero",
       "description": "A commoner who stood against tyranny and became a local legend.",
-      "icon": "Shield"
+      "icon": "UtensilsCrossed"
     },
     {
       "name": "Guild Artisan",
@@ -33,7 +33,7 @@
     {
       "name": "Hermit",
       "description": "You lived in seclusion for years, discovering profound truths and self-awareness.",
-      "icon": "Mountain"
+      "icon": "MountainSnow"
     },
     {
       "name": "Noble",
@@ -48,7 +48,7 @@
     {
       "name": "Sage",
       "description": "You are deeply knowledgeable, having spent years studying and researching.",
-      "icon": "BookOpen"
+      "icon": "BookOpenText"
     },
     {
       "name": "Sailor",

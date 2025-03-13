@@ -52,7 +52,7 @@ const AbilityScoresStep: React.FC<AbilityScoresStepProps> = ({ nextStep, previou
       </p>
 
       {/* Grid layout: 3 columns on md screens, stacking on smaller */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-4">
         {abilityScores.map(({ name }) => (
           <div key={name} className="flex flex-col items-center border rounded-md p-4">
             <span className="font-semibold mb-2">{name}</span>

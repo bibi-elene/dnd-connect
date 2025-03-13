@@ -53,7 +53,6 @@ const inter = Inter({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${montserrat.variable}`}>
-      <link rel="preload" as="image" href="/assets/tavern.jpg" />
       <body className="bg-[#0c1015]">
         <AuthProvider>
           <SidebarProvider defaultOpen={false}>

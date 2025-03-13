@@ -13,6 +13,8 @@ export const SUCCESS_CHAR_CREATE_MESSAGES = {
 
 export const MIN_LOADING_TIME = 500;
 
+export const MAX_SKILLS_ALLOWED = 2;
+
 // "metadata": {
 //   "avatars": {
 //     "Fighter": {

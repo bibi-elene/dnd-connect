@@ -7,7 +7,7 @@
         "Extra Skill: Gain proficiency in one extra skill.",
         "Flexible Stats: Distribute ability score bonuses as you like."
       ],
-      "img": "/assets/error.png"
+      "img": "/assets/human.jpeg"
     },
     {
       "name": "Elf",
@@ -16,7 +16,7 @@
         "Darkvision: See in dim light and darkness.",
         "Keen Senses: Proficiency in the Perception skill."
       ],
-      "img": "/assets/elf.jpg"
+      "img": "/assets/elf.png"
     },
     {
       "name": "Dwarf",
@@ -25,7 +25,7 @@
         "Dwarven Resilience: Resistance to poison.",
         "Stonecunning: Gain bonuses on stone-related knowledge."
       ],
-      "img": "/assets/dwarf.jpg"
+      "img": "/assets/dwarf.png"
     },
     {
       "name": "Halfling",
@@ -34,7 +34,7 @@
         "Lucky: Re-roll 1s on attack rolls, ability checks, and saving throws.",
         "Brave: Advantage on saving throws against fear."
       ],
-      "img": "/assets/halfling.jpg"
+      "img": "/assets/halfling.png"
     },
     {
       "name": "Dragonborn",
@@ -43,7 +43,7 @@
         "Breath Weapon: Exhale destructive energy.",
         "Damage Resistance: Resistance to specific damage types based on ancestry."
       ],
-      "img": "/assets/dragonborn.jpg"
+      "img": "/assets/dragonborn.png"
     },
     {
       "name": "Tiefling",
@@ -52,7 +52,7 @@
         "Infernal Legacy: Gain innate spellcasting abilities.",
         "Fire Resistance: Resist fire damage."
       ],
-      "img": "/assets/tiefling.jpg"
+      "img": "/assets/tiefling2.png"
     },
     {
       "name": "Half-Orc",
@@ -61,7 +61,7 @@
         "Relentless Endurance: Avoid death once per long rest.",
         "Savage Attacks: Deal extra damage on critical hits."
       ],
-      "img": "/assets/halforc.jpg"
+      "img": "/assets/half_orc.png"
     },
     {
       "name": "Gnome",
@@ -70,7 +70,7 @@
         "Gnome Cunning: Advantage on saving throws against magic.",
         "Artificer's Lore: Bonus to history checks on magical items."
       ],
-      "img": "/assets/gnome.jpg"
+      "img": "/assets/gnome.png"
     },
     {
       "name": "Half-Elf",
@@ -79,7 +79,7 @@
         "Fey Ancestry: Resistance to charm and immunity to magical sleep.",
         "Versatile Stats: Distribute bonuses to ability scores."
       ],
-      "img": "/assets/halfelf.jpg"
+      "img": "/assets/half_elf.png"
     }
   ]
 }
