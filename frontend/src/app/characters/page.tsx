@@ -26,7 +26,7 @@ const CharactersList = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-5xl">
         <ReturnButton />
         <div className="bg-white shadow-md rounded-lg p-6 mt-6">
@@ -38,7 +38,7 @@ const CharactersList = () => {
             <p className="text-center text-gray-500">No characters found.</p>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
+              <table className="hidden md:table w-full border-collapse">
                 <thead className="bg-gray-100">
                   <tr className="border-none">
                     <th className="p-3 text-left">Avatar</th>
@@ -79,6 +79,40 @@ const CharactersList = () => {
                   ))}
                 </tbody>
               </table>
+
+              {/* Mobile View: Card Layout */}
+              <div className="md:hidden flex flex-col gap-4">
+                {characters.map((character) => (
+                  <div
+                    key={character.id}
+                    className="bg-gray-100 p-4 rounded-lg mt-2 shadow-sm flex items-center justify-between"
+                  >
+                    <div className="flex items-center gap-4">
+                      {character.image && (
+                        <Image
+                          src={character.image}
+                          alt={character.name}
+                          width={50}
+                          height={50}
+                          className="rounded-full object-cover"
+                          loading="lazy"
+                        />
+                      )}
+                      <div>
+                        <p className="text-lg font-semibold">{character.name}</p>
+                        <p className="text-sm text-gray-600">
+                          <Badge variant="default" className="mr-2">
+                            {character.class}
+                          </Badge>
+                          <Badge variant="outline">{character.race}</Badge>
+                        </p>
+                        <p className="text-sm text-gray-500">Level {character.level}</p>
+                      </div>
+                    </div>
+                    <EditButton onEdit={() => goToCharacter(character.id)} />
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>

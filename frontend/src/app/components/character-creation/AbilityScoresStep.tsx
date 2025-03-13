@@ -61,7 +61,7 @@ const AbilityScoresStep: React.FC<AbilityScoresStepProps> = ({ nextStep, previou
               min="1"
               max="30"
               {...register(`abilityScores.${name.toLowerCase()}`, { valueAsNumber: true })}
-              className="w-16 border rounded px-2 py-1 text-center"
+              className="w-16 border rounded px-2 py-1 text-center bg-white"
             />
           </div>
         ))}

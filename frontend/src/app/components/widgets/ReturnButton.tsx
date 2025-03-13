@@ -28,7 +28,7 @@ const ReturnButton: React.FC<ReturnButtonProps> = ({
   return (
     <Container
       fluid
-      className={`fixed bottom-0 start-10 p-3 d-flex gap-2 ${className}`}
+      className={`fixed bottom-0 start-0 p-3 d-flex gap-2 ${className}`}
       style={{ zIndex: 15 }}
     >
       <button

@@ -15,6 +15,7 @@ import { useNavigate } from '@/app/utils/navigation';
 import { CharacterFormInputs } from '@/app/utils/types';
 import { SUCCESS_CHAR_CREATE_MESSAGES } from '@/app/utils/constants';
 import MessageDialog from '@/app/components/widgets/MessageDialog';
+import ReturnButton from '@/app/components/widgets/ReturnButton';
 
 const CreateCharacterWizard = () => {
   const methods = useForm({
@@ -83,6 +84,7 @@ const CreateCharacterWizard = () => {
         fluid
         className="d-flex flex-column justify-content-center bg-gradient-to-br from-blue-100 to-blue-200 p-0 h-100"
       >
+        <ReturnButton />
         <Card
           className="mx-auto my-2 w-100 h-100 bg-white shadow-lg"
           style={{ maxWidth: '900px', padding: '30px', borderRadius: '12px' }}

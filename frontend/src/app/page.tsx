@@ -10,6 +10,7 @@ import Testimonials from './components/landingPage/Testimonials';
 import FramerButton from './components/widgets/FramerButton';
 import './page.styles.scss';
 import DiceRoller from './components/DiceRoller/DiceRoller';
+import Footer from './components/landingPage/Footer';
 
 export default function Home() {
   const { loading } = useContext(AuthContext);
@@ -45,6 +46,7 @@ export default function Home() {
         <About />
         <Testimonials />
         <ReviewForm />
+        <Footer />
       </div>
     </section>
   );

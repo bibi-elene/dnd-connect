@@ -14,6 +14,7 @@ import './EditCharacter.styles.scss';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
 import { MAX_SKILLS_ALLOWED } from '@/app/utils/constants';
 import MessageDialog from '@/app/components/widgets/MessageDialog';
+import ReturnButton from '@/app/components/widgets/ReturnButton';
 
 const EditCharacter = () => {
   const { id } = useParams();
@@ -158,16 +159,17 @@ const EditCharacter = () => {
 
   return (
     <Container fluid className="min-vh-100 p-2 d-flex align-items-center">
+      <ReturnButton />
       <Row className="w-100 justify-content-center">
         <Col xs={12} md={6} lg={5}>
           <Card className="shadow-lg">
             <Card.Body>
-              <Card.Title className="text-center mb-2">Edit Character</Card.Title>
+              <Card.Title className="text-center mb-4">Edit Character</Card.Title>
               <Form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
                 <Row>
                   <Col xs={12} sm={6}>
-                    <Form.Group className="mb-1">
-                      <Form.Label>Name</Form.Label>
+                    <Form.Group className="mb-4">
+                      <Form.Label className="text-xl font-semibold">Name</Form.Label>
                       <Form.Control
                         type="text"
                         isInvalid={!!errors.name}
@@ -177,8 +179,8 @@ const EditCharacter = () => {
                     </Form.Group>
                   </Col>
                   <Col xs={12} sm={6}>
-                    <Form.Group className="mb-1">
-                      <Form.Label>Class</Form.Label>
+                    <Form.Group className="mb-4">
+                      <Form.Label className="text-xl font-semibold">Class</Form.Label>
                       <Form.Select
                         isInvalid={!!errors.class}
                         {...register('class', { required: true })}
@@ -198,8 +200,8 @@ const EditCharacter = () => {
                 </Row>
                 <Row>
                   <Col xs={12} sm={6}>
-                    <Form.Group className="mb-1">
-                      <Form.Label>Race</Form.Label>
+                    <Form.Group className="mb-4">
+                      <Form.Label className="text-xl font-semibold">Race</Form.Label>
                       <Form.Select
                         isInvalid={!!errors.race}
                         {...register('race', { required: true })}
@@ -215,8 +217,8 @@ const EditCharacter = () => {
                     </Form.Group>
                   </Col>
                   <Col xs={12} sm={6}>
-                    <Form.Group className="mb-1">
-                      <Form.Label>Background</Form.Label>
+                    <Form.Group className="mb-4">
+                      <Form.Label className="text-xl font-semibold">Background</Form.Label>
                       <Form.Select
                         isInvalid={!!errors.background}
                         {...register('background', { required: true })}
@@ -236,8 +238,10 @@ const EditCharacter = () => {
                 </Row>
                 <Row>
                   <Col xs={12}>
-                    <Form.Group className="mb-1">
-                      <Form.Label>Skills (Select up to 2)</Form.Label>
+                    <Form.Group className="mb-4">
+                      <Form.Label className="text-xl font-semibold">
+                        Skills (Select up to 2)
+                      </Form.Label>
                       <div className="d-flex flex-wrap gap-2">
                         {data.characterSkills.map((skill) => (
                           <Form.Check
@@ -246,6 +250,7 @@ const EditCharacter = () => {
                             label={skill}
                             value={skill}
                             checked={watch('skills')?.includes(skill)}
+                            className="text-xs"
                             onChange={(e) => {
                               let selectedSkills = watch('skills') || [];
 
@@ -269,12 +274,14 @@ const EditCharacter = () => {
                 </Row>
                 <Row>
                   <Col xs={12}>
-                    <Form.Group className="mb-1">
-                      <Form.Label>Ability Scores</Form.Label>
+                    <Form.Group className="mb-4">
+                      <Form.Label className="text-xl font-semibold">Ability Scores</Form.Label>
                       <Row>
                         {Object.keys(data.defaultAbilityScores).map((ability) => (
                           <Col key={ability} xs={6}>
-                            <Form.Label className="mb-0">{ability}</Form.Label>
+                            <Form.Label className="mb-0 text-xs">
+                              {ability.toUpperCase()}
+                            </Form.Label>
                             <Form.Control
                               type="number"
                               min="1"
@@ -304,8 +311,8 @@ const EditCharacter = () => {
                 </Row>
                 <Row>
                   <Col xs={12}>
-                    <Form.Group className="mb-1">
-                      <Form.Label>Level</Form.Label>
+                    <Form.Group className="mb-4">
+                      <Form.Label className="text-xl font-semibold">Level</Form.Label>
                       <Form.Control
                         type="number"
                         isInvalid={!!errors.level}
@@ -319,7 +326,7 @@ const EditCharacter = () => {
                 </Row>
                 <Row>
                   <Col xs={12}>
-                    <Form.Group className="mb-1">
+                    <Form.Group className="mb-4">
                       <Form.Label>Upload Avatar</Form.Label>
                       <Form.Control
                         type="file"

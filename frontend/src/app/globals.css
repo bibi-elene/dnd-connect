@@ -313,6 +313,7 @@ label {
 
 input {
   color: black;
+  background: white;
 }
 
 select {
