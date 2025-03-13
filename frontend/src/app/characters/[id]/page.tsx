@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Card, Form, Button, Spinner } from 'react-bootstrap';
 import Loading from '@/app/components/widgets/Loading';
 import { CharacterFormInputs } from '@/app/utils/types';
 import Image from 'next/image';
@@ -13,6 +13,7 @@ import data from '@/app/data/data.json';
 import './EditCharacter.styles.scss';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
 import { MAX_SKILLS_ALLOWED } from '@/app/utils/constants';
+import MessageDialog from '@/app/components/widgets/MessageDialog';
 
 const EditCharacter = () => {
   const { id } = useParams();
@@ -28,12 +29,13 @@ const EditCharacter = () => {
 
   const [loading, setLoading] = useState(true);
   const [loadingEditSave, setLoadingEditSave] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [originalUploadedImage, setOriginalUploadedImage] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
+
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [showErrorDialog, setShowErrorDialog] = useState(false);
 
   useEffect(() => {
     const fetchCharacter = async () => {
@@ -70,7 +72,7 @@ const EditCharacter = () => {
           }
         });
       } catch (error) {
-        setErrorMessage('Failed to load character details.');
+        setShowErrorDialog(true);
         console.error('Error:', error);
       } finally {
         setLoading(false);
@@ -135,11 +137,9 @@ const EditCharacter = () => {
 
       if (!response.ok) throw new Error('Failed to update character');
 
-      setSuccessMessage('Character updated successfully!');
-      goToCharacters();
+      setShowSuccessDialog(true);
     } catch (error) {
-      setErrorMessage('Failed to update character.');
-      console.error('Error:', error);
+      setShowErrorDialog(true);
     } finally {
       setLoadingEditSave(false);
     }
@@ -163,16 +163,6 @@ const EditCharacter = () => {
           <Card className="shadow-lg">
             <Card.Body>
               <Card.Title className="text-center mb-2">Edit Character</Card.Title>
-              {errorMessage && (
-                <Alert variant="danger" className="text-center">
-                  {errorMessage}
-                </Alert>
-              )}
-              {successMessage && (
-                <Alert variant="success" className="text-center">
-                  {successMessage}
-                </Alert>
-              )}
               <Form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
                 <Row>
                   <Col xs={12} sm={6}>
@@ -372,6 +362,25 @@ const EditCharacter = () => {
           </Col>
         )}
       </Row>
+
+      <MessageDialog
+        open={showSuccessDialog}
+        onClose={() => setShowSuccessDialog(false)}
+        title="Character Updated!"
+        message="Your character has been successfully updated."
+        buttonText="Return to Characters"
+        navigateTo={goToCharacters}
+        type="success"
+      />
+
+      <MessageDialog
+        open={showErrorDialog}
+        onClose={() => setShowErrorDialog(false)}
+        title="Error"
+        message="Failed to update character. Please try again."
+        buttonText="Close"
+        type="error"
+      />
     </Container>
   );
 };

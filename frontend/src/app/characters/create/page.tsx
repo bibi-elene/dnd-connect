@@ -13,9 +13,8 @@ import NameAndAvatarStep from '@/app/components/character-creation/NameAndAvatar
 import { apiRoutes } from '@/app/api/apiRoutes';
 import { useNavigate } from '@/app/utils/navigation';
 import { CharacterFormInputs } from '@/app/utils/types';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { SUCCESS_CHAR_CREATE_MESSAGES } from '@/app/utils/constants';
+import MessageDialog from '@/app/components/widgets/MessageDialog';
 
 const CreateCharacterWizard = () => {
   const methods = useForm({
@@ -100,40 +99,25 @@ const CreateCharacterWizard = () => {
             </StepWizard>
           </form>
           {loading && <div className="mt-3 text-center">Loading...</div>}
-          {errorMessage && (
-            <Dialog open={true} onOpenChange={() => {}}>
-              <DialogContent className="max-w-md">
-                <DialogHeader>
-                  <DialogTitle className="text-xl font-bold">Error</DialogTitle>
-                </DialogHeader>
-                <div className="flex flex-col items-center gap-4">
-                  <p className="text-sm text-gray-700 text-center">{errorMessage}</p>
-                  <Button className="w-full" onClick={() => setErrorMessage('')}>
-                    Close
-                  </Button>
-                </div>
-              </DialogContent>
-            </Dialog>
-          )}
-          {success && (
-            <Dialog open={true} onOpenChange={() => {}}>
-              <DialogContent className="max-w-md">
-                <DialogHeader>
-                  <DialogTitle className="text-xl font-bold">
-                    {SUCCESS_CHAR_CREATE_MESSAGES.TITLE}
-                  </DialogTitle>
-                </DialogHeader>
-                <div className="flex flex-col items-center gap-4">
-                  <p className="text-sm text-gray-700 text-center">
-                    {SUCCESS_CHAR_CREATE_MESSAGES.DESCRIPTION}
-                  </p>
-                  <Button className="w-full" onClick={() => goToDashboard()}>
-                    Return to Dashboard
-                  </Button>
-                </div>
-              </DialogContent>
-            </Dialog>
-          )}
+
+          <MessageDialog
+            open={success}
+            onClose={() => setSuccess(false)}
+            title={SUCCESS_CHAR_CREATE_MESSAGES.TITLE}
+            message={SUCCESS_CHAR_CREATE_MESSAGES.DESCRIPTION}
+            buttonText="Return to Dashboard"
+            navigateTo={goToDashboard}
+            type="success"
+          />
+
+          <MessageDialog
+            open={!!errorMessage}
+            onClose={() => setErrorMessage('')}
+            title="Error"
+            message="Failed to create character. Please try again."
+            buttonText="Close"
+            type="error"
+          />
         </Card>
       </Container>
     </FormProvider>
