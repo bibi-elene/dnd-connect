@@ -134,7 +134,7 @@ const EditUser = () => {
         <Button
           type="submit"
           disabled={!isDirty}
-          className={`w-full py-2 rounded text-white
+          className={`w-full py-2 rounded text-white z-25 p-relative
           }`}
           variant="default"
         >

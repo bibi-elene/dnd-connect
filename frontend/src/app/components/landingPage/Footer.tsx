@@ -41,7 +41,7 @@ const Footer = () => {
 
         {/* Credits */}
         <p className="text-xs opacity-70 mt-4 md:mt-0">
-          © {new Date().getFullYear()} Your Name. All rights reserved.
+          © {new Date().getFullYear()} All rights reserved.
         </p>
       </div>
     </footer>

@@ -5,7 +5,6 @@ import { useFormContext } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import data from '@/app/data/metadata/classes.json';
 import Image from 'next/image';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
@@ -16,18 +15,61 @@ interface ClassStepProps {
 
 const ClassStep: React.FC<ClassStepProps> = ({ nextStep, previousStep }) => {
   const { setValue, watch } = useFormContext();
+  const [classesList, setClassesList] = useState<any[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   const selectedClass = watch('class');
 
-  const classesList = data.classes;
+  // 🚀 Fetch class data from API AFTER page transition
+  useEffect(() => {
+    const fetchClasses = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch('/api/classes');
+        const data = await response.json();
+        setClassesList(data.classes);
+      } catch (error) {
+        console.error('Error fetching class data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchClasses();
+  }, []);
+
+  useEffect(() => {
+    if (classesList.length > 0 && !selectedClass) {
+      setValue('class', classesList[0].name);
+    }
+  }, [setValue, selectedClass, classesList]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-center text-xl font-semibold">Loading classes...</p>
+      </div>
+    );
+  }
+
+  if (classesList.length === 0) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-center text-xl font-semibold text-red-500">
+          Error: No class data available.
+        </p>
+      </div>
+    );
+  }
+
   const currentClass = classesList[currentIndex];
 
   const handleSelect = (className: string) => {
     setValue('class', className);
   };
 
-  const handleSwipe = (direction: string) => {
+  const handleSwipe = (direction: 'left' | 'right') => {
     const newIndex =
       direction === 'left'
         ? (currentIndex + 1) % classesList.length
@@ -41,12 +83,6 @@ const ClassStep: React.FC<ClassStepProps> = ({ nextStep, previousStep }) => {
     setCurrentIndex(index);
     handleSelect(classesList[index].name);
   };
-
-  useEffect(() => {
-    if (!selectedClass) {
-      setValue('class', classesList[0].name);
-    }
-  }, [setValue, selectedClass, classesList]);
 
   return (
     <motion.div
@@ -83,6 +119,7 @@ const ClassStep: React.FC<ClassStepProps> = ({ nextStep, previousStep }) => {
                 className="w-full h-full object-cover"
                 width={200}
                 height={200}
+                loading="lazy"
               />
             </div>
             <div className="p-4 text-center">
@@ -118,6 +155,7 @@ const ClassStep: React.FC<ClassStepProps> = ({ nextStep, previousStep }) => {
                   }`}
                   width={100}
                   height={100}
+                  loading="lazy"
                 />
                 <span className="mt-1 text-xs text-gray-700">{cls.name}</span>
               </div>
@@ -147,6 +185,7 @@ const ClassStep: React.FC<ClassStepProps> = ({ nextStep, previousStep }) => {
               className="w-32 h-32 object-contain rounded-md"
               width={100}
               height={100}
+              loading="lazy"
             />
             <p className="text-sm text-gray-700 text-center">{currentClass.description}</p>
           </div>

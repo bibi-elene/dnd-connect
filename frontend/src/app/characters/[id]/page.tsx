@@ -2,10 +2,11 @@
 
 import { useForm } from 'react-hook-form';
 import { useParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Form, Button, Spinner } from 'react-bootstrap';
+import { useState, useEffect, useContext } from 'react';
+import { Container, Row, Col, Card, Form, Spinner } from 'react-bootstrap';
+import { Button } from '@/components/ui/button';
 import Loading from '@/app/components/widgets/Loading';
-import { CharacterFormInputs } from '@/app/utils/types';
+import { CharacterFormInputs, Character } from '@/app/utils/types';
 import Image from 'next/image';
 import { useNavigate } from '@/app/utils/navigation';
 import { apiRoutes } from '@/app/api/apiRoutes';
@@ -15,6 +16,7 @@ import ProtectedRoute from '@/app/components/ProtectedRoute';
 import { MAX_SKILLS_ALLOWED } from '@/app/utils/constants';
 import MessageDialog from '@/app/components/widgets/MessageDialog';
 import ReturnButton from '@/app/components/widgets/ReturnButton';
+import { CharactersContext } from '@/app/context/CharactersContext';
 
 const EditCharacter = () => {
   const { id } = useParams();
@@ -28,30 +30,22 @@ const EditCharacter = () => {
     formState: { errors, isDirty },
   } = useForm<CharacterFormInputs>();
 
-  const [loading, setLoading] = useState(true);
   const [loadingEditSave, setLoadingEditSave] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [originalUploadedImage, setOriginalUploadedImage] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
+  const { fetchCharacterById, refetchCharacters, loading } = useContext(CharactersContext);
 
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [showErrorDialog, setShowErrorDialog] = useState(false);
 
   useEffect(() => {
     const fetchCharacter = async () => {
-      setLoading(true);
       try {
-        const response = await fetch(apiRoutes.characters.character(Number(id)), {
-          method: 'GET',
-          credentials: 'include',
-        });
+        const characterData = await fetchCharacterById(id);
 
-        if (!response.ok) throw new Error('Failed to fetch character details');
-
-        const characterData = await response.json();
-
-        Object.entries(characterData).forEach(([key, value]) => {
+        Object.entries(characterData as Character).forEach(([key, value]) => {
           if (key === 'image' && value) {
             const base64String = (value as string).split(',')[1];
             const byteCharacters = atob(base64String);
@@ -75,8 +69,6 @@ const EditCharacter = () => {
       } catch (error) {
         setShowErrorDialog(true);
         console.error('Error:', error);
-      } finally {
-        setLoading(false);
       }
     };
     fetchCharacter();
@@ -138,6 +130,7 @@ const EditCharacter = () => {
 
       if (!response.ok) throw new Error('Failed to update character');
 
+      await refetchCharacters();
       setShowSuccessDialog(true);
     } catch (error) {
       setShowErrorDialog(true);
@@ -146,19 +139,16 @@ const EditCharacter = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <Container fluid className="vh-100 d-flex align-items-center justify-content-center">
-        <Loading message="Loading character details..." size="lg" />
-      </Container>
-    );
-  }
-
   // Disable save if no changes or file error
   const isButtonDisabled = !!fileError || (!isDirty && uploadedImage === originalUploadedImage);
 
   return (
     <Container fluid className="min-vh-100 p-2 d-flex align-items-center">
+      {loading && (
+        <div className="vh-100 d-flex absolute top-[20%] left-[50%] bg-transparent z-100">
+          <Loading message="Please wait..." size="lg" />
+        </div>
+      )}
       <ReturnButton />
       <Row className="w-100 justify-content-center">
         <Col xs={12} md={6} lg={5}>
@@ -342,8 +332,7 @@ const EditCharacter = () => {
                 <Button
                   type="submit"
                   disabled={isButtonDisabled}
-                  className="w-100 save-edit mt-2"
-                  variant={isButtonDisabled ? 'secondary' : 'primary'}
+                  className="w-100 save-edit mt-2 z-20 relative"
                 >
                   {loadingEditSave ? <Spinner animation="border" size="sm" /> : 'Save Changes'}
                 </Button>

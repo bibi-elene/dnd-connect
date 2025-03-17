@@ -19,9 +19,15 @@ import {
 import { routes } from '@/app/utils/routes';
 import { ROLES } from '@/app/utils/constants';
 import { admin_section, application, dnd_info, user_section } from '@/app/data/sidebar-content';
+import { Button } from './button';
 
 export function AppSidebar() {
   const { user, logout } = useContext(AuthContext);
+
+  const handleLogout = async () => {
+    await logout();
+    window.location.href = routes.home;
+  };
 
   const accountSection = [
     ...(user?.role === ROLES.ADMIN ? admin_section : user_section),
@@ -95,14 +101,21 @@ export function AppSidebar() {
             </div>
           </div>
           {user ? (
-            <SidebarMenuButton asChild onClick={logout}>
-              <a className="w-full justify-center danger-custom-button" href={routes.home}>
-                Logout
-              </a>
-            </SidebarMenuButton>
+            <Button
+              variant="destructive"
+              onClick={handleLogout}
+              type="button"
+              data-testId="sidebar-logout-button"
+            >
+              Logout
+            </Button>
           ) : (
             <SidebarMenuButton asChild>
-              <a href={routes.login} className="w-full justify-center secondary-custom-button">
+              <a
+                href={routes.login}
+                className="w-full justify-center secondary-custom-button"
+                data-testId="sidebar-login-button"
+              >
                 Login
               </a>
             </SidebarMenuButton>

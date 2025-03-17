@@ -20,13 +20,13 @@ const Roadmap = () => {
               <strong>Frontend:</strong> Next.js (React, TypeScript, Tailwind CSS, ShadCN UI)
             </li>
             <li>
-              <strong>State Management:</strong> React Hook Form for form handling
+              <strong>State Management:</strong> Context API, React Hook Form for form handling
             </li>
             <li>
               <strong>Backend:</strong> Nest.js with PostgreSQL & TypeORM
             </li>
             <li>
-              <strong>Authentication:</strong> JWT & Protected Routes
+              <strong>Authentication:</strong> JWT & Role Based Authentication & Protected Routes
             </li>
             <li>
               <strong>Real-Time Features:</strong> Socket.io (Chat & Live Updates)
@@ -63,10 +63,13 @@ const Roadmap = () => {
               💬 <strong>Live Chat:</strong> Real-time chat using Socket.io
             </li>
             <li>
-              📂 <strong>Profile & Dashboard:</strong> View, edit, and manage characters
+              🎲 <strong>Dice Roller:</strong> In-app dice rolls
             </li>
             <li>
-              🔐 <strong>Authentication:</strong> JWT-based login & protected routes
+              📂 <strong>Profile & Dashboard:</strong> View, edit, delete and manage characters
+            </li>
+            <li>
+              🔐 <strong>Authentication:</strong> JWT-based based login & protected routes
             </li>
             <li>
               📊 <strong>Interactive UI:</strong> Smooth animations & responsive design
@@ -104,7 +107,7 @@ const Roadmap = () => {
 
           <div>
             This project was created with sole purpose of having a digital app for a famous Board
-            Game - Dungeons and Dragons. Most ima
+            Game - Dungeons and Dragons
           </div>
         </CardContent>
       </Card>

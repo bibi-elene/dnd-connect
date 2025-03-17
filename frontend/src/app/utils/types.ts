@@ -1,7 +1,7 @@
 // regex to remove comments: \/\*.*?\*\/
 // regex to capture jsx comments: \{\s*\/\*.*?\*\/\s*\}
 export interface Character {
-  id: number;
+  id: any;
   name: string;
   class: string;
   level: number;

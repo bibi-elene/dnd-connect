@@ -45,7 +45,7 @@ const AccountSettings: React.FC = () => {
   });
 
   const { handleSubmit, formState, reset } = form;
-  const { errors, isDirty } = formState;
+  const { isDirty } = formState;
 
   useEffect(() => {
     const fetchUserProfile = async () => {

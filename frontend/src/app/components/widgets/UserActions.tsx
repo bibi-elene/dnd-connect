@@ -1,60 +1,18 @@
-import { useState } from 'react';
+import { AuthContext } from '@/app/context/AuthContext';
+import { useNavigate } from '@/app/utils/navigation';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
-import { MIN_LOADING_TIME } from '@/app/utils/constants';
+import { useContext } from 'react';
 
-interface UserActionProps {
-  onViewAll: () => Promise<void> | void; // Supports async functions
-  onCreate?: () => Promise<void> | void;
-}
-
-const UserActions: React.FC<UserActionProps> = ({ onViewAll, onCreate }) => {
-  const [loading, setLoading] = useState<{ viewAll: boolean; create: boolean }>({
-    viewAll: false,
-    create: false,
-  });
-
-  const handleClick = async (
-    action: 'viewAll' | 'create',
-    callback?: () => Promise<void> | void
-  ) => {
-    if (!callback) return;
-    setLoading((prev) => ({ ...prev, [action]: true }));
-
-    const startTime = Date.now();
-
-    try {
-      await callback();
-    } finally {
-      const elapsedTime = Date.now() - startTime;
-      const remainingTime = MIN_LOADING_TIME - elapsedTime;
-
-      setTimeout(
-        () => setLoading((prev) => ({ ...prev, [action]: false })),
-        remainingTime > 0 ? remainingTime : 0
-      );
-    }
-  };
+const UserActions: React.FC = () => {
+  const { loading } = useContext(AuthContext);
+  const { goToUsers } = useNavigate();
 
   return (
     <div className="flex gap-2 mb-5">
-      <Button
-        variant="outline"
-        onClick={() => handleClick('viewAll', onViewAll)}
-        disabled={loading.viewAll}
-      >
-        {loading.viewAll ? <Loader2 className="w-4 h-4 animate-spin" /> : 'View All Users'}
+      <Button variant="outline" onClick={goToUsers} disabled={loading}>
+        {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'View All Users'}
       </Button>
-
-      {onCreate && (
-        <Button
-          variant="default"
-          onClick={() => handleClick('create', onCreate)}
-          disabled={loading.create}
-        >
-          {loading.create ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Create New User'}
-        </Button>
-      )}
     </div>
   );
 };

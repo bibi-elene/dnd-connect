@@ -29,7 +29,7 @@ const ReturnButton: React.FC<ReturnButtonProps> = ({
     <Container
       fluid
       className={`fixed bottom-0 start-0 p-3 d-flex gap-2 ${className}`}
-      style={{ zIndex: 15 }}
+      style={{ zIndex: 1 }}
     >
       <button
         onClick={handleBack}
@@ -54,7 +54,7 @@ const ReturnButton: React.FC<ReturnButtonProps> = ({
       {withDashboardButton && (
         <button
           onClick={goToDashboard}
-          className="relative overflow-hidden px-4 py-2 text-sm font-bold text-white bg-transparent border-2 border-white/40 rounded-md transition-all duration-300 group hover:border-white"
+          className="z-50 relative overflow-hidden px-4 py-2 text-sm font-bold text-white bg-transparent border-2 border-white/40 rounded-md transition-all duration-300 group hover:border-white"
         ></button>
       )}
     </Container>

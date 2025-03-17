@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import data from '@/app/data/metadata/species.json';
 import Image from 'next/image';
 
 interface RaceStepProps {
@@ -15,11 +14,54 @@ interface RaceStepProps {
 
 const RaceStep: React.FC<RaceStepProps> = ({ nextStep }) => {
   const { setValue, watch } = useFormContext();
+  const [speciesList, setSpeciesList] = useState<any[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   const selectedRace = watch('race');
 
-  const speciesList = Object.values(data.species);
+  // Fetch species data dynamically
+  useEffect(() => {
+    const fetchSpecies = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch('/api/species');
+        const data = await response.json();
+        setSpeciesList(data.species);
+      } catch (error) {
+        console.error('Error fetching species data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSpecies();
+  }, []);
+
+  useEffect(() => {
+    if (speciesList.length > 0 && !selectedRace) {
+      setValue('race', speciesList[0].name);
+    }
+  }, [setValue, selectedRace, speciesList]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-center text-xl font-semibold">Loading species...</p>
+      </div>
+    );
+  }
+
+  if (speciesList.length === 0) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-center text-xl font-semibold text-red-500">
+          Error: No species data available.
+        </p>
+      </div>
+    );
+  }
+
   const currentRace = speciesList[currentIndex];
 
   const handleSelect = (raceName: string) => {
@@ -40,12 +82,6 @@ const RaceStep: React.FC<RaceStepProps> = ({ nextStep }) => {
     setCurrentIndex(index);
     handleSelect(speciesList[index].name);
   };
-
-  useEffect(() => {
-    if (!selectedRace) {
-      setValue('race', speciesList[0].name);
-    }
-  }, [setValue, selectedRace, speciesList]);
 
   return (
     <motion.div
@@ -81,6 +117,7 @@ const RaceStep: React.FC<RaceStepProps> = ({ nextStep }) => {
                 className="w-full h-full object-cover"
                 width={200}
                 height={200}
+                loading="lazy"
               />
             </div>
             <div className="p-4 text-center">
@@ -112,6 +149,7 @@ const RaceStep: React.FC<RaceStepProps> = ({ nextStep }) => {
                   className={`w-12 md:w-14 h-12 md:h-14 bg-black rounded-full object-cover transition-all ${index === currentIndex ? 'border-4 border-blue-500' : 'border-2 border-transparent'}`}
                   width={100}
                   height={100}
+                  loading="lazy"
                 />
                 <span className="mt-1 text-xs text-gray-700">{race.name}</span>
               </div>
@@ -138,6 +176,7 @@ const RaceStep: React.FC<RaceStepProps> = ({ nextStep }) => {
               className="w-32 h-32 object-contain rounded-md"
               width={100}
               height={100}
+              loading="lazy"
             />
             <p className="text-sm text-gray-700 text-center">{currentRace.description}</p>
           </div>

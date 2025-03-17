@@ -80,3 +80,73 @@ export async function PATCH(req: Request) {
     );
   }
 }
+
+export async function DELETE(req: Request) {
+  const cookieHeader = req.headers.get('cookie');
+
+  try {
+    if (!cookieHeader) {
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    }
+
+    const cookies = parse(cookieHeader);
+    const accessToken = cookies['access_token'];
+
+    const url = new URL(req.url);
+    const id = url.pathname.split('/').pop();
+
+    if (!id) {
+      return NextResponse.json({ message: 'User ID is required' }, { status: 400 });
+    }
+
+    // Fetch current user to check their role
+    const userResponse = await axios.get(`${API_BASE_URL}${endpoints.users.me}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    const currentUser = userResponse.data;
+
+    if (currentUser.role !== 'admin') {
+      return NextResponse.json(
+        { message: 'Forbidden: Only admins can delete users' },
+        { status: 403 }
+      );
+    }
+
+    // Fetch the target user to check if they're an admin
+    const targetUserResponse = await axios.get(
+      `${API_BASE_URL}${endpoints.users.user(Number(id))}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    const targetUser = targetUserResponse.data;
+
+    if (targetUser.role === 'admin') {
+      return NextResponse.json(
+        { message: 'Forbidden: Cannot delete other admins' },
+        { status: 403 }
+      );
+    }
+
+    // Proceed with deletion
+    await axios.delete(`${API_BASE_URL}${endpoints.users.user(Number(id))}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    return NextResponse.json({ message: 'User deleted successfully' }, { status: 200 });
+  } catch (error: any) {
+    console.error('Error deleting user:', error?.message || error);
+    return NextResponse.json(
+      { message: error.response?.data || 'Error deleting user' },
+      { status: error.response?.status || 500 }
+    );
+  }
+}

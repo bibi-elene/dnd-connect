@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import StepWizard from 'react-step-wizard';
 import { Container, Card } from 'react-bootstrap';
@@ -16,6 +16,7 @@ import { CharacterFormInputs } from '@/app/utils/types';
 import { SUCCESS_CHAR_CREATE_MESSAGES } from '@/app/utils/constants';
 import MessageDialog from '@/app/components/widgets/MessageDialog';
 import ReturnButton from '@/app/components/widgets/ReturnButton';
+import { CharactersContext } from '@/app/context/CharactersContext';
 
 const CreateCharacterWizard = () => {
   const methods = useForm({
@@ -42,6 +43,7 @@ const CreateCharacterWizard = () => {
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const { goToDashboard } = useNavigate();
+  const { refetchCharacters } = useContext(CharactersContext);
 
   const onSubmit = async (data: CharacterFormInputs) => {
     setLoading(true);
@@ -69,6 +71,7 @@ const CreateCharacterWizard = () => {
         throw new Error('Failed to create character');
       }
 
+      await refetchCharacters();
       setSuccess(true);
     } catch (error) {
       setErrorMessage('Failed to create character.');

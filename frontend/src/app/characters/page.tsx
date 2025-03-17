@@ -7,15 +7,15 @@ import Loading from '../components/widgets/Loading';
 import Image from 'next/image';
 import ReturnButton from '../components/widgets/ReturnButton';
 import { useNavigate } from '../utils/navigation';
-import { useFetchCharacters } from '../hooks/useFetchCharacters';
 import EditButton from '../components/widgets/EditButton';
 import { Badge } from '@/components/ui/badge';
+import { CharactersContext } from '../context/CharactersContext';
 
 const CharactersList = () => {
   const { user } = useContext(AuthContext);
   const [errorMessage] = useState('');
   const { goToCharacter } = useNavigate();
-  const { characters, loading } = useFetchCharacters(user);
+  const { characters, loading } = useContext(CharactersContext);
 
   if (!user || loading) {
     return (

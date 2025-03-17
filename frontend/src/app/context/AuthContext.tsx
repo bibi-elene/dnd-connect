@@ -11,16 +11,16 @@ interface AuthContextType {
   loading: boolean;
   login: (username: string, password: string) => Promise<void>;
   register: (username: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType>({
   user: null,
   setUser: () => {},
-  loading: true,
+  loading: false,
   login: async () => {},
   register: async () => {},
-  logout: () => {},
+  logout: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const fetchUser = async () => {
+      setLoading(true);
       try {
         const response = await fetch(apiRoutes.users.me);
         if (response.ok) {
@@ -50,25 +51,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = async (username: string, password: string) => {
+    setLoading(true);
     try {
       const response = await fetch(apiRoutes.auth.login, {
         method: 'POST',
         credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
 
       if (!response.ok) {
         const errorResponse = await response.json();
-        throw new Error(
-          errorResponse.message.message || 'Failed to log in. Please try again later.'
-        );
+        throw new Error(errorResponse.message?.message || 'Failed to log in.');
       }
 
       const userResponse = await fetch(apiRoutes.users.me);
-
       if (userResponse.ok) {
         const userData = await userResponse.json();
         setUser(userData);
@@ -77,30 +74,34 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (error: any) {
       console.error('Login error:', error);
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
   const register = async (username: string, password: string) => {
+    setLoading(true);
     try {
       const response = await fetch(apiRoutes.auth.register, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message.message || 'Failed to register');
+        throw new Error(errorData.message?.message || 'Failed to register');
       }
     } catch (error) {
       console.error('Registration error:', error);
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
   const logout = async () => {
+    setLoading(true);
     try {
       const response = await fetch(apiRoutes.auth.logout, {
         method: 'POST',
@@ -115,18 +116,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     } catch (error) {
       console.error('Logout error:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const contextValue = useMemo(
-    () => ({
-      user,
-      setUser,
-      loading,
-      login,
-      register,
-      logout,
-    }),
+    () => ({ user, setUser, loading, login, register, logout }),
     [user, loading]
   );
 

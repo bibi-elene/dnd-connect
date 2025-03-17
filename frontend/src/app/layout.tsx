@@ -5,6 +5,8 @@ import type { Metadata } from 'next';
 import { Montserrat, Inter } from 'next/font/google';
 import { SidebarProvider, Sidebar, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/ui/app-sidebar';
+import { CharactersProvider } from './context/CharactersContext';
+import { UsersProvider } from './context/UsersContext';
 
 export const metadata: Metadata = {
   title: 'D&D Connect',
@@ -55,15 +57,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${inter.variable} ${montserrat.variable}`}>
       <body className="bg-[#0c1015]">
         <AuthProvider>
-          <SidebarProvider defaultOpen={false}>
-            <div className="relative flex min-h-screen">
-              <Sidebar collapsible="offcanvas">
-                <AppSidebar />
-              </Sidebar>
-              <SidebarTrigger />
-              <div className="relative z-10 flex-1">{children}</div>
-            </div>
-          </SidebarProvider>
+          <CharactersProvider>
+            <UsersProvider>
+              <SidebarProvider defaultOpen={false}>
+                <div className="relative flex min-h-screen">
+                  <Sidebar collapsible="offcanvas">
+                    <AppSidebar />
+                  </Sidebar>
+                  <SidebarTrigger className="absolute top-4 left-4 z-50" />
+                  <div className="relative z-10 flex-1">{children}</div>
+                </div>
+              </SidebarProvider>
+            </UsersProvider>
+          </CharactersProvider>
         </AuthProvider>
       </body>
     </html>

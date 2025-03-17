@@ -11,6 +11,7 @@ import FramerButton from './components/widgets/FramerButton';
 import './page.styles.scss';
 import DiceRoller from './components/DiceRoller/DiceRoller';
 import Footer from './components/landingPage/Footer';
+import WhoAmI from './components/landingPage/WhoAmI';
 
 export default function Home() {
   const { loading } = useContext(AuthContext);
@@ -24,7 +25,15 @@ export default function Home() {
   }
 
   return (
-    <section className="relative">
+    <section
+      className="relative"
+      style={{
+        backgroundImage: `url('/assets/topography.svg')`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+      }}
+    >
       <div>
         <DiceRoller />
         <div className="flex items-center min-h-[85vh] relative">
@@ -43,6 +52,7 @@ export default function Home() {
             </Row>
           </Container>
         </div>
+        <WhoAmI />
         <About />
         <Testimonials />
         <ReviewForm />

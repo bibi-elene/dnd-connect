@@ -2,6 +2,7 @@ export const routes = {
   home: '/',
   dashboard: '/dashboard',
   chat: '/chat',
+  roadmap: '/roadmap',
   login: '/auth/login',
   register: '/auth/register',
   characters: '/characters',

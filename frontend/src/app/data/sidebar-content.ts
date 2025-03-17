@@ -7,6 +7,7 @@ import {
   Castle,
   PersonStanding,
   Users,
+  Smile,
 } from 'lucide-react';
 import { routes } from '@/app/utils/routes';
 
@@ -20,6 +21,7 @@ export const application = [
 export const dnd_info = [
   { title: 'Character Classes', url: routes.characterClasses, icon: Swords },
   { title: 'Character Races', url: routes.characterRaces, icon: Castle },
+  { title: 'Project Roadmap', url: routes.roadmap, icon: Smile },
 ];
 
 export const user_section = [{ title: 'Characters', url: routes.characters, icon: PersonStanding }];

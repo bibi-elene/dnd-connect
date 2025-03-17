@@ -9,6 +9,7 @@ import {
   UseGuards,
   Request,
   UnauthorizedException,
+  Delete,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
@@ -52,5 +53,10 @@ export class UserController {
   @Patch(':id')
   async updateUser(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.updateUser(id, updateUserDto);
+  }
+
+  @Delete(':id')
+  async removeUser(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.removeUser(id);
   }
 }

@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 const Testimonials = () => {
   return (
     <section className="relative py-20 text-white overflow-hidden">
@@ -5,7 +7,17 @@ const Testimonials = () => {
       <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
 
       <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-4xl font-bold text-center mb-12">Tales from the Tavern</h2>
+        <motion.h2
+          className="cursor-pointer text-center display-4 fw-bold mb-5"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2, ease: 'easeOut' }}
+          whileHover={{
+            scale: 1.05,
+          }}
+        >
+          Tales from the Tavern
+        </motion.h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Card 1 */}

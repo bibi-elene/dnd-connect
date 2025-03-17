@@ -99,3 +99,43 @@ export async function PATCH(req: Request) {
     );
   }
 }
+
+export async function DELETE(req: Request) {
+  const cookieHeader = req.headers.get('cookie');
+
+  try {
+    if (!cookieHeader) {
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    }
+
+    const cookies = parse(cookieHeader);
+    const accessToken = cookies['access_token'];
+
+    const url = new URL(req.url);
+    const id = url.pathname.split('/').pop();
+
+    if (!id) {
+      return NextResponse.json({ message: 'Character ID is required' }, { status: 400 });
+    }
+
+    const response = await axios.delete(
+      `${API_BASE_URL}${endpoints.characters.character(Number(id))}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    return NextResponse.json({ message: 'Character deleted successfully' }, { status: 200 });
+  } catch (error: any) {
+    if (isDynamicServerError(error)) {
+      throw error;
+    }
+    console.error('Error deleting character:', error?.message || error);
+    return NextResponse.json(
+      { message: error.response?.data || 'Error deleting character' },
+      { status: error.response?.status || 500 }
+    );
+  }
+}
