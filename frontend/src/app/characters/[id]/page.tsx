@@ -333,6 +333,7 @@ const EditCharacter = () => {
                   type="submit"
                   disabled={isButtonDisabled}
                   className="w-100 save-edit mt-2 z-20 relative"
+                  aria-label="Save Character Edit"
                 >
                   {loadingEditSave ? <Spinner animation="border" size="sm" /> : 'Save Changes'}
                 </Button>

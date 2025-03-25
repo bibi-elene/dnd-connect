@@ -67,7 +67,7 @@ const Login = () => {
             <Input id="password" type="password" {...register('password', { required: true })} />
             {errors.password && <p className="text-red-500 text-sm">Password is required</p>}
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" aria-label="Log in">
             {loading ? 'Logging in...' : 'Login'}
           </Button>
         </form>

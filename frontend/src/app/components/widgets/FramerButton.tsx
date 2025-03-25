@@ -20,6 +20,7 @@ const FramerButton = ({ text }: { text: string }) => {
   return (
     <button
       className="relative overflow-hidden px-6 py-3 mt-7 text-lg font-bold text-white bg-transparent border-4 border-white/40 rounded-lg transition-all duration-300 group hover:border-white button"
+      aria-label="Join D&D Connect"
       onClick={handleClick}
     >
       <span className="flex items-center gap-2 transition-all duration-300">

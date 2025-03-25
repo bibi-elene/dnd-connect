@@ -9,8 +9,9 @@ import { CharactersProvider } from './context/CharactersContext';
 import { UsersProvider } from './context/UsersContext';
 
 export const metadata: Metadata = {
-  title: 'D&D Connect',
-  description: 'Connect with D&D characters',
+  title: 'DND Connect – Find Your Dungeons & Dragons Party',
+  description:
+    'DND Connect helps you find and join Dungeons & Dragons groups. Connect with D&D players, characters, and campaigns.',
   icons: {
     icon: '/assets/D&D-2.png',
     apple: '/assets/D&D-2.png',

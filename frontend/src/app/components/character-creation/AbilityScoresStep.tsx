@@ -68,16 +68,16 @@ const AbilityScoresStep: React.FC<AbilityScoresStepProps> = ({ nextStep, previou
       </div>
 
       <div className="flex justify-center mt-4">
-        <Button variant="outline" onClick={rollAll}>
+        <Button aria-label="Roll Random Ability Scores" variant="outline" onClick={rollAll}>
           Roll All
         </Button>
       </div>
 
       <div className="mt-6 flex justify-between">
-        <Button type="button" onClick={previousStep}>
+        <Button aria-label="Go Back" type="button" onClick={previousStep}>
           Back
         </Button>
-        <Button type="button" onClick={nextStep}>
+        <Button aria-label="Go To Next Step" type="button" onClick={nextStep}>
           Next
         </Button>
       </div>

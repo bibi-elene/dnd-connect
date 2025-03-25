@@ -67,7 +67,9 @@ const Register = () => {
             </div>
             <div className="mt-4">
               <Link href={routes.login}>
-                <Button className="w-full">Proceed to Login</Button>
+                <Button className="w-full" aria-label="Go To Log in Page">
+                  Proceed to Login
+                </Button>
               </Link>
             </div>
           </Alert>
@@ -92,7 +94,12 @@ const Register = () => {
                 />
                 {errors.password && <p className="text-red-500 text-sm">Password is required</p>}
               </div>
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
+              <Button
+                aria-label="Register on D&D Connect"
+                type="submit"
+                className="w-full"
+                disabled={isSubmitting}
+              >
                 {isSubmitting ? 'Registering...' : 'Register'}
               </Button>
             </form>
